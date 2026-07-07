@@ -65,7 +65,13 @@
 body {
   margin: 0;
 }
+main{
+  height:100vh;
 
+}
+footer{
+  padding:20px;
+}
 h1,
 h2 {
   font-family: var(--heading);

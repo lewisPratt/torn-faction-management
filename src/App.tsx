@@ -3,6 +3,7 @@ import ApiKeyForm from './components/ApiKeyForm'
 import CustomGreeting from './components/CustomGreeting'
 import ClearKeyButton from './components/ClearKeyButton'
 import FactionInfoCard from './components/FactionInfoCard'
+import Layout from './Layout'
 
 function App() {
   const [apiKey, setApiKey] = useState(localStorage.getItem('tornApiKey') || '')
@@ -55,15 +56,31 @@ function App() {
       handleSubmit={handleSubmit}
     />
   }
+return(
+  <Layout handleClearKey={handleClearKey}>
+    <FirstView 
+    userData={userData}
+    handleClearKey={handleClearKey}
+    errorMsg={errorMsg}
+    />
+  </Layout>
+)
+}
 
-  return (
+interface firstViewProps {
+  userData : any
+  handleClearKey : () => void
+  errorMsg : string
+}
+
+function FirstView({userData, handleClearKey, errorMsg} : firstViewProps){
+    return (
     <div>
       
       {userData ? (
         <div>
           <CustomGreeting uData={userData} />
 
-          <ClearKeyButton handleClearKey={handleClearKey } />
           <FactionInfoCard uData={userData}/>
         </div>
 
@@ -83,7 +100,5 @@ function App() {
     </div>
   )
 }
-
-
 
 export default App
