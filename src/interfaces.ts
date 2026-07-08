@@ -1,9 +1,11 @@
 export interface TornUserData {
   name: string
-  player_id: number
+  id: number
   level: number
-  profile_image: string
+  image: string
   rank: string
+  faction_id: number
+  
 }
 export interface firstViewProps {
   userData: TornUserData
@@ -38,9 +40,7 @@ export interface FactionData {
     name: string
     leader: number
     age: number
-    members: {
-        [key : string] : FactionMember
-    }
+    members: number
     rank: {
         division: number
         level: number
@@ -49,6 +49,6 @@ export interface FactionData {
     }
 }
 export interface ProfilePictureProps {
-  player_id: number
+  id: number
   profile_image: string
 }

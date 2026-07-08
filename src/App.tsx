@@ -4,6 +4,7 @@ import CustomGreeting from './components/CustomGreeting'
 import ClearKeyButton from './components/ClearKeyButton'
 import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
+import RankedWarSelector from './components/RankedWarSelector'
 import type { TornUserData, firstViewProps } from './interfaces'
 
 
@@ -17,15 +18,20 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://api.torn.com/user/?selections=profile&key=${apiKey}`)
+      const response = await fetch(`https://api.torn.com/v2/user?selections=profile`, {
+        headers: {
+          'Authorization': `ApiKey ${apiKey}`,
+          'accept': 'application/json'
+        }
+      })
       const data = await response.json()
 
       if (data.error) {
         setErrorMsg(data.error.error)
       }
       else {
-        setUserData(data)
-        console.log(data)
+        setUserData(data.profile)
+        console.log(data.profile)
       }
     }
 
@@ -81,6 +87,7 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
           </div>
           <section id="main-content">
             <FactionInfoCard uData={userData} apiKey={apiKey} />
+            <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id} />
           </section>
         </>
 

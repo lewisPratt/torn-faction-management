@@ -8,15 +8,20 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`https://api.torn.com/faction/?selections=basic&key=${apiKey}`)
+            const response = await fetch(`https://api.torn.com/v2/faction/basic`, {
+                headers: {
+                    'Authorization': `ApiKey ${apiKey}`,
+                    'accept': 'application/json'
+                }
+            })
             const data = await response.json()
             if (data.error) {
                 console.log("error")
                 setErrorMsg(data.error.error)
             }
             else {
-                setFacData(data)
-                console.log(data)
+                setFacData(data.basic)
+                // console.log(data.basic)
             }
         }
 
@@ -26,7 +31,7 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
 
 
     if (!errorMsg) {
-        const memberCount = facData?.members ? Object.keys(facData.members).length : 0
+        const memberCount = facData?.members
         return (
             <>
                 <div id="faction-info-card">

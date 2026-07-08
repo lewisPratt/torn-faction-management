@@ -5,8 +5,8 @@ function CustomGreeting({ uData }: { uData: TornUserData }) {
   return (
     <div className="player-card">
       <ProfilePicture 
-      player_id={uData.player_id}
-      profile_image={uData.profile_image} />
+      id={uData.id}
+      profile_image={uData.image} />
       <div>
         <p>Welcome back {uData.name}</p>
         <p id='rank-text'>Level {uData.level} {uData.rank}</p>
