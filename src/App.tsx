@@ -56,33 +56,44 @@ function App() {
       handleSubmit={handleSubmit}
     />
   }
-return(
-  <Layout handleClearKey={handleClearKey}>
-    <FirstView 
-    userData={userData}
-    handleClearKey={handleClearKey}
-    errorMsg={errorMsg}
-    />
-  </Layout>
-)
+  return (
+    <Layout handleClearKey={handleClearKey}>
+      <FirstView
+        userData={userData}
+        handleClearKey={handleClearKey}
+        errorMsg={errorMsg}
+        apiKey={apiKey}
+      />
+    </Layout>
+  )
 }
-
+interface TornUserData {
+  name: string
+  player_id: number
+  level: number
+  profile_image: string
+  rank: string
+}
 interface firstViewProps {
-  userData : any
-  handleClearKey : () => void
-  errorMsg : string
+  userData: TornUserData
+  handleClearKey: () => void
+  errorMsg: string
+  apiKey: string
 }
 
-function FirstView({userData, handleClearKey, errorMsg} : firstViewProps){
-    return (
+function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProps) {
+  return (
     <div>
-      
-      {userData ? (
-        <div>
-          <CustomGreeting uData={userData} />
 
-          <FactionInfoCard uData={userData}/>
-        </div>
+      {userData ? (
+        <>
+          <div>
+            <CustomGreeting uData={userData} />
+          </div>
+          <section id="main-content">
+            <FactionInfoCard uData={userData} apiKey={apiKey} />
+          </section>
+        </>
 
       ) : (
         <div>
@@ -91,9 +102,9 @@ function FirstView({userData, handleClearKey, errorMsg} : firstViewProps){
           ) : (
             <p>Loading..</p>
           )}
-          
+
           <p></p>
-          <ClearKeyButton handleClearKey={handleClearKey } />
+          <ClearKeyButton handleClearKey={handleClearKey} />
 
         </div>
       )}

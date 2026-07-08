@@ -51,8 +51,7 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
   text-align: center;
   border-inline: 1px solid var(--border);
@@ -67,7 +66,7 @@ body {
 }
 main{
   height:100vh;
-
+  max-width:100%;
 }
 footer{
   padding:20px;
@@ -139,8 +138,21 @@ code {
   max-width:100%;
 }
 #faction-info-card{
-  margin-top:50px;
-  width:600px;
   border:2px solid black;
   border-radius:5px;
+  padding:20px;
+  flex-basis: 400px;
+  margin-bottom:30px;
+}
+#rank-text{
+  text-align:right;
+  font-size:.6rem;
+}
+#main-content{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  padding:20px;
+  flex-wrap:wrap;
+  justify-content: space-evenly;
 }
