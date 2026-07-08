@@ -1,33 +1,6 @@
 
 import { useState, useEffect } from 'react'
-
-interface RankedWarProps {
-    apiKey: string
-    faction_id: number
-}
-interface RankedWarsListData {
-    [key: string]: {
-        end: number
-        factions: {
-            [key: string]: {
-                id: number
-                name: string
-            }
-        }
-    }
-}
-interface RankedWarData {
-    factions: {
-        [key: string]: {
-            chain: number
-            name: string
-        }
-    }
-    war: {
-        start: number
-        end: number
-    }
-}
+import type { RankedWarProps, RankedWarsListData } from '../interfaces'
 
 
 
