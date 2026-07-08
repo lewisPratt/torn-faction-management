@@ -1,7 +1,6 @@
-interface ClearKeyProps {
-  handleClearKey : () => void
-}
-
+import type { ClearKeyProps
+    
+ } from "../interfaces"
 function ClearKeyButton({handleClearKey} : ClearKeyProps){
     return(
         <div>

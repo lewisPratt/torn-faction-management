@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import ApiKeyForm from './components/ApiKeyForm'
 import CustomGreeting from './components/CustomGreeting'
 import ClearKeyButton from './components/ClearKeyButton'
 import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
+import type { TornUserData, firstViewProps } from './interfaces'
+
 
 function App() {
   const [apiKey, setApiKey] = useState(localStorage.getItem('tornApiKey') || '')
@@ -66,19 +68,6 @@ function App() {
       />
     </Layout>
   )
-}
-interface TornUserData {
-  name: string
-  player_id: number
-  level: number
-  profile_image: string
-  rank: string
-}
-interface firstViewProps {
-  userData: TornUserData
-  handleClearKey: () => void
-  errorMsg: string
-  apiKey: string
 }
 
 function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProps) {

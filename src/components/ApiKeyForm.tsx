@@ -1,8 +1,4 @@
-interface ApiKeyFormProps {
-  inputValue: string
-  setInputValue: (value: string) => void
-  handleSubmit: () => void
-}
+import type { ApiKeyFormProps } from "../interfaces"
 
 function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps) {
   return (

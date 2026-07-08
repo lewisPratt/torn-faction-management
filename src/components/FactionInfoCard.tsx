@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react'
-interface factionProps {
-    uData: any
-    apiKey: string
-}
-
+import type { FactionData, FactionMember, factionProps } from '../interfaces'
 
 function FactionInfoCard({ uData, apiKey }: factionProps) {
 
     const [errorMsg, setErrorMsg] = useState<string>('')
+    const [facData, setFacData] = useState<FactionData | null>(null)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,6 +15,7 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
                 setErrorMsg(data.error.error)
             }
             else {
+                setFacData(data)
                 console.log(data)
             }
         }
@@ -28,20 +26,16 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
 
 
     if (!errorMsg) {
+        const memberCount = facData?.members ? Object.keys(facData.members).length : 0
         return (
             <>
                 <div id="faction-info-card">
-                    <p>{uData.faction.faction_name}</p>
-                    <p>Faction info obtained</p>
+                    <p>{facData?.name}</p>
+                    <p>There are {memberCount} players in your faction</p>
+                    <p>Rank: {facData?.rank.name}</p>
+                    <p>Wins: {facData?.rank.wins}</p>
                 </div>
-                <div id="faction-info-card">
-                    <p>{uData.faction.faction_name}</p>
-                    <p>Faction info obtained</p>
-                </div>
-                <div id="faction-info-card">
-                    <p>{uData.faction.faction_name}</p>
-                    <p>Faction info obtained</p>
-                </div>
+
             </>
         )
     }

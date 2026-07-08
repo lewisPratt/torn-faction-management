@@ -1,9 +1,6 @@
 import ClearKeyButton from "./components/ClearKeyButton"
+import type { LayoutProps } from "./interfaces"
 
-interface LayoutProps {
-    children: React.ReactNode
-    handleClearKey: () => void
-}
 
 function Layout({ children, handleClearKey }: LayoutProps) {
     return (

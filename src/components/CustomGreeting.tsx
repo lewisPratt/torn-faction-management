@@ -1,17 +1,12 @@
 import ProfilePicture from "./ProfilePicture"
-
-interface TornUserData {
-  name: string
-  player_id: number
-  level: number
-  profile_image: string
-  rank: string
-}
+import type { TornUserData } from "../interfaces"
 
 function CustomGreeting({ uData }: { uData: TornUserData }) {
   return (
     <div className="player-card">
-      <ProfilePicture image={uData} />
+      <ProfilePicture 
+      player_id={uData.player_id}
+      profile_image={uData.profile_image} />
       <div>
         <p>Welcome back {uData.name}</p>
         <p id='rank-text'>Level {uData.level} {uData.rank}</p>
