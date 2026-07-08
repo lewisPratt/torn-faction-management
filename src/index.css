@@ -143,6 +143,10 @@ code {
   padding:20px;
   flex-basis: 400px;
   margin-bottom:30px;
+  text-align: left;
+}
+#faction-description{
+  font-size:.8rem;
 }
 #rank-text{
   text-align:right;
