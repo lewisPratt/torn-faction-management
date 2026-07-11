@@ -87,7 +87,7 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
           </div>
           <section id="main-content">
             <FactionInfoCard uData={userData} apiKey={apiKey} />
-            <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id} />
+            <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id}  />
           </section>
         </>
 

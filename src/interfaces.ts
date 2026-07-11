@@ -51,20 +51,31 @@ export interface FactionData {
 export interface RankedWarProps {
     apiKey: string
     faction_id: number
+
 }
 export interface RankedWarsListData {
     [key: string]: {
         end: number
+        start: number
         factions: {
             [key: string]: {
                 id: number
                 name: string
+                score: number
             }
         }
+        winner: number
+        target: number
+
     }
 }
 
 export interface ProfilePictureProps {
   id: number
   profile_image: string
+}
+
+
+export interface SelectedWar{
+
 }
