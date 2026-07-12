@@ -40,14 +40,54 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     if (!rankedWarsList) {
         return <div id="faction-info-card"><p>Loading...</p></div>
     }
+    //get users faction name
+    let usersFactionName = ""
+    Object.entries(rankedWarsList).map(([warId, warDetails]) => {
+        Object.entries(warDetails.factions).map(([teamId, factionDetails]) => {
+            if (factionDetails.id == faction_id) {
+                usersFactionName = factionDetails.name
+                return
+            }
+        })
+    })
+
+    const noWarSelected = <p>No war selected </p>
+    const timestamp = selectedWar ? selectedWar.end : 0
+    const convertedTimestamp = new Date(timestamp * 1000)
+
+    let warWinner = null
+    let warLoser = null
+    let opponent = null
+    let myFaction = null
+    // if a war has been selected from the dropdown
+    if (selectedWar) {
+
+        //set the team objects to remove need for repeated iteration
+        if (Object.values(selectedWar.factions[0]).includes(faction_id)) {
+            opponent = selectedWar.factions[1]
+            myFaction = selectedWar.factions[0]
+        } else {
+            opponent = selectedWar.factions[0]
+            myFaction = selectedWar.factions[1]
+        }
+        //set war winner name
+        if (Object.values(opponent).includes(selectedWar.winner)) {
+            warWinner = opponent
+            warLoser = myFaction
+        }
+        else {
+            warWinner = myFaction
+            warLoser = opponent
+        }
+
+    }
 
     return (
-        <div id="faction-info-card">
+        <div className="card" >
             <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
                 <option value="0">Select a war</option>
                 {Object.entries(rankedWarsList).map(([warId, warData]) => {
-                    const timestamp = warData.end
-                    const convertedTimestamp = new Date(timestamp * 1000)
+
                     // console.log(convertedTimestamp)
                     return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
 
@@ -59,7 +99,14 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                     })
                 })}
             </select>
-            <p>{warEndDate}</p>
+
+            {!selectedWar ? noWarSelected :
+                <>
+                    <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
+                    <h4>Winner: {warWinner?.name}</h4>
+                    <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
+                </>
+            }
         </div>
     )
 
@@ -73,8 +120,9 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         //run through the previously cached ranked war data nd find the details for the selected war
         Object.entries(rankedWarsList).map(([warId, warData]) => {
             //if the selected war matches the currently iterated war data, start populating the details field.
-            if(parseInt(e.target.value) == warData.end){
-                console.log(warData.winner)
+            if (parseInt(e.target.value) == warData.end) {
+                setSelectedWar(warData)
+
             }
         })
 

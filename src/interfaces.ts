@@ -1,36 +1,36 @@
 export interface TornUserData {
-  name: string
-  id: number
-  level: number
-  image: string
-  rank: string
-  faction_id: number
-  
+    name: string
+    id: number
+    level: number
+    image: string
+    rank: string
+    faction_id: number
+
 }
 export interface firstViewProps {
-  userData: TornUserData
-  handleClearKey: () => void
-  errorMsg: string
-  apiKey: string
+    userData: TornUserData
+    handleClearKey: () => void
+    errorMsg: string
+    apiKey: string
 }
 export interface LayoutProps {
     children: React.ReactNode
     handleClearKey: () => void
 }
 export interface ApiKeyFormProps {
-  inputValue: string
-  setInputValue: (value: string) => void
-  handleSubmit: () => void
+    inputValue: string
+    setInputValue: (value: string) => void
+    handleSubmit: () => void
 }
 export interface ClearKeyProps {
-  handleClearKey : () => void
+    handleClearKey: () => void
 }
 export interface factionProps {
     uData: any
     apiKey: string
 }
 
-export interface FactionMember{
+export interface FactionMember {
     name: string
     level: number
 }
@@ -61,6 +61,7 @@ export interface RankedWarsListData {
             [key: string]: {
                 id: number
                 name: string
+                chain: number
                 score: number
             }
         }
@@ -71,11 +72,23 @@ export interface RankedWarsListData {
 }
 
 export interface ProfilePictureProps {
-  id: number
-  profile_image: string
+    id: number
+    profile_image: string
 }
 
 
-export interface SelectedWar{
+export interface SelectedWar {
+    end: number
+    start: number
+    target: number
+    winner: number
+    factions: {
+        [key: string]: {
+            id: number
+            chain: number
+            name: string
+            score: number
+        }
 
+    }
 }

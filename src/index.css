@@ -64,13 +64,16 @@
 body {
   margin: 0;
 }
-main{
-  height:100vh;
-  max-width:100%;
+
+main {
+  height: 100vh;
+  max-width: 100%;
 }
-footer{
-  padding:20px;
+
+footer {
+  padding: 20px;
 }
+
 h1,
 h2 {
   font-family: var(--heading);
@@ -104,6 +107,21 @@ p {
   margin: 0;
 }
 
+.card {
+  border: 1px solid black;
+  box-shadow: 5px 5px 8px rgba(203, 203, 203,.7);
+  border-radius: 5px;
+  padding: 20px;
+  flex-basis: 400px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+.red-text{
+  color:red;
+}
+.green-text{
+  color:lightgreen;
+}
 code,
 .counter {
   font-family: var(--mono);
@@ -126,37 +144,43 @@ code {
   justify-content: space-between;
   align-items: center;
 }
-.profile-image{
-  width:50px;
-  height:50px;
-  background:black;
-  border-radius:50%;
-  overflow:hidden;
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  background: black;
+  border-radius: 50%;
+  overflow: hidden;
 
 }
-.profile-image img{
-  max-width:100%;
+
+.profile-image img {
+  max-width: 100%;
 }
-#faction-info-card{
-  border:2px solid black;
-  border-radius:5px;
-  padding:20px;
+
+#faction-info-card {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 20px;
   flex-basis: 400px;
-  margin-bottom:30px;
+  margin-bottom: 30px;
   text-align: left;
 }
-#faction-description{
-  font-size:.8rem;
+
+#faction-description {
+  font-size: .8rem;
 }
-#rank-text{
-  text-align:right;
-  font-size:.6rem;
+
+#rank-text {
+  text-align: right;
+  font-size: .6rem;
 }
-#main-content{
-  display:flex;
+
+#main-content {
+  display: flex;
   flex-direction: row;
   align-items: center;
-  padding:20px;
-  flex-wrap:wrap;
+  padding: 20px;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
