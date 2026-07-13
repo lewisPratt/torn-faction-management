@@ -72,7 +72,7 @@ body {
 }
 
 main {
-  height: 100vh;
+  height: 100%;
   max-width: 100%;
 }
 
@@ -117,12 +117,13 @@ p {
   border: 1px solid black;
   box-shadow: 5px 5px 8px rgba(203, 203, 203, .7);
   border-radius: 5px;
-  padding: 20px;
   flex-basis: 400px;
   margin-bottom: 30px;
   text-align: left;
 }
-
+.card .card-content{
+  padding:20px;
+}
 .full-width {
   flex-basis: 800px;
 }

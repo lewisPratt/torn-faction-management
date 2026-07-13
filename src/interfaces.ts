@@ -106,6 +106,7 @@ export interface warReportProps {
     warStart: number
     warEnd: number
     target: number
+    armouryTime: number
 }
 
 export interface ReportData {

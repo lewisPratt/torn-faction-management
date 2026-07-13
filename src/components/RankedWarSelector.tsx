@@ -95,13 +95,25 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     }
     function generateWarReport(e: React.SubmitEvent) {
         e.preventDefault()
+        const form = e.target
+        const formData = new FormData(form)
+        let armouryDate = 0
+        let armouryTimestamp = 0
+        if (formData) {
+            
+            const armouryDate = formData.get("armoury-time")
+            const timestamp = new Date(`${armouryDate}`)
+            armouryTimestamp = timestamp.getTime()
+        }
         if (selectedWar) {
             const report = {
                 warStart: selectedWar.start,
                 warEnd: selectedWar.end,
                 target: selectedWar.target,
                 factionId: faction_id,
-                warId: selectedWar.id
+                warId: selectedWar.id,
+                armouryTime: armouryTimestamp
+
             }
             setWarReport(report)
         }
@@ -109,40 +121,42 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     return (
         <>
             <div className="card" >
-                <h2>Ranked War Review</h2>
-                <hr></hr>
-                <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
-                    <option value="0">Select a war</option>
-                    {Object.entries(rankedWarsList).map(([warId, warData]) => {
+                <div className="card-content" >
+                    <h2>Ranked War Review</h2>
+                    <hr></hr>
+                    <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
+                        <option value="0">Select a war</option>
+                        {Object.entries(rankedWarsList).map(([warId, warData]) => {
 
-                        return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
+                            return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
 
-                            if (factionDetails.id !== faction_id) {
+                                if (factionDetails.id !== faction_id) {
 
-                                return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
-                            }
-                            return null
-                        })
-                    })}
-                </select>
+                                    return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
+                                }
+                                return null
+                            })
+                        })}
+                    </select>
 
-                {!selectedWar ? noWarSelected :
-                    <>
-                        <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
-                        <h4>Winner: {warWinner?.name}</h4>
-                        <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
-                        <form onSubmit={generateWarReport}>
-                            <button>Detailed war Report</button>
-                            <input type="datetime-local" name="armoury-time"></input>
-                        </form>
-                    </>
-                }
+                    {!selectedWar ? noWarSelected :
+                        <>
+                            <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
+                            <h4>Winner: {warWinner?.name}</h4>
+                            <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
+                            <form onSubmit={generateWarReport}>
+                                <button>Detailed war Report</button>
+                                <input type="datetime-local" name="armoury-time" required></input>
+                            </form>
+                        </>
+                    }
+                </div>
             </div>
 
 
             {!warReport ? null :
 
-                <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} />
+                <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime}/>
 
             }
         </>

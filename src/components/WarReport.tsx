@@ -4,7 +4,7 @@ import { ApiKeyContext } from './ApiKeyContext'
 import type { warReportProps, ReportData } from "../interfaces"
 
 
-function WarReport({ warStart, warEnd, target, factionId, warId }: warReportProps) {
+function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
@@ -55,37 +55,39 @@ function WarReport({ warStart, warEnd, target, factionId, warId }: warReportProp
         const attackerPercentage = Math.round((attackerCount / memberCount) * 100)
         return (
             <div className="card full-width">
-                <h2>{reportData.attacks} attacks by {attackerCount} members </h2><span className="faction-participation">({attackerPercentage}% faction participation)</span>
-                {Object.entries(reportData.members).map(([memberId, memberData]) => {
+                <div className="card-content">
+                    <h2>{reportData.attacks} attacks by {attackerCount} members </h2><span className="faction-participation">({attackerPercentage}% faction participation)</span>
+                    {Object.entries(reportData.members).map(([memberId, memberData]) => {
 
-                    // cycle through each member of the faction and display their data
-                    // work out their participation percentage and values for visual representation of participaton (basic progress bar)
-                    //set deafault values
-                    const participation = Math.round((memberData.attacks / reportData.attacks) * 100)
-                    let barWidth = `${participation}%`
-                    let barColour = "lightgreen"
+                        // cycle through each member of the faction and display their data
+                        // work out their participation percentage and values for visual representation of participaton (basic progress bar)
+                        //set deafault values
+                        const participation = Math.round((memberData.attacks / reportData.attacks) * 100)
+                        let barWidth = `${participation}%`
+                        let barColour = "lightgreen"
 
-                    //determine colours for memebrs who met different attack thresholds
-                    if (participation < 10 && participation > 0) {
-                        barColour = "orange"
-                    } else if (participation === 0) {
-                        barColour = "red"
-                    }
-                    //highlight memebrs who did not participate
-                    if (participation === 0) {
-                        barWidth = "100%"
-                        barColour = "red"
-                    }
+                        //determine colours for memebrs who met different attack thresholds
+                        if (participation < 10 && participation > 0) {
+                            barColour = "orange"
+                        } else if (participation === 0) {
+                            barColour = "red"
+                        }
+                        //highlight memebrs who did not participate
+                        if (participation === 0) {
+                            barWidth = "100%"
+                            barColour = "red"
+                        }
 
-                    return (
-                        <div key={memberData.id} className="member-row">
-                            <div className="participation-bar" style={{ width: `${barWidth}`, background: `${barColour}` }}></div>
-                            <p><a href={`https://www.torn.com/profiles.php?XID=${memberData.id}`} target="_blank">{memberData.name}</a></p><p>{memberData.attacks} <span className="participation"> ({participation}%)</span></p>
-                        </div>
-                    )
-                })}
+                        return (
+                            <div key={memberData.id} className="member-row">
+                                <div className="participation-bar" style={{ width: `${barWidth}`, background: `${barColour}` }}></div>
+                                <p><a href={`https://www.torn.com/profiles.php?XID=${memberData.id}`} target="_blank">{memberData.name}</a></p><p>{memberData.attacks} <span className="participation"> ({participation}%)</span></p>
+                            </div>
+                        )
+                    })}
 
 
+                </div>
             </div>
 
         )
