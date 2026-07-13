@@ -56,9 +56,16 @@ export interface RankedWarProps {
 export interface RankedWarsListData {
     [key: string]: {
         end: number
+        id: number
         start: number
         factions: {
-            [key: string]: {
+            "0": {
+                id: number
+                name: string
+                chain: number
+                score: number
+            }
+            "1": {
                 id: number
                 name: string
                 chain: number
@@ -79,6 +86,7 @@ export interface ProfilePictureProps {
 
 export interface SelectedWar {
     end: number
+    id: number
     start: number
     target: number
     winner: number
@@ -91,4 +99,11 @@ export interface SelectedWar {
         }
 
     }
+}
+export interface warReportProps {
+    factionId: number
+    warId: number
+    warStart: number
+    warEnd: number
+    target: number
 }

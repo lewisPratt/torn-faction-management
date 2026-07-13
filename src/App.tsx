@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from 'react'
 import ApiKeyForm from './components/ApiKeyForm'
+import { ApiKeyContext } from './components/ApiKeyContext'
 import CustomGreeting from './components/CustomGreeting'
 import ClearKeyButton from './components/ClearKeyButton'
 import FactionInfoCard from './components/FactionInfoCard'
@@ -65,14 +66,16 @@ function App() {
     />
   }
   return (
-    <Layout handleClearKey={handleClearKey}>
-      <FirstView
-        userData={userData}
-        handleClearKey={handleClearKey}
-        errorMsg={errorMsg}
-        apiKey={apiKey}
-      />
-    </Layout>
+    <ApiKeyContext.Provider value={apiKey}>
+      <Layout handleClearKey={handleClearKey}>
+        <FirstView
+          userData={userData}
+          handleClearKey={handleClearKey}
+          errorMsg={errorMsg}
+          apiKey={apiKey}
+        />
+      </Layout>
+    </ApiKeyContext.Provider>
   )
 }
 
@@ -87,7 +90,7 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
           </div>
           <section id="main-content">
             <FactionInfoCard uData={userData} apiKey={apiKey} />
-            <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id}  />
+            <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id} />
           </section>
         </>
 

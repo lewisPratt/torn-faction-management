@@ -61,6 +61,12 @@
   box-sizing: border-box;
 }
 
+a,
+a:visited {
+  color:black;
+  text-decoration: none;
+}
+
 body {
   margin: 0;
 }
@@ -109,19 +115,26 @@ p {
 
 .card {
   border: 1px solid black;
-  box-shadow: 5px 5px 8px rgba(203, 203, 203,.7);
+  box-shadow: 5px 5px 8px rgba(203, 203, 203, .7);
   border-radius: 5px;
   padding: 20px;
   flex-basis: 400px;
   margin-bottom: 30px;
   text-align: left;
 }
-.red-text{
-  color:red;
+
+.full-width {
+  flex-basis: 800px;
 }
-.green-text{
-  color:lightgreen;
+
+.red-text {
+  color: red;
 }
+
+.green-text {
+  color: lightgreen;
+}
+
 code,
 .counter {
   font-family: var(--mono);
@@ -183,4 +196,38 @@ code {
   padding: 20px;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.member-row {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.247);
+  position: relative;
+}
+
+.member-row p {
+  z-index: 10;
+}
+
+.member-row .participation {
+  font-size: .7rem;
+}
+
+.member-row .participation-bar {
+  position: absolute;
+  left: 0;
+  background-color: lightgreen;
+
+  height: 100%;
+  top: 0;
+  z-index: 0;
+
+}
+
+.faction-participation {
+  font: size 0.8rem;
 }

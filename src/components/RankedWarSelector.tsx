@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
-import type { RankedWarProps, RankedWarsListData, SelectedWar } from '../interfaces'
+import WarReport from './WarReport'
+import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps } from '../interfaces'
 
 
 
@@ -11,6 +12,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [selectedWar, setSelectedWar] = useState<SelectedWar | null>(null)
     const [warEndDate, setWarEndDate] = useState<string>('')
     const [selectedOption, setSelectedOption] = useState<number>(0)
+    const [warReport, setWarReport] = useState<warReportProps | null>(null)
 
     useEffect(() => {
 
@@ -35,21 +37,11 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
         fetchData()
     }, [])
-    // console.log("test", rankedWarsList)
 
     if (!rankedWarsList) {
         return <div id="faction-info-card"><p>Loading...</p></div>
     }
-    //get users faction name
-    let usersFactionName = ""
-    Object.entries(rankedWarsList).map(([warId, warDetails]) => {
-        Object.entries(warDetails.factions).map(([teamId, factionDetails]) => {
-            if (factionDetails.id == faction_id) {
-                usersFactionName = factionDetails.name
-                return
-            }
-        })
-    })
+
 
     const noWarSelected = <p>No war selected </p>
     const timestamp = selectedWar ? selectedWar.end : 0
@@ -82,51 +74,75 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     }
 
-    return (
-        <div className="card" >
-            <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
-                <option value="0">Select a war</option>
-                {Object.entries(rankedWarsList).map(([warId, warData]) => {
-
-                    // console.log(convertedTimestamp)
-                    return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
-
-                        if (factionDetails.id !== faction_id) {
-
-                            return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
-                        }
-                        return null
-                    })
-                })}
-            </select>
-
-            {!selectedWar ? noWarSelected :
-                <>
-                    <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
-                    <h4>Winner: {warWinner?.name}</h4>
-                    <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
-                </>
-            }
-        </div>
-    )
-
+    //function triggered when a war is selected from the select input
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        if(selectedWar){
+            setSelectedWar(null)
+            setWarReport(null)
+        }
         //update the state of the currently selected war
         setSelectedOption(parseInt(e.target.value))
         //if there is no rankedwar data show error (wont let you iterate over an object if its null state hasnt been handled.)
         if (!rankedWarsList) {
             return <div id="faction-info-card"><p>Loading...</p></div>
         }
-        //run through the previously cached ranked war data nd find the details for the selected war
-        Object.entries(rankedWarsList).map(([warId, warData]) => {
-            //if the selected war matches the currently iterated war data, start populating the details field.
-            if (parseInt(e.target.value) == warData.end) {
-                setSelectedWar(warData)
-
-            }
-        })
+        //run through the previously cached ranked war data and find the details for the selected war
+        const match = Object.entries(rankedWarsList).find(([warId, warData]) =>
+            parseInt(e.target.value) === warData.end
+        )
+        if (match) setSelectedWar(match[1])
 
     }
+    function generateWarReport() {
+        if(selectedWar){
+        const report = {
+            warStart: selectedWar.start,
+            warEnd: selectedWar.end,
+            target: selectedWar.target,
+            factionId: faction_id,
+            warId: selectedWar.id
+        }
+        setWarReport(report)
+    }
+    }
+    return (
+        <>
+            <div className="card" >
+                <h2>Ranked War Review</h2>
+                <hr></hr>
+                <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
+                    <option value="0">Select a war</option>
+                    {Object.entries(rankedWarsList).map(([warId, warData]) => {
+
+                        return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
+
+                            if (factionDetails.id !== faction_id) {
+
+                                return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
+                            }
+                            return null
+                        })
+                    })}
+                </select>
+
+                {!selectedWar ? noWarSelected :
+                    <>
+                        <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
+                        <h4>Winner: {warWinner?.name}</h4>
+                        <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
+                        <button onClick={generateWarReport}>Detailed war Report</button>
+                    </>
+                }
+            </div>
+
+
+            {!warReport ? null :
+
+                <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} />
+
+            }
+        </>
+    )
 }
 
 
