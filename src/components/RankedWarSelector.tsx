@@ -118,6 +118,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             setWarReport(report)
         }
     }
+    const noReport = <div className="card full-width"><p className="card-content">No report generated....yet</p></div>
     return (
         <>
             <div className="card" >
@@ -154,7 +155,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             </div>
 
 
-            {!warReport ? null :
+            {!warReport ? noReport :
 
                 <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime}/>
 
