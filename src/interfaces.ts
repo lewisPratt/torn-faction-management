@@ -107,3 +107,29 @@ export interface warReportProps {
     warEnd: number
     target: number
 }
+
+export interface ReportData {
+    attacks: number
+    members: {
+        [key: string]: {
+            attacks: number
+            id: number
+            level: number
+            name: string
+            score: number
+        }
+    }
+    rewards: {
+        [key: string]: {
+            respect: number
+            points: number
+            items: {
+                [key: string]: {
+                    id: number
+                    name: string
+                    quantity: number
+                }
+            }
+        }
+    }
+}

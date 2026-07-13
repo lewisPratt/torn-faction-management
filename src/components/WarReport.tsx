@@ -1,33 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
-import type { warReportProps } from "../interfaces"
-
-interface ReportData {
-    attacks: number
-    members: {
-        [key: string]: {
-            attacks: number
-            id: number
-            level: number
-            name: string
-            score: number
-        }
-    }
-    rewards: {
-        [key: string]: {
-            respect: number
-            points: number
-            items: {
-                [key: string]: {
-                    id: number
-                    name: string
-                    quantity: number
-                }
-            }
-        }
-    }
-}
+import type { warReportProps, ReportData } from "../interfaces"
 
 
 function WarReport({ warStart, warEnd, target, factionId, warId }: warReportProps) {
@@ -74,7 +48,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId }: warReportProp
         const members = Object.values(reportData.members)
         members.forEach(member => {
             memberCount += 1
-            if(member.attacks > 0){
+            if (member.attacks > 0) {
                 attackerCount += 1
             }
         });
@@ -83,25 +57,31 @@ function WarReport({ warStart, warEnd, target, factionId, warId }: warReportProp
             <div className="card full-width">
                 <h2>{reportData.attacks} attacks by {attackerCount} members </h2><span className="faction-participation">({attackerPercentage}% faction participation)</span>
                 {Object.entries(reportData.members).map(([memberId, memberData]) => {
+
+                    // cycle through each member of the faction and display their data
+                    // work out their participation percentage and values for visual representation of participaton (basic progress bar)
+                    //set deafault values
                     const participation = Math.round((memberData.attacks / reportData.attacks) * 100)
                     let barWidth = `${participation}%`
                     let barColour = "lightgreen"
-                    if(participation < 10 && participation > 0){
+
+                    //determine colours for memebrs who met different attack thresholds
+                    if (participation < 10 && participation > 0) {
                         barColour = "orange"
-                    }else if(participation === 0){
+                    } else if (participation === 0) {
                         barColour = "red"
                     }
-                    if(participation === 0){
+                    //highlight memebrs who did not participate
+                    if (participation === 0) {
                         barWidth = "100%"
                         barColour = "red"
                     }
-                    
-                    
+
                     return (
-                    <div key={memberData.id} className="member-row">
-                        <div className="participation-bar" style={{width:`${barWidth}`,background:`${barColour}`}}></div>
-                        <p><a href={`https://www.torn.com/profiles.php?XID=${memberData.id}`} target="_blank">{memberData.name}</a></p><p>{memberData.attacks} <span className="participation"> ({participation}%)</span></p>
-                    </div>
+                        <div key={memberData.id} className="member-row">
+                            <div className="participation-bar" style={{ width: `${barWidth}`, background: `${barColour}` }}></div>
+                            <p><a href={`https://www.torn.com/profiles.php?XID=${memberData.id}`} target="_blank">{memberData.name}</a></p><p>{memberData.attacks} <span className="participation"> ({participation}%)</span></p>
+                        </div>
                     )
                 })}
 

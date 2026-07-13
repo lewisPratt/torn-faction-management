@@ -76,7 +76,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     //function triggered when a war is selected from the select input
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        if(selectedWar){
+        if (selectedWar) {
             setSelectedWar(null)
             setWarReport(null)
         }
@@ -93,17 +93,18 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         if (match) setSelectedWar(match[1])
 
     }
-    function generateWarReport() {
-        if(selectedWar){
-        const report = {
-            warStart: selectedWar.start,
-            warEnd: selectedWar.end,
-            target: selectedWar.target,
-            factionId: faction_id,
-            warId: selectedWar.id
+    function generateWarReport(e: React.SubmitEvent) {
+        e.preventDefault()
+        if (selectedWar) {
+            const report = {
+                warStart: selectedWar.start,
+                warEnd: selectedWar.end,
+                target: selectedWar.target,
+                factionId: faction_id,
+                warId: selectedWar.id
+            }
+            setWarReport(report)
         }
-        setWarReport(report)
-    }
     }
     return (
         <>
@@ -130,7 +131,10 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                         <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
                         <h4>Winner: {warWinner?.name}</h4>
                         <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
-                        <button onClick={generateWarReport}>Detailed war Report</button>
+                        <form onSubmit={generateWarReport}>
+                            <button>Detailed war Report</button>
+                            <input type="datetime-local" name="armoury-time"></input>
+                        </form>
                     </>
                 }
             </div>
