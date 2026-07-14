@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -208,6 +210,9 @@ code {
   border-radius: 5px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.247);
   position: relative;
+  z-index:10;
+  background-color:white;
+  cursor: pointer;
 }
 
 .member-row p {
@@ -222,13 +227,39 @@ code {
   position: absolute;
   left: 0;
   background-color: lightgreen;
-  border-radius:5px;
+  border-radius:5px 0 0 5px;
   height: 100%;
   top: 0;
   z-index: 0;
 
 }
+.more-info-container{
+  border:1px solid black;
+  position:relative;
+  top:-15px;
+  z-index:1;
+  width:95%;
+  padding:10px;
+  margin:auto;
+  border-radius:0 0 5px 5px;
+  background-color: #f1f1f1;
+  animation-name: reveal;
+  animation-duration: .2s;
+  animation-iteration-count: 1;
+}
+.more-info-container h3{
+  margin: 0;
+}
+.member-row .respect-p,
+.more-info-container .average-p{
+  font-size: .7rem;
+}
 
 .faction-participation {
   font: size 0.8rem;
+}
+
+@keyframes reveal {
+  0%{height:0px}
+  100%{height:50px}
 }

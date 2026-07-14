@@ -80,7 +80,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
                         }
 
                         return (
-                            <ReportRow memberId={memberData.id} memberName={memberData.name} memberAttacks={memberData.attacks} participationNumber={participation} participationBarWidth={barWidth} participationBarColour={barColour} />
+                            <ReportRow memberId={memberData.id} memberName={memberData.name} memberAttacks={memberData.attacks} memberScore={memberData.score} participationNumber={participation} participationBarWidth={barWidth} participationBarColour={barColour} />
                         )
                     })}
 
