@@ -7,7 +7,7 @@ function Layout({ children, handleClearKey }: LayoutProps) {
         <>
             <header>
                 <nav>
-                    <h1>Faction Dashboard</h1>
+
                 </nav>
             </header>
             <main>
