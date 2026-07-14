@@ -251,15 +251,19 @@ code {
   margin: 0;
 }
 .member-row .respect-p,
-.more-info-container .average-p{
+.more-info-container .average-p,
+.member-armoury-news-container{
   font-size: .7rem;
 }
-
+.member-armoury-news-container{
+  display:flex;
+  justify-content: space-between;
+}
 .faction-participation {
   font: size 0.8rem;
 }
 
 @keyframes reveal {
   0%{height:0px}
-  100%{height:50px}
+  100%{height:120px}
 }

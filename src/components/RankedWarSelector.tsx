@@ -44,8 +44,10 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
 
     const noWarSelected = <p>No war selected </p>
-    const timestamp = selectedWar ? selectedWar.end : 0
-    const convertedTimestamp = new Date(timestamp * 1000)
+    const endTimestamp = selectedWar ? selectedWar.end : 0
+    const convertedEndTimestamp = new Date(endTimestamp * 1000)
+    const startTimestamp = selectedWar ? selectedWar.start : 0
+    const convertedStartTimestamp = new Date(startTimestamp * 1000)
 
     let warWinner = null
     let warLoser = null
@@ -100,7 +102,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         let armouryDate = 0
         let armouryTimestamp = 0
         if (formData) {
-            
+
             const armouryDate = formData.get("armoury-time")
             const timestamp = new Date(`${armouryDate}`)
             armouryTimestamp = timestamp.getTime()
@@ -142,7 +144,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
                     {!selectedWar ? noWarSelected :
                         <>
-                            <h3>War end:  {convertedTimestamp.toLocaleString()}</h3>
+                            <h3>War start:  {convertedStartTimestamp.toLocaleString()}</h3>
+                            <h3>War end:  {convertedEndTimestamp.toLocaleString()}</h3>
                             <h4>Winner: {warWinner?.name}</h4>
                             <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
                             <form onSubmit={generateWarReport}>
@@ -157,7 +160,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
             {!warReport ? noReport :
 
-                <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime}/>
+                <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} />
 
             }
         </>
