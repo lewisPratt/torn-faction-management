@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
 import type { warReportProps, ReportData } from "../interfaces"
+import ReportRow from './ReportRow'
 
 
 function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: warReportProps) {
@@ -79,10 +80,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
                         }
 
                         return (
-                            <div key={memberData.id} className="member-row">
-                                <div className="participation-bar" style={{ width: `${barWidth}`, background: `${barColour}` }}></div>
-                                <p><a href={`https://www.torn.com/profiles.php?XID=${memberData.id}`} target="_blank">{memberData.name}</a></p><p>{memberData.attacks} <span className="participation"> ({participation}%)</span></p>
-                            </div>
+                            <ReportRow memberId={memberData.id} memberName={memberData.name} memberAttacks={memberData.attacks} participationNumber={participation} participationBarWidth={barWidth} participationBarColour={barColour} />
                         )
                     })}
 
