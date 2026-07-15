@@ -137,7 +137,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     return (
         <>
             <div className="card" >
-                <div className="card-content" >
+                <div id="war-selector-card" className="card-content" >
                     <h2>Ranked War Review</h2>
                     <hr></hr>
                     <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
@@ -162,13 +162,14 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                             <h4>Winner: {warWinner?.name}</h4>
                             <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
                             <form onSubmit={generateWarReport}>
-                                <button>Detailed war Report</button>
-                                <p>Get armoury news from what point?</p>
-                                <select name="armoury-news-date">
+
+                                <p id="armoury-news-desc">Get armoury news from what point?</p>
+                                <select name="armoury-news-date" onChange={() => { setWarReport(null) }}>
                                     <option value="war-start">War start</option>
                                     <option value="1-day">1 day before war start</option>
                                     <option value="2-day">2 days before war start</option>
                                 </select>
+                                <button>Generate Report</button>
                             </form>
                         </>
                     }

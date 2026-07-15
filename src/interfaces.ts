@@ -134,3 +134,29 @@ export interface ReportData {
         }
     }
 }
+
+export interface MemberRow {
+    memberId: number
+    memberName: string
+    memberAttacks: number
+    memberScore: number
+    participationNumber: number
+    participationBarWidth: string
+    participationBarColour: string
+    armouryTime: number
+    warEndDate: number
+
+}
+export interface MembersArmouryProps {
+    memberId: number
+    memberName: string
+    armouryFromDate: number
+    warEndDate: number
+}
+
+export interface armouryNewsData {
+        id: number
+        text: string
+        timestamp: number
+    
+}
