@@ -86,7 +86,7 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
       {userData ? (
         <>
           <div>
-            <CustomGreeting uData={userData} />
+            <CustomGreeting id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id}/>
           </div>
           <section id="main-content">
             <FactionInfoCard uData={userData} apiKey={apiKey} />

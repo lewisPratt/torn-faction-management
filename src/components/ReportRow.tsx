@@ -84,6 +84,10 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
                             <h4>Meds Used:</h4>
                             <p>{filteredNews?.medsUsed}</p>
                         </div>
+                        <div>
+                            <h4>Ipecac Used:</h4>
+                            <p>{filteredNews?.ipecacUsed}</p>
+                        </div>
                     </div>
                 </div>
                 : null

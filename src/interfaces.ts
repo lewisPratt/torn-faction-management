@@ -6,7 +6,6 @@ export interface TornUserData {
     rank: string
     title: string
     faction_id: number
-
 }
 export interface firstViewProps {
     userData: TornUserData
