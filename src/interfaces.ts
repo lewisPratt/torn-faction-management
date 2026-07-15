@@ -4,6 +4,7 @@ export interface TornUserData {
     level: number
     image: string
     rank: string
+    title: string
     faction_id: number
 
 }

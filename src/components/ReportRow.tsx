@@ -18,6 +18,7 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
     let medsFiltered = []
     let ipecacFiltered = []
     let attackPotential = 0
+
     const averageRespect = memberAttacks > 0 ?
         (memberScore / memberAttacks).toFixed(2)
         : "0"

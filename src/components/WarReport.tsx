@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
-import type { warReportProps, ReportData,armouryNewsData } from "../interfaces"
+import type { warReportProps, ReportData, armouryNewsData } from "../interfaces"
 import ReportRow from './ReportRow'
+import XanaxCost from './XanaxCost'
 
 
 function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: warReportProps) {
@@ -65,6 +66,11 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     if (!reportData) {
         return <div className="card full-width"><p>Loading...</p></div>
     }
+    //count total amount of xanax used in the war
+    const totalXanax = armouryNews?.filter(newsItem =>
+        newsItem.text.includes(`Xanax`) &&
+        newsItem.text.includes("used")
+    ).length ?? 0
 
     let attackerCount = 0
     const members = Object.values(reportData.members)
@@ -77,7 +83,9 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     return (
         <div className="card full-width">
             <div className="card-content">
+
                 <h2>{reportData.attacks} attacks by {attackerCount} members </h2><span className="faction-participation">({attackerPercentage}% faction participation)</span>
+                <XanaxCost totalNumber={totalXanax} />
                 {Object.entries(reportData.members).map(([memberId, memberData]) => {
 
                     // cycle through each member of the faction and display their data

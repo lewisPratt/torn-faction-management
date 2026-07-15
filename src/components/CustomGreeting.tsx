@@ -9,7 +9,7 @@ function CustomGreeting({ uData }: { uData: TornUserData }) {
       profile_image={uData.image} />
       <div>
         <p>Welcome back {uData.name}</p>
-        <p id='rank-text'>Level {uData.level} {uData.rank}</p>
+        <p id='rank-text'>Level {uData.level} {uData.rank} {uData.title}</p>
       </div>
     </div>
   )
