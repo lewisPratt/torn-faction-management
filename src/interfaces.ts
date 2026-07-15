@@ -136,6 +136,7 @@ export interface ReportData {
 }
 
 export interface MemberRow {
+    armouryNews: armouryNewsData[] | null
     memberId: number
     memberName: string
     memberAttacks: number

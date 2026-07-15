@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
-import type { warReportProps, ReportData } from "../interfaces"
+import type { warReportProps, ReportData,armouryNewsData } from "../interfaces"
 import ReportRow from './ReportRow'
 
 
@@ -10,6 +10,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
 
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [reportData, setReportData] = useState<ReportData | null>(null)
+    const [armouryNews, setArmouryNews] = useState<armouryNewsData[] | null>(null)
 
     useEffect(() => {
 
@@ -27,6 +28,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
                 console.log(data)
             }
             else {
+
                 const factions = Object.values(data.rankedwarreport.factions)
                 factions.forEach((faction: any) => {
                     if (faction.id === factionId) {
@@ -37,6 +39,26 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
         }
 
         fetchData()
+
+        const fetchAllPages = async () => {
+            const allResults: armouryNewsData[] = []
+            let nextUrl: string | null = `https://api.torn.com/v2/faction/news?striptags=false&limit=100&sort=DESC&from=${armouryTime}&to=${warEnd}&cat=armoryAction`
+            while (nextUrl) {
+                const response = await fetch(nextUrl, {
+                    headers: {
+                        'Authorization': `ApiKey ${apiKey}`,
+                        'accept': 'application/json'
+                    }
+                })
+                const data = await response.json()
+                allResults.push(...data.news)
+                nextUrl = data._metadata?.links?.prev ?? null
+            }
+            setArmouryNews(allResults)
+        }
+
+        fetchAllPages()
+
     }, [])
 
     //if there is no data to populate the report(api error etc)
@@ -79,7 +101,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
 
                     return (
                         <div key={memberId}>
-                            <ReportRow memberId={memberData.id} memberName={memberData.name} memberAttacks={memberData.attacks} memberScore={memberData.score} participationNumber={participation} participationBarWidth={barWidth} participationBarColour={barColour} armouryTime={armouryTime} warEndDate={warEnd} />
+                            <ReportRow armouryNews={armouryNews} memberId={memberData.id} memberName={memberData.name} memberAttacks={memberData.attacks} memberScore={memberData.score} participationNumber={participation} participationBarWidth={barWidth} participationBarColour={barColour} armouryTime={armouryTime} warEndDate={warEnd} />
                         </div>
                     )
                 })}
