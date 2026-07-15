@@ -314,6 +314,12 @@ code {
 .stats-container div>p {
   padding-bottom: 10px;
 }
+.member-details-container p{
+  font-size:.8rem;
+}
+.member-details-container{
+  margin-top:10px;
+}
 .warning-icon{
   color:darkred;
 }

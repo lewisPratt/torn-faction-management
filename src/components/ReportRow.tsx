@@ -2,11 +2,13 @@ import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
 import { useState, useEffect } from 'react'
 import type { MemberRow } from '../interfaces'
+import ThisMemberDetails from './ThisMemberDetails'
+
 interface membersArmouryNews {
     xanaxUsed: number
     medsUsed: number
     ipecacUsed: number
-    attackPotential: number 
+    attackPotential: number
 }
 
 function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, armouryTime, warEndDate, armouryNews }: MemberRow) {
@@ -52,7 +54,7 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
 
     }, [armouryNews])
 
-   const warningIcon =  filteredNews && filteredNews.attackPotential > memberAttacks ? <i className="warning-icon bi bi-exclamation-triangle-fill"></i>
+    const warningIcon = filteredNews && filteredNews.attackPotential > memberAttacks ? <i className="warning-icon bi bi-exclamation-triangle-fill"></i>
         : null
     return (
         <div className="row-container">
@@ -89,9 +91,12 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
                             <p>{filteredNews?.ipecacUsed}</p>
                         </div>
                     </div>
+                    <ThisMemberDetails memberId={memberId} />
                 </div>
                 : null
             }
+            
+
         </div>
     )
 

@@ -66,6 +66,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     if (!reportData) {
         return <div className="card full-width"><p>Loading...</p></div>
     }
+    
     //count total amount of xanax used in the war
     const totalXanax = armouryNews?.filter(newsItem =>
         newsItem.text.includes(`Xanax`) &&
