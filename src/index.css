@@ -51,7 +51,11 @@
     filter: invert(1) brightness(2);
   }
 }
-
+form select,
+form button{
+  display:block;
+  margin:10px 0;
+}
 #root {
   max-width: 1440px;
   margin: 0 auto;

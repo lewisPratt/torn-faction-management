@@ -12,11 +12,12 @@ interface MemberRow {
     participationBarWidth: string
     participationBarColour: string
     armouryTime: number
+    warEndDate: number
     keyString: string
 
 }
 
-function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, armouryTime, keyString }: MemberRow) {
+function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, armouryTime, warEndDate ,keyString }: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
     const averageRespect = (memberScore / memberAttacks).toFixed(2)
 
@@ -40,7 +41,7 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
                     <h3>More Info</h3>
                     <p><a href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"></i></a> <a href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i></a></p>
                     <p className="average-p">{memberName} averaged {averageRespect} respect per attack.</p>
-                    <MemberArmouryNews memberId={memberId} memberName={memberName} armouryFromDate={armouryTime} />
+                    <MemberArmouryNews memberId={memberId} memberName={memberName} armouryFromDate={armouryTime} warEndDate={warEndDate}/>
                 </div>
                 : null
             }

@@ -13,6 +13,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [warEndDate, setWarEndDate] = useState<string>('')
     const [selectedOption, setSelectedOption] = useState<number>(0)
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
+    const noReport = <div className="card full-width"><p className="card-content">No report generated....yet</p></div>
 
     useEffect(() => {
 
@@ -100,27 +101,39 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         const form = e.target
         const formData = new FormData(form)
         let armouryDate = 0
-        let armouryTimestamp = 0
-        if (formData) {
 
-            const armouryDate = formData.get("armoury-time")
-            const timestamp = new Date(`${armouryDate}`)
-            armouryTimestamp = timestamp.getTime()
-        }
-        if (selectedWar) {
+        if (selectedWar && formData) {
+
+            //set the armourynews date dependant on when the user has picked to start it from. 
+            const armouryNewsDate = formData.get("armoury-news-date")
+            if (armouryNewsDate === "war-start") {
+
+                armouryDate = selectedWar.start
+
+            } else if (armouryNewsDate === "1-day") {
+
+                armouryDate = (selectedWar.start - 86400)
+
+            } else if (armouryNewsDate === "2-day") {
+
+                armouryDate = (selectedWar.start - 172800)
+
+            }
+
             const report = {
                 warStart: selectedWar.start,
                 warEnd: selectedWar.end,
                 target: selectedWar.target,
                 factionId: faction_id,
                 warId: selectedWar.id,
-                armouryTime: armouryTimestamp
-
+                armouryTime: armouryDate
             }
+
             setWarReport(report)
+
         }
     }
-    const noReport = <div className="card full-width"><p className="card-content">No report generated....yet</p></div>
+
     return (
         <>
             <div className="card" >
@@ -150,7 +163,12 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                             <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
                             <form onSubmit={generateWarReport}>
                                 <button>Detailed war Report</button>
-                                <input type="datetime-local" name="armoury-time" required></input>
+                                <p>Get armoury news from what point?</p>
+                                <select name="armoury-news-date">
+                                    <option value="war-start">War start</option>
+                                    <option value="1-day">1 day before war start</option>
+                                    <option value="2-day">2 days before war start</option>
+                                </select>
                             </form>
                         </>
                     }
