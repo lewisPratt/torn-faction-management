@@ -92,7 +92,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
             <div className="card full-width" id="legend">
                 <button onClick={toggleLegend}>See Legend?</button>
                  
-                {legendVisible ? <LegendReportRow /> : null}
+                {legendVisible ? <><p>Hover over the elements in the row below to see the explanation.</p><LegendReportRow /></> : null}
             </div>
 
 

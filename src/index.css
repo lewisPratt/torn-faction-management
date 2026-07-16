@@ -314,8 +314,12 @@ code {
 #legend>div{
   margin:20px;
 }
+#legend>p{
+  margin:10px;
+  font-size:.8rem;
+}
 #legend>button{
-  margin:20px 0 0 20px;
+  margin:10px;
 }
 .stats-container div {
   flex-basis: 200px;
