@@ -79,6 +79,12 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     //function triggered when a war is selected from the select input
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        if(parseInt(e.target.value) === 0) {
+            setErrorMsg("No war data found.")
+            return
+        } else{
+            setErrorMsg("")
+        }
         if (selectedWar) {
             setSelectedWar(null)
             setWarReport(null)
@@ -93,7 +99,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         const match = Object.entries(rankedWarsList).find(([warId, warData]) =>
             parseInt(e.target.value) === warData.end
         )
-        if (match) setSelectedWar(match[1])
+        if (match) setSelectedWar(match[1]) 
 
     }
     function generateWarReport(e: React.SubmitEvent) {
@@ -130,6 +136,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             }
 
             setWarReport(report)
+            errorMsg ?  setErrorMsg("") : null
 
         }
     }
@@ -139,6 +146,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             <div className="card" >
                 <div id="war-selector-card" className="card-content" >
                     <h2>Ranked War Review</h2>
+                    {errorMsg ? errorMsg : null}
                     <hr></hr>
                     <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
                         <option value="0">Select a war</option>
