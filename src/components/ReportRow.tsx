@@ -60,10 +60,10 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
         <div className="row-container">
             <div className="member-row" onClick={showMore}>
                 <div className="participation-bar" style={{ width: `${participationBarWidth}`, background: `${participationBarColour}` }}></div>
-                <p>{memberName} {warningIcon} </p><p className="respect-p">Respect earned: {memberScore}</p><p><i className="bi bi-bullseye"></i> {memberAttacks} <span className="participation"> ({participationNumber}%)</span></p>
+                <p className="player-name-p">{memberName} {warningIcon} <br/><span className="respect-span">Respect: {memberScore}</span> </p><p><i className="bi bi-bullseye"></i> {memberAttacks} <span className="participation"> ({participationNumber}%)</span></p>
                 {filteredNews ?
 
-                    <p>{filteredNews.xanaxUsed} | {filteredNews.attackPotential} - {filteredNews.medsUsed} - {filteredNews.ipecacUsed}</p>
+                    <p className="quick-stats-p">{filteredNews.xanaxUsed} | {filteredNews.attackPotential} - {filteredNews.medsUsed} - {filteredNews.ipecacUsed}</p>
                     : null
                 }
 
@@ -71,7 +71,7 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
             {showMoreInfo ?
                 <div className="more-info-container">
                     <h3>More Info</h3>
-                    <p><a href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"></i></a> <a href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i></a></p>
+                    <p className="player-action-p"><a href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"></i></a> <a href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i></a></p>
                     <p className="average-p">{memberName} averaged {averageRespect} respect per attack.</p>
                     <div className="stats-container">
                         <div>

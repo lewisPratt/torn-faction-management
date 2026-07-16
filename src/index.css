@@ -258,7 +258,6 @@ code {
   top: -15px;
   z-index: 1;
   width: 95%;
-  padding: 10px;
   margin: auto;
   border-radius: 0 0 5px 5px;
   background-color: #f1f1f1;
@@ -268,13 +267,14 @@ code {
 }
 
 .more-info-container h3 {
-  margin: 0;
+  margin: 10px;
 }
 
 .member-row .respect-p,
 .more-info-container .average-p,
 .member-armoury-news-container {
   font-size: .7rem;
+  margin:10px;
 }
 
 .member-armoury-news-container {
@@ -291,14 +291,32 @@ code {
   flex-direction: column;
   align-items: stretch;
 }
-
+.quick-stats-p{
+  font-size:.8rem;
+}
+.respect-span{
+  font-size:.6rem;
+  line-height: .6rem;
+}
+.player-name-p{
+  line-height: 1rem;
+}
+.player-actions-p{
+  margin:10px;
+}
 .stats-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  padding:10px;
 }
-
+#legend>div{
+  margin:20px;
+}
+#legend>button{
+  margin:20px 0 0 20px;
+}
 .stats-container div {
   flex-basis: 200px;
   background: #dcdcdc;
@@ -315,10 +333,11 @@ code {
   padding-bottom: 10px;
 }
 .member-details-container p{
-  font-size:.8rem;
+  font-size:.6rem;
+  margin-bottom:0;
 }
 .member-details-container{
-  margin-top:10px;
+  margin:10px;
 }
 .warning-icon{
   color:darkred;

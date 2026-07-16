@@ -32,7 +32,7 @@ function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
         else {
             console.log(data)
             const details = {
-                lastActive: data.profile.last_action.timestamp,
+                lastActive: data.profile.last_action.relative,
                 donatorStatus: data.profile.donator_status,
                 level: data.profile.level
             }
@@ -50,7 +50,7 @@ function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
 
     return (
         <div className="member-details-container">
-            <p>Last Active {memberDetails.lastActive} | {!memberDetails.donatorStatus ? "Player" : memberDetails.donatorStatus} | Level {memberDetails.level}</p>
+            <p>Active {memberDetails.lastActive} | {!memberDetails.donatorStatus ? "Player" : memberDetails.donatorStatus} | Level {memberDetails.level}</p>
         </div>
     )
 }
