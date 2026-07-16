@@ -6,7 +6,6 @@ import ReportRow from './ReportRow'
 import XanaxCost from './XanaxCost'
 import LegendReportRow from './LegendReportRow'
 
-
 function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
@@ -65,7 +64,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     }, [])
 
 
-    function toggleLegend(){
+    function toggleLegend() {
         setLegend(prev => !prev)
     }
     //if there is no data to populate the report(api error etc)
@@ -89,15 +88,13 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     const attackerPercentage = Math.round((attackerCount / members.length) * 100)
     return (
         <>
-            
+
             <div className="card full-width" id="legend">
                 <button onClick={toggleLegend}>See Legend?</button>
-                <button type="button" className="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-  Tooltip on top
-</button>
-                {legendVisible ? <LegendReportRow  /> : null}
-                </div>
-            
+                 
+                {legendVisible ? <LegendReportRow /> : null}
+            </div>
+
 
             <div className="card full-width">
                 <div className="card-content">
