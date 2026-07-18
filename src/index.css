@@ -55,10 +55,9 @@
 select {
   max-width: 90%;
   height: 30px;
-
+  display:block;
 }
 
-form select,
 form button {
   display: block;
   margin: 10px 0;
@@ -72,8 +71,7 @@ form #armoury-news-desc {
   max-width: 1440px;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -84,15 +82,14 @@ a:visited {
   color: black;
   text-decoration: none;
 }
-
+html, body, #root{
+  height:100%;
+}
 body {
   margin: 0;
 }
 
-main {
-  height: 100%;
-  max-width: 100%;
-}
+
 
 footer {
   padding: 20px;
@@ -133,9 +130,9 @@ p {
 
 .card {
   border: 1px solid black;
-  box-shadow: 5px 5px 8px rgba(203, 203, 203, .7);
+  box-shadow: 3px 3px 4px rgba(203, 203, 203, .7);
   border-radius: 5px;
-  flex-basis: 400px;
+  flex-basis: 300px;
   margin-bottom: 30px;
   text-align: left;
 }
@@ -145,9 +142,24 @@ p {
 }
 
 .full-width {
-  flex-basis: 800px;
+  flex-basis: 80%;
 }
+.edge-to-edge{
+  width:100%;
 
+}
+.my-faction-info .card-content{
+  margin:0 20px;
+  text-align: left;
+}
+.my-faction-info h3{
+  display:inline-block;
+  margin-bottom:0;
+}
+.my-faction-info p{
+  margin:0;
+  line-height: .8rem;
+}
 .red-text {
   color: red;
 }
@@ -202,7 +214,7 @@ code {
 }
 
 #faction-description {
-  font-size: .8rem;
+  font-size: .6rem;
 }
 
 #rank-text {
@@ -217,8 +229,12 @@ code {
   padding: 20px;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-items: flex-start;
+  flex:1;
 }
-
+#report-container{
+  flex-basis:900px;
+}
 .member-row {
   display: flex;
   justify-content: space-between;
@@ -274,7 +290,7 @@ code {
 .more-info-container .average-p,
 .member-armoury-news-container {
   font-size: .7rem;
-  margin:10px;
+  margin: 10px;
 }
 
 .member-armoury-news-container {
@@ -291,36 +307,49 @@ code {
   flex-direction: column;
   align-items: stretch;
 }
-.quick-stats-p{
-  font-size:.8rem;
+
+.quick-stats-p {
+  font-size: .8rem;
 }
-.respect-span{
-  font-size:.6rem;
+
+.respect-span {
+  font-size: .6rem;
   line-height: .6rem;
 }
-.player-name-p{
+
+.player-name-p {
   line-height: 1rem;
 }
-.player-actions-p{
-  margin:10px;
+
+.more-info-container .player-action-p {
+  margin: 10px;
 }
+
 .stats-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
-  padding:10px;
+  padding: 10px;
 }
-#legend>div{
-  margin:20px;
+
+#legend>div {
+  margin: 20px;
 }
-#legend>p{
-  margin:10px;
-  font-size:.8rem;
+
+#legend>p {
+  margin: 10px;
+  font-size: .8rem;
 }
-#legend>button{
-  margin:10px;
+
+#legend>button {
+  margin: 10px;
 }
+
+.legend-outline {
+  border: 1px dashed black;
+}
+
 .stats-container div {
   flex-basis: 200px;
   background: #dcdcdc;
@@ -336,18 +365,41 @@ code {
 .stats-container div>p {
   padding-bottom: 10px;
 }
-.member-details-container p{
-  font-size:.6rem;
+
+.member-details-container p {
+  font-size: .6rem;
+  margin-bottom: 0;
+}
+
+.member-details-container {
+  margin: 10px;
+}
+
+.warning-icon {
+  color: darkred;
+}
+
+.react-tooltip {
+  z-index: 9999;
+}
+
+button {
+  padding: 10px;
+  background:none;
+  border: 1px solid black;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+label{
+  font-size:.8rem;
+}
+#war-selector-card h3{
   margin-bottom:0;
-}
-.member-details-container{
-  margin:10px;
-}
-.warning-icon{
-  color:darkred;
 }
 @media (max-width:490px) {
   .stats-container div {
     flex-basis: 300px;
+
   }
 }

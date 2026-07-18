@@ -34,13 +34,11 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
         const memberCount = facData?.members
         return (
             <>
-                <div className="card">
+                <div className="edge-to-edge my-faction-info">
                     <div className="card-content" >
-                        <h2>Faction Stats:</h2>
-                        <hr></hr>
                         <h3>{facData?.name}</h3>
-                        <p id="faction-description">Level {facData?.rank.level} {facData?.rank.name} faction with {facData?.rank.wins} wins.</p>
-                        <p>There are {memberCount} players in your faction</p>
+                        <p id="faction-description"> Level {facData?.rank.level} {facData?.rank.name} faction with {facData?.rank.wins} wins.</p>
+                      
                     </div>
                 </div>
 

@@ -13,7 +13,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [warEndDate, setWarEndDate] = useState<string>('')
     const [selectedOption, setSelectedOption] = useState<number>(0)
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
-    const noReport = <div className="card full-width"><p className="card-content">No report generated....yet</p></div>
+    const noReport = <div className="card"><p className="card-content">No report generated....yet</p></div>
 
     useEffect(() => {
 
@@ -49,7 +49,10 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const convertedEndTimestamp = new Date(endTimestamp * 1000)
     const startTimestamp = selectedWar ? selectedWar.start : 0
     const convertedStartTimestamp = new Date(startTimestamp * 1000)
-
+    const warLengthDays = Math.floor((endTimestamp - startTimestamp) / 86400)
+    const warLengthHours = Math.floor(((endTimestamp - startTimestamp) % 86400) / 3600)
+    const warLengthMinutes = Math.floor((((endTimestamp - startTimestamp) % 86400) % 3600) / 60)
+    console.log(warLengthDays)
     let warWinner = null
     let warLoser = null
     let opponent = null
@@ -79,10 +82,10 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     //function triggered when a war is selected from the select input
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        if(parseInt(e.target.value) === 0) {
+        if (parseInt(e.target.value) === 0) {
             setErrorMsg("No war data found.")
             return
-        } else{
+        } else {
             setErrorMsg("")
         }
         if (selectedWar) {
@@ -99,7 +102,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         const match = Object.entries(rankedWarsList).find(([warId, warData]) =>
             parseInt(e.target.value) === warData.end
         )
-        if (match) setSelectedWar(match[1]) 
+        if (match) setSelectedWar(match[1])
 
     }
     function generateWarReport(e: React.SubmitEvent) {
@@ -136,7 +139,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             }
 
             setWarReport(report)
-            errorMsg ?  setErrorMsg("") : null
+            errorMsg ? setErrorMsg("") : null
 
         }
     }
@@ -148,40 +151,45 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                     <h2>Ranked War Review</h2>
                     {errorMsg ? errorMsg : null}
                     <hr></hr>
-                    <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
-                        <option value="0">Select a war</option>
-                        {Object.entries(rankedWarsList).map(([warId, warData]) => {
+                    <form onSubmit={generateWarReport}>
+                        <label htmlFor="oppnonet-name">War Opponent:</label>
+                        <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
+                            <option value="0">Select a war</option>
+                            {Object.entries(rankedWarsList).map(([warId, warData]) => {
 
-                            return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
+                                return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
 
-                                if (factionDetails.id !== faction_id) {
+                                    if (factionDetails.id !== faction_id) {
 
-                                    return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
-                                }
-                                return null
-                            })
-                        })}
-                    </select>
+                                        return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
+                                    }
+                                    return null
+                                })
+                            })}
+                        </select>
 
-                    {!selectedWar ? noWarSelected :
-                        <>
-                            <h3>War start:  {convertedStartTimestamp.toLocaleString()}</h3>
-                            <h3>War end:  {convertedEndTimestamp.toLocaleString()}</h3>
-                            <h4>Winner: {warWinner?.name}</h4>
-                            <h5><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></h5>
-                            <form onSubmit={generateWarReport}>
+                        {!selectedWar ? noWarSelected :
+                            <>
 
-                                <p id="armoury-news-desc">Get armoury news from what point?</p>
-                                <select name="armoury-news-date" onChange={() => { setWarReport(null) }}>
+
+                                <label htmlFor="armoury-news-selector">Armoury use date:</label>
+                                <select id="armoury-news-selector" name="armoury-news-date" onChange={() => { setWarReport(null) }}>
                                     <option value="war-start">War start</option>
                                     <option value="1-day">1 day before war start</option>
                                     <option value="2-day">2 days before war start</option>
                                 </select>
-                                <button>Generate Report</button>
-                            </form>
-                        </>
-                    }
-                </div>
+                                <button>Generate Review</button>
+
+                                <h3>War breakdown:</h3>
+                                <p>Began:  {convertedStartTimestamp.toLocaleString()}</p>
+                                <p>Ended:  {convertedEndTimestamp.toLocaleString()}</p>
+                                <p>Length: {warLengthDays} days, {warLengthHours} hours, {warLengthMinutes} minutes</p>
+                                <p>Winner: {warWinner?.name}</p>
+                                <p><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></p>
+
+                            </>
+                        }
+                    </form></div>
             </div>
 
 

@@ -81,15 +81,17 @@ function App() {
 
 function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProps) {
   return (
-    <div>
+    <>
 
       {userData ? (
         <>
-          <div>
-            <CustomGreeting id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id}/>
-          </div>
+          <header>
+            <CustomGreeting id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id} />
+
+          </header>
+          <FactionInfoCard uData={userData} apiKey={apiKey} />
           <section id="main-content">
-            <FactionInfoCard uData={userData} apiKey={apiKey} />
+
             <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id} />
           </section>
         </>
@@ -107,7 +109,7 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
 
         </div>
       )}
-    </div>
+    </>
   )
 }
 
