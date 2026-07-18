@@ -84,6 +84,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         if (parseInt(e.target.value) === 0) {
             setErrorMsg("No war data found.")
+            setSelectedWar(null)
+            
             return
         } else {
             setErrorMsg("")
@@ -149,7 +151,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             <div className="card" >
                 <div id="war-selector-card" className="card-content" >
                     <h2>Ranked War Review</h2>
-                    {errorMsg ? errorMsg : null}
+                    {errorMsg ? <p id="selector-error-message"> {errorMsg}</p> : null}
                     <hr></hr>
                     <form onSubmit={generateWarReport}>
                         <label htmlFor="oppnonet-name">War Opponent:</label>
@@ -160,8 +162,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
 
                                     if (factionDetails.id !== faction_id) {
-
-                                        return <option value={warData.end} key={warData.end}>{factionDetails.name}</option>
+                                        const disabled = warData.end === 0
+                                        return <option value={warData.end} key={warData.end} disabled={disabled}>{factionDetails.name}</option>
                                     }
                                     return null
                                 })

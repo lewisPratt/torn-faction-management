@@ -53,8 +53,14 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
                     }
                 })
                 const data = await response.json()
-                allResults.push(...data.news)
-                nextUrl = data._metadata?.links?.prev ?? null
+                if (data.error) {
+                    setErrorMsg("API permissions not present for armoury details.")
+                    nextUrl = null
+                }
+                else {
+                    allResults.push(...data.news)
+                    nextUrl = data._metadata?.links?.prev ?? null
+                }
             }
             setArmouryNews(allResults)
         }
@@ -69,7 +75,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     }
     //if there is no data to populate the report(api error etc)
     if (!reportData) {
-        return <div className="card full-width"><p>Loading...</p></div>
+        return <div className="card"><p>Loading...</p></div>
     }
 
     //count total amount of xanax used in the war
@@ -98,9 +104,10 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
 
                 <div className="card">
                     <div className="card-content">
-
                         <h2>{reportData.attacks} attacks by {attackerCount} members </h2><span className="faction-participation">({attackerPercentage}% faction participation)</span>
                         <XanaxCost totalNumber={totalXanax} />
+                        {errorMsg ? <p id="report-error-message">{errorMsg}</p> : null}
+
                         {Object.entries(reportData.members).map(([memberId, memberData]) => {
 
                             // cycle through each member of the faction and display their data
