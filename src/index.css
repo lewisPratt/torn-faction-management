@@ -483,6 +483,11 @@ h6 {
 .login-error-card{
   flex-basis:300px;
 }
+.secondary-button{
+  font-size:.6rem;
+  padding:8px;
+  border:1px dashed grey;
+}
 @media (max-width:490px) {
   .stats-container div {
     flex-basis: 300px;

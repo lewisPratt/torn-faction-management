@@ -13,6 +13,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [warEndDate, setWarEndDate] = useState<string>('')
     const [selectedOption, setSelectedOption] = useState<number>(0)
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
+    const [warBreakdown, setWarBreadown] = useState<boolean>(false)
     const noReport = <div className="card"><p className="card-content">No report generated....yet</p></div>
 
     useEffect(() => {
@@ -79,11 +80,13 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         }
 
     }
-    function clearReview(){
-         setSelectedWar(null) 
-         setWarReport(null)
-         setSelectedOption(0)
+    function clearReview() {
+        setSelectedWar(null)
+        setWarReport(null)
+        setSelectedOption(0)
     }
+
+
     //function triggered when a war is selected from the select input
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         if (parseInt(e.target.value) === 0) {
@@ -187,16 +190,25 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                     <option value="1-day">1 day before war start</option>
                                     <option value="2-day">2 days before war start</option>
                                 </select>
-                                <button>Generate Review</button>
+                                <button type="submit">Generate Review</button> 
+                                <button type="button" className="secondary-button" onClick={() => setWarBreadown(prev => !prev)}>Show war Details?</button>
+                                {warBreakdown ? (
+                                    <>
+                                        <h3>War breakdown:</h3>
+                                        <p>Winner: {warWinner?.name}</p>
+                                        <p>Began:  {convertedStartTimestamp.toLocaleString()}</p>
+                                        <p>Ended:  {convertedEndTimestamp.toLocaleString()}</p>
+                                        <p>Length: {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</p>
+                                        <p><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></p>
+                                    </>
+                                ) : (
+                                    null
+                                )}
+                                <p id="reset-report-button"><button type="button" className="secondary-button" onClick={clearReview}>Reset Review</button></p>
 
-                                <h3>War breakdown:</h3>
-                                <p>Winner: {warWinner?.name}</p>
-                                <p>Began:  {convertedStartTimestamp.toLocaleString()}</p>
-                                <p>Ended:  {convertedEndTimestamp.toLocaleString()}</p>
-                                <p>Length: {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</p>
-                                <p><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></p>
-                                <p id="reset-report-button"><button onClick={clearReview}>Reset Review</button></p>
                             </>
+
+
                         }
                     </form></div>
             </div>
