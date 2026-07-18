@@ -44,7 +44,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     }
 
 
-    const noWarSelected = <p>No war selected </p>
+    const noWarSelected = <p className="no-war-p">Select a war from the list above. </p>
     const endTimestamp = selectedWar ? selectedWar.end : 0
     const convertedEndTimestamp = new Date(endTimestamp * 1000)
     const startTimestamp = selectedWar ? selectedWar.start : 0
@@ -79,13 +79,17 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         }
 
     }
-
+    function clearReview(){
+         setSelectedWar(null) 
+         setWarReport(null)
+         setSelectedOption(0)
+    }
     //function triggered when a war is selected from the select input
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         if (parseInt(e.target.value) === 0) {
             setErrorMsg("No war data found.")
             setSelectedWar(null)
-            
+
             return
         } else {
             setErrorMsg("")
@@ -163,7 +167,10 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
                                     if (factionDetails.id !== faction_id) {
                                         const disabled = warData.end === 0
-                                        return <option value={warData.end} key={warData.end} disabled={disabled}>{factionDetails.name}</option>
+                                        let ongoingWar = ""
+                                        if (disabled) { ongoingWar = " - War ongoing" }
+                                        return <option value={warData.end} key={warData.end} disabled={disabled}>{factionDetails.name} {ongoingWar}</option>
+
                                     }
                                     return null
                                 })
@@ -183,12 +190,12 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 <button>Generate Review</button>
 
                                 <h3>War breakdown:</h3>
+                                <p>Winner: {warWinner?.name}</p>
                                 <p>Began:  {convertedStartTimestamp.toLocaleString()}</p>
                                 <p>Ended:  {convertedEndTimestamp.toLocaleString()}</p>
-                                <p>Length: {warLengthDays} days, {warLengthHours} hours, {warLengthMinutes} minutes</p>
-                                <p>Winner: {warWinner?.name}</p>
+                                <p>Length: {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</p>
                                 <p><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></p>
-
+                                <p id="reset-report-button"><button onClick={clearReview}>Reset Review</button></p>
                             </>
                         }
                     </form></div>

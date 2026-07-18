@@ -75,7 +75,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
     }
     //if there is no data to populate the report(api error etc)
     if (!reportData) {
-        return <div className="card"><p>Loading...</p></div>
+        return <div className="card"><p className="card-content">Loading...</p></div>
     }
 
     //count total amount of xanax used in the war

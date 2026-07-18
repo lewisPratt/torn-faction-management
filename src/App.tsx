@@ -97,17 +97,14 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
         </>
 
       ) : (
-        <div>
+        <section id="main-content">
           {errorMsg ? (
-            <p>{errorMsg}</p>
+            <p className="card"><div className="card-content">{errorMsg}</div></p>
           ) : (
-            <p>Loading..</p>
+            <p className="card">Loading..</p>
           )}
 
-          <p></p>
-          <ClearKeyButton handleClearKey={handleClearKey} />
-
-        </div>
+        </section>
       )}
     </>
   )
