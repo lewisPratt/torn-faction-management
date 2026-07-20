@@ -24,3 +24,6 @@ Still in early development.
 * Store faction member war data locally, to enable visualization of performance over multiple wars (using line/bar charts)
 * Grouping of faction member rows based on criteria (grouping underperforming member rows together)
 * Detailed Chain report for each war
+* Improved structure of locally stored data
+* Removal of all cached data
+* Improved mobile friendly styling 
