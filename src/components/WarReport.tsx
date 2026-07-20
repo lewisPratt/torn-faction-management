@@ -26,14 +26,13 @@ interface warMemberDataType {
         war_id: number
     }
 }
-function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: warReportProps) {
+function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [reportData, setReportData] = useState<ReportData | null>(null)
     const [armouryNews, setArmouryNews] = useState<armouryNewsData[] | null>(null)
     const [attacksData, setAttacksData] = useState<fullAttacksData[] | null>(null)
-    // const [chainData, setChainData] = useState<chainData[] | null>(null)
 
     const xanaxEnergyGain = 250
     let warMemberData: warMemberDataType[] = []
@@ -165,7 +164,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
                         <XanaxCost totalNumber={totalXanax} />
                         {errorMsg ? <p id="report-error-message">{errorMsg}</p> : null}
 
-                        {Object.entries(reportData.members).map(([mapKey, memberData]) => {
+                        {Object.entries(reportData.members).map(([_mapKey, memberData]) => {
 
                             // cycle through each member of the faction and display their data
                             // work out their participation percentage and values for visual representation of participaton (basic progress bar)
@@ -184,7 +183,7 @@ function WarReport({ warStart, warEnd, target, factionId, warId, armouryTime }: 
                             if (!attacksData) return
 
                             //count up total attacks held in attack logs (that cover the wartime timeperiod)
-                            const preFilteredAttacks = attacksData.filter(attackItem =>
+                            attacksData.filter(attackItem =>
                                 attackItem.attacker.id === memberData.id ? totalWartimeAttacks += 1 : null
                             )
                             //work out how many additional attacks the memebr made on non-war targets

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
 

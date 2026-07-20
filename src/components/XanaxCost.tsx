@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 interface xanaxCostProps {
     totalNumber: number
@@ -34,7 +34,7 @@ function XanaxCost({ totalNumber }: xanaxCostProps) {
     fetchData()
 
     if(!averagePrice) return
-
+    if(errorMsg) return <p id="report-error-message">{errorMsg}</p>
     return (
         <p>{totalNumber} Xanax used at a cost of ${(totalNumber * averagePrice).toLocaleString()}</p>
     )

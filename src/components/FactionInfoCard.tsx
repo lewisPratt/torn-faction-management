@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import type { FactionData, FactionMember, factionProps } from '../interfaces'
+import type { FactionData, factionProps } from '../interfaces'
 
-function FactionInfoCard({ uData, apiKey }: factionProps) {
+function FactionInfoCard({ apiKey }: factionProps) {
 
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [facData, setFacData] = useState<FactionData | null>(null)
@@ -21,7 +21,6 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
             }
             else {
                 setFacData(data.basic)
-                // console.log(data.basic)
             }
         }
 
@@ -31,7 +30,6 @@ function FactionInfoCard({ uData, apiKey }: factionProps) {
 
 
     if (!errorMsg) {
-        const memberCount = facData?.members
         return (
             <>
                 <div className="edge-to-edge my-faction-info">

@@ -10,7 +10,6 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [rankedWarsList, setRankedWarsListData] = useState<RankedWarsListData | null>(null)
     const [selectedWar, setSelectedWar] = useState<SelectedWar | null>(null)
-    const [warEndDate, setWarEndDate] = useState<string>('')
     const [selectedOption, setSelectedOption] = useState<number>(0)
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
     const [warBreakdown, setWarBreadown] = useState<boolean>(false)
@@ -108,7 +107,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             return <div id="faction-info-card"><p>Loading...</p></div>
         }
         //run through the previously cached ranked war data and find the details for the selected war
-        const match = Object.entries(rankedWarsList).find(([warId, warData]) =>
+        const match = Object.entries(rankedWarsList).find(([_mapKey, warData]) =>
             parseInt(e.target.value) === warData.end
         )
         if (match) setSelectedWar(match[1])
@@ -164,9 +163,9 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                         <label htmlFor="oppnonet-name">War Opponent:</label>
                         <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
                             <option value="0">Select a war</option>
-                            {Object.entries(rankedWarsList).map(([warId, warData]) => {
+                            {Object.entries(rankedWarsList).map(([_mapKey, warData]) => {
 
-                                return Object.entries(warData.factions).map(([factionId, factionDetails]) => {
+                                return Object.entries(warData.factions).map(([_innerMapKey, factionDetails]) => {
 
                                     if (factionDetails.id !== faction_id) {
                                         const disabled = warData.end === 0

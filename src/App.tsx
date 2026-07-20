@@ -1,13 +1,11 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect } from 'react'
 import ApiKeyForm from './components/ApiKeyForm'
 import { ApiKeyContext } from './components/ApiKeyContext'
 import CustomGreeting from './components/CustomGreeting'
-import ClearKeyButton from './components/ClearKeyButton'
 import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
 import RankedWarSelector from './components/RankedWarSelector'
-import type { TornUserData, firstViewProps } from './interfaces'
-import Tracker from './components/Tracker'
+import type {firstViewProps } from './interfaces'
 
 
 function App() {
@@ -80,7 +78,7 @@ function App() {
   )
 }
 
-function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProps) {
+function FirstView({ userData, errorMsg, apiKey }: firstViewProps) {
   return (
     <>
 
