@@ -7,6 +7,7 @@ import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
 import RankedWarSelector from './components/RankedWarSelector'
 import type { TornUserData, firstViewProps } from './interfaces'
+import Tracker from './components/Tracker'
 
 
 function App() {
@@ -91,8 +92,9 @@ function FirstView({ userData, handleClearKey, errorMsg, apiKey }: firstViewProp
           </header>
           <FactionInfoCard uData={userData} apiKey={apiKey} />
           <section id="main-content">
-
+         
             <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id} />
+              
           </section>
         </>
 

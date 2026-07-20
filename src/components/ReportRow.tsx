@@ -1,70 +1,32 @@
-import { useContext } from 'react'
-import { ApiKeyContext } from './ApiKeyContext'
 import { useState, useEffect } from 'react'
 import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
 
-interface membersArmouryNews {
-    xanaxUsed: number
-    medsUsed: number
-    ipecacUsed: number
-    attackPotential: number
-}
 
-function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, armouryTime, warEndDate, armouryNews }: MemberRow) {
+
+function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, filteredNews, wartimeAttacks}: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
-    const [filteredNews, setFilteredMemberNews] = useState<membersArmouryNews | null>(null)
-    const xanaxEnergyGain = 250
-    const energyCostPerAttack = 25
-    let xanaxFiltered = []
-    let medsFiltered = []
-    let ipecacFiltered = []
-    let attackPotential = 0
-
     const averageRespect = memberAttacks > 0 ?
         (memberScore / memberAttacks).toFixed(2)
         : "0"
+    const warningIcon = filteredNews && filteredNews.attackPotential > memberAttacks ? <i className="warning-icon bi bi-exclamation-triangle-fill"></i>
+        : null
+
 
     function showMore() {
         setShowMore(prev => !prev)
     }
 
-    useEffect(() => {
-        if (!armouryNews) return
 
-        const preFiltered = armouryNews.filter(newsItem =>
-            newsItem.text.includes(`XID=${memberId}`) &&
-            newsItem.text.includes("used")
-        )
-
-        const xanaxFiltered = preFiltered.filter(newsItem => newsItem.text.includes("Xanax"))
-        const xanaxGain = xanaxFiltered.length * xanaxEnergyGain
-        const attackPotential = xanaxGain / 25
-        const medsFiltered = preFiltered.filter(newsItem =>
-            newsItem.text.includes("Morphine") || newsItem.text.includes("First Aid Kit")
-        )
-        const ipecacFiltered = preFiltered.filter(newsItem => newsItem.text.includes("Ipecac"))
-
-        setFilteredMemberNews({
-            xanaxUsed: xanaxFiltered.length,
-            medsUsed: medsFiltered.length,
-            ipecacUsed: ipecacFiltered.length,
-            attackPotential: attackPotential
-        })
-
-    }, [armouryNews])
-
-    const warningIcon = filteredNews && filteredNews.attackPotential > memberAttacks ? <i className="warning-icon bi bi-exclamation-triangle-fill"></i>
-        : null
     return (
         <div className="row-container">
             <div className="member-row" onClick={showMore}>
                 <div className="participation-bar" style={{ width: `${participationBarWidth}`, background: `${participationBarColour}` }}></div>
-                <p className="player-name-p">{memberName} {warningIcon} <br/><span className="respect-span">R: {memberScore}</span> </p>
-                <p><i className="bi bi-bullseye"></i> {memberAttacks} <span className="participation"> ({participationNumber}%)</span></p>
+                <p className="player-name-p">{memberName} {warningIcon} <br /><span className="respect-span">R: {memberScore}</span> </p>
+                <p ><i className="bi bi-bullseye"></i> {memberAttacks}<span className="participation"> ({participationNumber}%)</span></p>
                 {filteredNews ?
 
-                    <p className="quick-stats-p"><i className="bi bi-capsule"></i>{filteredNews.xanaxUsed} | <i className="bi bi-crosshair"></i>{filteredNews.attackPotential} | <i className="bi bi-heart-pulse"></i>{filteredNews.medsUsed} | <i className="bi bi-droplet"></i>{filteredNews.ipecacUsed}</p>
+                    <p className="quick-stats-p"><i className="bi bi-plus-circle-dotted"></i>{wartimeAttacks} | <i className="bi bi-capsule"></i>{filteredNews.xanaxUsed} | <i className="bi bi-crosshair"></i>{filteredNews.attackPotential} | <i className="bi bi-heart-pulse"></i>{filteredNews.medsUsed} | <i className="bi bi-droplet"></i>{filteredNews.ipecacUsed}</p>
                     : null
                 }
 
@@ -96,7 +58,7 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
                 </div>
                 : null
             }
-            
+
 
         </div>
     )

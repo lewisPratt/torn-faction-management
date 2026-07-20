@@ -194,8 +194,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 <button type="button" className="secondary-button" onClick={() => setWarBreadown(prev => !prev)}>Show war Details?</button>
                                 {warBreakdown ? (
                                     <>
-                                        <h3>War breakdown:</h3>
-                                        <p>Winner: {warWinner?.name}</p>
+                                        <p><i className="bi bi-trophy"></i> {warWinner?.name}</p>
                                         <p>Began:  {convertedStartTimestamp.toLocaleString()}</p>
                                         <p>Ended:  {convertedEndTimestamp.toLocaleString()}</p>
                                         <p>Length: {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</p>

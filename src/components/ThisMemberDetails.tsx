@@ -30,7 +30,7 @@ function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
             console.log(data)
         }
         else {
-            console.log(data)
+            // console.log(data)
             const details = {
                 lastActive: data.profile.last_action.relative,
                 donatorStatus: data.profile.donator_status,
@@ -41,12 +41,12 @@ function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
     }
 
     useEffect(() => {
-        fetchData()
+        if (memberDetails === null) {
+            fetchData()
+        }
     }, [])
 
     if (!memberDetails) return
-
-    const lastActiveReadable = new Date(memberDetails.lastActive)
 
     return (
         <div className="member-details-container">

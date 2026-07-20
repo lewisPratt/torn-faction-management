@@ -134,12 +134,18 @@ export interface ReportData {
         }
     }
 }
-
+export interface membersArmouryNews {
+    xanaxUsed: number
+    medsUsed: number
+    ipecacUsed: number
+    attackPotential: number
+}
 export interface MemberRow {
-    armouryNews: armouryNewsData[] | null
+    filteredNews: membersArmouryNews | null
     memberId: number
     memberName: string
     memberAttacks: number
+    wartimeAttacks: number
     memberScore: number
     participationNumber: number
     participationBarWidth: string
