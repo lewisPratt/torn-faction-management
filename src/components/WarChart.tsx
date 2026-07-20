@@ -20,6 +20,7 @@ function WarChart({ warMemberData }: warChartProps) {
     let attacksTotalDataset: number[] = []
     let participationPercDataset: number[] = []
     let outsideAttacksDataset: number[] = []
+    let attackPotentialDataset: number[] = []
 
 
     warMemberData.map((mapEntry) => {
@@ -36,6 +37,10 @@ function WarChart({ warMemberData }: warChartProps) {
 
     warMemberData.map((mapEntry) => {
         outsideAttacksDataset.push(Object.values(mapEntry)[0].outside_attacks)
+    })
+
+    warMemberData.map((mapEntry) => {
+        attackPotentialDataset.push(Object.values(mapEntry)[0].attackPotential)
     })
 
     const data = {
@@ -64,7 +69,14 @@ function WarChart({ warMemberData }: warChartProps) {
                 data: outsideAttacksDataset,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(255, 222, 11, 0.5)',
-                
+
+            },
+            {
+                label: 'Attack Potential',
+                data: attackPotentialDataset,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(52, 59, 254, 0.5)',
+
             }
         ]
     }
