@@ -162,8 +162,27 @@ export interface MembersArmouryProps {
 }
 
 export interface armouryNewsData {
-        id: number
-        text: string
-        timestamp: number
+    id: number
+    text: string
+    timestamp: number
+
+}
+export interface warMemberDataType {
+        [memberId: number]: {
+            xanaxUsed: number
+            medsUsed: number
+            ipecacUsed: number
+            attackPotential: number
+            war_attacks: number
+            outside_attacks: number
+            name: string
+            score: number
+            participation_perc: number
+            war_id: number
+        }
     
+}
+
+export interface warChartProps{
+    warMemberData: warMemberDataType[]
 }

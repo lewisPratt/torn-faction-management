@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
-import type { warReportProps, ReportData, armouryNewsData } from "../interfaces"
+import type { warReportProps, ReportData, armouryNewsData, warMemberDataType } from "../interfaces"
 import ReportRow from './ReportRow'
 import XanaxCost from './XanaxCost'
 import LegendReportRow from './LegendReportRow'
+import WarChart from './WarChart'
 
 interface fullAttacksData {
     attacker: {
@@ -12,20 +13,7 @@ interface fullAttacksData {
     }
 }
 //for accumulating and storing individual member performance from different wars
-interface warMemberDataType {
-    [memberId: number]: {
-        xanaxUsed: number
-        medsUsed: number
-        ipecacUsed: number
-        attackPotential: number
-        war_attacks: number
-        outside_attacks: number
-        name: string
-        score: number
-        participation_perc: number
-        war_id: number
-    }
-}
+
 function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
@@ -33,9 +21,9 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     const [reportData, setReportData] = useState<ReportData | null>(null)
     const [armouryNews, setArmouryNews] = useState<armouryNewsData[] | null>(null)
     const [attacksData, setAttacksData] = useState<fullAttacksData[] | null>(null)
+    const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
 
     const xanaxEnergyGain = 250
-    let warMemberData: warMemberDataType[] = []
     const [legendVisible, setLegend] = useState<boolean>(false)
 
     useEffect(() => {
@@ -120,6 +108,56 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
         fetchAllAttackPages()
 
     }, [])
+    useEffect(() => {
+
+        if (!reportData || !armouryNews || !attacksData) return
+
+        const members = Object.values(reportData.members)
+        const newWarMemberDataArray: warMemberDataType[] = []
+
+        members.forEach(memberData => {
+            const participation = Math.round((memberData.attacks / reportData.attacks) * 100)
+
+            let totalWartimeAttacks = 0
+            attacksData.forEach(attackItem => {
+                if (attackItem.attacker.id === memberData.id) {
+                    totalWartimeAttacks += 1
+                }
+            })
+            const extraAttacks = totalWartimeAttacks - memberData.attacks
+
+            const preFiltered = armouryNews.filter(newsItem =>
+                newsItem.text.includes(`XID=${memberData.id}`) &&
+                newsItem.text.includes("used")
+            )
+            const xanaxFiltered = preFiltered.filter(newsItem => newsItem.text.includes("Xanax"))
+            const xanaxGain = xanaxFiltered.length * xanaxEnergyGain
+            const attackPotential = xanaxGain / 25
+            const medsFiltered = preFiltered.filter(newsItem =>
+                newsItem.text.includes("Morphine") || newsItem.text.includes("First Aid Kit")
+            )
+            const ipecacFiltered = preFiltered.filter(newsItem => newsItem.text.includes("Ipecac"))
+
+            const memberPerformance = {
+                [memberData.id]: {
+                    xanaxUsed: xanaxFiltered.length,
+                    medsUsed: medsFiltered.length,
+                    ipecacUsed: ipecacFiltered.length,
+                    attackPotential: attackPotential,
+                    war_attacks: memberData.attacks,
+                    outside_attacks: extraAttacks,
+                    name: memberData.name,
+                    score: memberData.score,
+                    participation_perc: participation,
+                    war_id: warId
+                }
+            }
+
+            newWarMemberDataArray.push(memberPerformance)
+        })
+
+        setWarMemberData(newWarMemberDataArray)
+    }, [reportData, armouryNews, attacksData])
 
 
     //toggle visibility of the legend component
@@ -148,6 +186,10 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     });
     //determine percentage of member participation 
     const attackerPercentage = Math.round((attackerCount / members.length) * 100)
+
+
+
+
     return (
         <>
             <div id="report-container">
@@ -164,85 +206,52 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                         <XanaxCost totalNumber={totalXanax} />
                         {errorMsg ? <p id="report-error-message">{errorMsg}</p> : null}
 
-                        {Object.entries(reportData.members).map(([_mapKey, memberData]) => {
+                        {warMemberData ? <WarChart warMemberData={warMemberData} /> : null}
 
-                            // cycle through each member of the faction and display their data
-                            // work out their participation percentage and values for visual representation of participaton (basic progress bar)
-                            const participation = Math.round((memberData.attacks / reportData.attacks) * 100)
+                        {warMemberData && warMemberData.map((memberEntry) => {
+                            const memberId = Object.keys(memberEntry)[0]
+                            const stats = Object.values(memberEntry)[0]
+
+                            const participation = stats.participation_perc
                             let barWidth = `${participation}%`
                             let barColour = "lightgreen"
-                            let totalWartimeAttacks = 0
 
-                            //determine colours for members who met different attack thresholds
-                            if (memberData.attacks < 10 && memberData.attacks > 0) {
+                            if (stats.war_attacks < 10 && stats.war_attacks > 0) {
                                 barColour = "orange"
-                            } else if (memberData.attacks === 0) {
+                            } else if (stats.war_attacks === 0) {
                                 barColour = "lightcoral"
                                 barWidth = "100%"
                             }
-                            if (!attacksData || attacksData.length === 0) return
-                            
-                            //count up total attacks held in attack logs (that cover the wartime timeperiod)
-                            attacksData.filter(attackItem =>
-                                attackItem.attacker.id === memberData.id ? totalWartimeAttacks += 1 : null
-                            )
-                            //work out how many additional attacks the memebr made on non-war targets
-                            const extraAttacks = totalWartimeAttacks - memberData.attacks
-                            
-                            
-                            if (!armouryNews) return
-                            //filter through armoury news to find the news related to this member and pass it to the reportrow component
-                            const preFiltered = armouryNews.filter(newsItem =>
-                                newsItem.text.includes(`XID=${memberData.id}`) &&
-                                newsItem.text.includes("used")
-                            )
-
-                            const xanaxFiltered = preFiltered.filter(newsItem => newsItem.text.includes("Xanax"))
-                            const xanaxGain = xanaxFiltered.length * xanaxEnergyGain
-                            const attackPotential = xanaxGain / 25
-                            const medsFiltered = preFiltered.filter(newsItem =>
-                                newsItem.text.includes("Morphine") || newsItem.text.includes("First Aid Kit")
-                            )
-                            const ipecacFiltered = preFiltered.filter(newsItem => newsItem.text.includes("Ipecac"))
-
-                            const fitleredMemberNews = {
-                                xanaxUsed: xanaxFiltered.length,
-                                medsUsed: medsFiltered.length,
-                                ipecacUsed: ipecacFiltered.length,
-                                attackPotential: attackPotential
-                            }
-
-                            //build object for each members performance in the war to pass on if war data is stored (TO BE ADDED)
-                            const memberPerformance = {
-                                [memberData.id]: {
-                                    ...fitleredMemberNews,
-                                    ["war_attacks"]: memberData.attacks,
-                                    ["outside_attacks"]: extraAttacks,
-                                    ["name"]: memberData.name,
-                                    ["score"]: memberData.score,
-                                    ["participation_perc"]: participation,
-                                    ["war_id"]: warId
-                                }
-                            }
-                            warMemberData.push(memberPerformance)
-
-                            
-
 
                             return (
-                                <div key={memberData.id}>
-                                    <ReportRow filteredNews={fitleredMemberNews} memberId={memberData.id} memberName={memberData.name} memberAttacks={memberData.attacks} wartimeAttacks={extraAttacks} memberScore={memberData.score} participationNumber={participation} participationBarWidth={barWidth} participationBarColour={barColour} armouryTime={armouryTime} warEndDate={warEnd} />
+                                <div key={memberId}>
+                                    <ReportRow
+                                        filteredNews={{
+                                            xanaxUsed: stats.xanaxUsed,
+                                            medsUsed: stats.medsUsed,
+                                            ipecacUsed: stats.ipecacUsed,
+                                            attackPotential: stats.attackPotential
+                                        }}
+                                        memberId={parseInt(memberId)}
+                                        memberName={stats.name}
+                                        memberAttacks={stats.war_attacks}
+                                        wartimeAttacks={stats.outside_attacks}
+                                        memberScore={stats.score}
+                                        participationNumber={participation}
+                                        participationBarWidth={barWidth}
+                                        participationBarColour={barColour}
+                                        armouryTime={armouryTime}
+                                        warEndDate={warEnd}
+                                    />
                                 </div>
                             )
-
                         })}
-                        
                     </div>
                 </div>
             </div>
         </>
     )
-   
+
 }
 
 

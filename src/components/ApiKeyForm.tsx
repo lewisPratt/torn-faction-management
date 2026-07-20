@@ -11,7 +11,7 @@ function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps
         <div className="card"><p>This tool links to the Torn API to give you a detailed understanding of your faction members performance during ranked wars. </p>
           <p className="api-p">Your API key is stored in your local browser cache, meaning your Torn privacy is protected.<br /> (Just remember not to delete your browser cache if you want to stay logged in!)</p>
           <p className="create-api-p">Create an API key via your torn account <a href="https://torn.com/preferences.php#tab=api" target="_blank">here.</a> 
-          <br />Minimum API access Level: Limited Access & Faction API access</p>
+          <br />Minimum API access level: Limited Access & Faction API access</p>
           <p className="login-form"><input
             name="api-key"
             required

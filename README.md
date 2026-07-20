@@ -27,3 +27,4 @@ Still in early development.
 * Improved structure of locally stored data
 * Removal of all cached data
 * Improved mobile friendly styling 
+* Add export data option to export war data as CSV/spreadsheet format
