@@ -1,6 +1,6 @@
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement } from 'chart.js'
+import { Chart as ChartJS, CategoryScale, LinearScale, Title, Tooltip, Legend, BarElement } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
-import type { warChartProps, warMemberDataType } from '../interfaces'
+import type { warChartProps } from '../interfaces'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -19,6 +19,9 @@ function WarChart({ warMemberData }: warChartProps) {
     let xanaxUsedDataset: number[] = []
     let attacksTotalDataset: number[] = []
     let participationPercDataset: number[] = []
+    let outsideAttacksDataset: number[] = []
+
+
     warMemberData.map((mapEntry) => {
         xanaxUsedDataset.push(Object.values(mapEntry)[0].xanaxUsed)
     })
@@ -31,17 +34,21 @@ function WarChart({ warMemberData }: warChartProps) {
         participationPercDataset.push(Object.values(mapEntry)[0].participation_perc)
     })
 
+    warMemberData.map((mapEntry) => {
+        outsideAttacksDataset.push(Object.values(mapEntry)[0].outside_attacks)
+    })
+
     const data = {
         labels: memberLabels,
         datasets: [
             {
-                label: 'XanaxUsed',
+                label: 'Xanax Used',
                 data: xanaxUsedDataset,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.5)',
             },
             {
-                label: 'Attacks',
+                label: 'War Attacks',
                 data: attacksTotalDataset,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(255, 78, 69, 0.5)',
@@ -51,6 +58,13 @@ function WarChart({ warMemberData }: warChartProps) {
                 data: participationPercDataset,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(103, 255, 69, 0.5)',
+            },
+            {
+                label: 'Outside Attacks',
+                data: outsideAttacksDataset,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(255, 222, 11, 0.5)',
+                
             }
         ]
     }
