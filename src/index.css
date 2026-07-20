@@ -457,7 +457,7 @@ h6 {
   font-size:.8rem;
 }
 #login-main-content .login-form{
-  margin:50px;
+  margin:20px;
   text-align: center;
 }
 #login-main-content .login-form input{
@@ -487,6 +487,17 @@ h6 {
   font-size:.6rem;
   padding:8px;
   border:1px dashed grey;
+}
+#login-main-content .create-api-p{
+  font-size: .6rem;
+}
+#login-main-content input{
+  height:25px;
+  padding:10px;
+  width:30%;
+}
+.create-api-p a {
+  text-decoration: underline;
 }
 @media (max-width:490px) {
   .stats-container div {

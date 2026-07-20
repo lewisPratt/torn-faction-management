@@ -180,8 +180,8 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                                 barColour = "lightcoral"
                                 barWidth = "100%"
                             }
-                            if (!attacksData) return
-
+                            if (!attacksData || attacksData.length === 0) return
+                            
                             //count up total attacks held in attack logs (that cover the wartime timeperiod)
                             attacksData.filter(attackItem =>
                                 attackItem.attacker.id === memberData.id ? totalWartimeAttacks += 1 : null
