@@ -50,9 +50,11 @@ function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
     if(errorMsg) return <p id="report-error-message">{errorMsg}</p>
     
     return (
+       
         <div className="member-details-container">
             <p>Active {memberDetails.lastActive} | {!memberDetails.donatorStatus ? "Player" : memberDetails.donatorStatus} | Level {memberDetails.level}</p>
         </div>
+  
     )
 }
 
