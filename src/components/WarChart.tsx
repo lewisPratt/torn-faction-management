@@ -1,5 +1,5 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, Title, Tooltip, Legend, BarElement } from 'chart.js'
-import { Bar, Doughnut,Pie } from 'react-chartjs-2'
+import { Bar, } from 'react-chartjs-2'
 import type { warChartProps } from '../interfaces'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
