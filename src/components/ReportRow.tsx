@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
-import { Tooltip } from 'react-tooltip'
 
 
 function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, filteredNews, wartimeAttacks }: MemberRow) {
@@ -24,8 +23,8 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
 
 
     return (
-        <div className="row-container">
-            <div className="member-row" onClick={showMore}>
+        <>
+            <div className="row-content" onClick={showMore}>
                 <div className="participation-bar" style={{ width: `${participationBarWidth}`, background: `${participationBarColour}` }}></div>
                 <p className="player-name-p">{rowName}  <br /><span className="respect-span">R: {memberScore}</span> </p>
                 <p ><i className="bi bi-bullseye"></i> {memberAttacks}<span className="participation"> ({participationNumber}%)</span> {warningIcon}</p>
@@ -61,19 +60,14 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
                         </div>
                     </div>
                     <ThisMemberDetails memberId={memberId} />
-                    <Tooltip anchorSelect=".user-profile">
-                        Go to profile.
-                    </Tooltip>
-                    <Tooltip anchorSelect=".user-message">
-                        Message {memberName}.
-                    </Tooltip>
+                  
                 </div>
 
                 : null
             }
 
+        </>
 
-        </div>
     )
 
 }

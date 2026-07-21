@@ -6,7 +6,7 @@ import ReportRow from './ReportRow'
 import XanaxCost from './XanaxCost'
 import LegendReportRow from './LegendReportRow'
 import WarChart from './WarChart'
-
+import { Tooltip } from 'react-tooltip'
 interface fullAttacksData {
     attacker: {
         id: number
@@ -207,49 +207,55 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                             <XanaxCost totalNumber={totalXanax} /></p>
 
 
-                      
                         {errorMsg ? <p id="report-error-message">{errorMsg}</p> : null}
 
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
+                        <div id="report-rows-container">
+                            <Tooltip anchorSelect=".user-profile">
+                                Go to profile.
+                            </Tooltip>
+                            <Tooltip anchorSelect=".user-message">
+                                Send message.
+                            </Tooltip>
+                            {warMemberData && warMemberData.map((memberEntry) => {
+                                const memberId = Object.keys(memberEntry)[0]
+                                const stats = Object.values(memberEntry)[0]
 
-                        {warMemberData && warMemberData.map((memberEntry) => {
-                            const memberId = Object.keys(memberEntry)[0]
-                            const stats = Object.values(memberEntry)[0]
+                                const participation = stats.participation_perc
+                                let barWidth = `${participation}%`
+                                let barColour = "lightgreen"
 
-                            const participation = stats.participation_perc
-                            let barWidth = `${participation}%`
-                            let barColour = "lightgreen"
+                                if (stats.war_attacks < 10 && stats.war_attacks > 0) {
+                                    barColour = "orange"
+                                } else if (stats.war_attacks === 0) {
+                                    barColour = "lightcoral"
+                                    barWidth = "100%"
+                                }
 
-                            if (stats.war_attacks < 10 && stats.war_attacks > 0) {
-                                barColour = "orange"
-                            } else if (stats.war_attacks === 0) {
-                                barColour = "lightcoral"
-                                barWidth = "100%"
-                            }
-
-                            return (
-                                <div key={memberId}>
-                                    <ReportRow
-                                        filteredNews={{
-                                            xanaxUsed: stats.xanaxUsed,
-                                            medsUsed: stats.medsUsed,
-                                            ipecacUsed: stats.ipecacUsed,
-                                            attackPotential: stats.attackPotential
-                                        }}
-                                        memberId={parseInt(memberId)}
-                                        memberName={stats.name}
-                                        memberAttacks={stats.war_attacks}
-                                        wartimeAttacks={stats.outside_attacks}
-                                        memberScore={stats.score}
-                                        participationNumber={participation}
-                                        participationBarWidth={barWidth}
-                                        participationBarColour={barColour}
-                                        armouryTime={armouryTime}
-                                        warEndDate={warEnd}
-                                    />
-                                </div>
-                            )
-                        })}
+                                return (
+                                    <div key={memberId} className="row-container">
+                                        <ReportRow
+                                            filteredNews={{
+                                                xanaxUsed: stats.xanaxUsed,
+                                                medsUsed: stats.medsUsed,
+                                                ipecacUsed: stats.ipecacUsed,
+                                                attackPotential: stats.attackPotential
+                                            }}
+                                            memberId={parseInt(memberId)}
+                                            memberName={stats.name}
+                                            memberAttacks={stats.war_attacks}
+                                            wartimeAttacks={stats.outside_attacks}
+                                            memberScore={stats.score}
+                                            participationNumber={participation}
+                                            participationBarWidth={barWidth}
+                                            participationBarColour={barColour}
+                                            armouryTime={armouryTime}
+                                            warEndDate={warEnd}
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -253,7 +253,7 @@ code {
   flex-basis: 500px
 }
 
-.member-row {
+.row-content {
   display: flex;
   justify-content: space-between;
   border: 1px solid black;
@@ -267,15 +267,15 @@ code {
   cursor: pointer;
 }
 
-.member-row p {
+.row-content p {
   z-index: 10;
 }
 
-.member-row .participation {
+.row-content .participation {
   font-size: .7rem;
 }
 
-.member-row .participation-bar {
+.row-content .participation-bar {
   position: absolute;
   left: 0;
   background-color: lightgreen;
@@ -524,6 +524,13 @@ h6 {
   position:relative;
   width:100%;
   height:600px;
+}
+
+#report-rows-container .row-content{
+  transition:.3s
+}
+#report-rows-container .row-content:hover{
+  background-color: #f4fff9;
 }
 @media (max-width:490px) {
   .stats-container div {
