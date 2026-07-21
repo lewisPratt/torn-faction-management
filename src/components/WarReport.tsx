@@ -206,7 +206,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                         <XanaxCost totalNumber={totalXanax} />
                         {errorMsg ? <p id="report-error-message">{errorMsg}</p> : null}
 
-                        {warMemberData ? <WarChart warMemberData={warMemberData} /> : null}
+                        {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
 
                         {warMemberData && warMemberData.map((memberEntry) => {
                             const memberId = Object.keys(memberEntry)[0]

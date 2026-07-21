@@ -42,7 +42,10 @@ function WarChart({ warMemberData }: warChartProps) {
     warMemberData.map((mapEntry) => {
         attackPotentialDataset.push(Object.values(mapEntry)[0].attackPotential)
     })
-
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false
+    }
     const data = {
         labels: memberLabels,
         datasets: [
@@ -76,12 +79,12 @@ function WarChart({ warMemberData }: warChartProps) {
                 data: attackPotentialDataset,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(52, 59, 254, 0.5)',
-
+                
             }
         ]
     }
 
-    return <Bar data={data} />
+    return <Bar data={data}  options={options}/>
 }
 
 export default WarChart

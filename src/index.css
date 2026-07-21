@@ -249,8 +249,8 @@ code {
 }
 
 #report-container {
-  flex:1;
-  flex-basis:500px
+  flex: 1;
+  flex-basis: 500px
 }
 
 .member-row {
@@ -304,13 +304,15 @@ code {
   margin: 10px;
 }
 
-.member-row .respect-p,
+.member-row .respect-p, .warning-p,
 .more-info-container .average-p,
 .member-armoury-news-container {
   font-size: .7rem;
   margin: 10px;
 }
-
+.warning-p{
+  color:red;
+}
 .member-armoury-news-container {
   display: flex;
   justify-content: space-between;
@@ -337,6 +339,7 @@ code {
 
 .player-name-p {
   line-height: 1rem;
+  font-size: 1rem;
 }
 
 .more-info-container .player-action-p {
@@ -395,6 +398,10 @@ code {
 
 .warning-icon {
   color: darkred;
+  display: block;
+  position: absolute;
+  right: 5px;
+  bottom: 2px;
 }
 
 .react-tooltip {
@@ -444,60 +451,79 @@ h3,
 h4,
 h5,
 h6 {
-  line-height:1.8rem;
+  line-height: 1.8rem;
   font-weight: 800;
 }
-#login-main-content p{
-  font-size:1rem;
-  margin:20px;
+
+#login-main-content p {
+  font-size: 1rem;
+  margin: 20px;
   text-align: center;
-  
+
 }
-#login-main-content .api-p{
-  font-size:.8rem;
+
+#login-main-content .api-p {
+  font-size: .8rem;
 }
-#login-main-content .login-form{
-  margin:20px;
+
+#login-main-content .login-form {
+  margin: 20px;
   text-align: center;
 }
-#login-main-content .login-form input{
-  display:inline-block;
-  margin:10px;
+
+#login-main-content .login-form input {
+  display: inline-block;
+  margin: 10px;
 }
-#login-main-content{
-  display:flex;
+
+#login-main-content {
+  display: flex;
   justify-content: center;
-  padding:20px;
+  padding: 20px;
 }
-#login-main-content .card{
-  flex-basis:900px;
+
+#login-main-content .card {
+  flex-basis: 900px;
 }
-#login-header{
-  padding:100px 20px 0 20px;
+
+#login-header {
+  padding: 100px 20px 0 20px;
 }
-#login-header h2{
-  font-size:1rem;
-  margin-bottom:50px;
+
+#login-header h2 {
+  font-size: 1rem;
+  margin-bottom: 50px;
   font-family: monospace;
 }
-.login-error-card{
-  flex-basis:300px;
+
+.login-error-card {
+  flex-basis: 300px;
 }
-.secondary-button{
-  font-size:.6rem;
-  padding:8px;
-  border:1px dashed grey;
+
+.secondary-button {
+  font-size: .6rem;
+  padding: 8px;
+  border: 1px dashed grey;
 }
-#login-main-content .create-api-p{
+
+#login-main-content .create-api-p {
   font-size: .6rem;
 }
-#login-main-content input{
-  height:25px;
-  padding:10px;
-  width:30%;
+
+#login-main-content input {
+  height: 25px;
+  padding: 10px;
+  width: 30%;
 }
+
 .create-api-p a {
   text-decoration: underline;
+}
+#chart-container{
+  position:relative;
+  width:100%;
+  height:400px;
+  overflow-x:auto;
 }
 @media (max-width:490px) {
   .stats-container div {
@@ -505,8 +531,13 @@ h6 {
 
   }
 }
+
 @media (max-width:768px) {
-  #main-content{
+  #main-content {
     justify-content: center;
+  }
+
+  .player-name-p {
+    font-size: .8rem;
   }
 }
