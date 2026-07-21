@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
 import { useState } from 'react'
+import { Tooltip } from 'react-tooltip'
 
 interface xanaxCostProps {
     totalNumber: number
@@ -10,7 +11,7 @@ interface xanaxCostProps {
 function XanaxCost({ totalNumber }: xanaxCostProps) {
     const apiKey = useContext(ApiKeyContext)
     const [errorMsg, setErrorMsg] = useState<string>('')
-    const [averagePrice,setAveragePrice] = useState<number>(0)
+    const [averagePrice, setAveragePrice] = useState<number>(0)
 
     const fetchData = async () => {
         const response = await fetch(`https://api.torn.com/v2/market/206/itemmarket?limit=1&offset=0`, {
@@ -33,10 +34,15 @@ function XanaxCost({ totalNumber }: xanaxCostProps) {
 
     fetchData()
 
-    if(!averagePrice) return
-    if(errorMsg) return <p id="report-error-message">{errorMsg}</p>
+    if (!averagePrice) return
+    if (errorMsg) return <p id="report-error-message">{errorMsg}</p>
     return (
-        <p>{totalNumber} Xanax used at a cost of ${(totalNumber * averagePrice).toLocaleString()}</p>
+        <>
+            <p> <a className="xanax-cost">{totalNumber} Xanax used at a cost of ${(totalNumber * averagePrice).toLocaleString()}</a></p>
+            <Tooltip anchorSelect=".xanax-cost" place="top-start">
+                Based on current average price of ${averagePrice.toLocaleString()}.
+            </Tooltip>
+        </>
     )
 }
 

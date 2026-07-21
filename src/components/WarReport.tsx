@@ -202,8 +202,12 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
 
                 <div className="card">
                     <div className="card-content">
-                        <h2>{reportData.attacks} attacks by {attackerCount} members </h2><span className="faction-participation">({attackerPercentage}% faction participation)</span>
-                        <XanaxCost totalNumber={totalXanax} />
+                        <h2>{reportData.attacks} attacks by {attackerCount} members </h2>
+                        <p id="faction-report-perc"><span className="faction-participation">({attackerPercentage}% faction participation)</span>
+                            <XanaxCost totalNumber={totalXanax} /></p>
+
+
+                      
                         {errorMsg ? <p id="report-error-message">{errorMsg}</p> : null}
 
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
