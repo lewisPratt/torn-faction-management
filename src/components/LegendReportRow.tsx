@@ -8,9 +8,12 @@ function LegendReportRow() {
         <div className="row-container">
             <div className="member-row" style={{ cursor: "help" }}>
                 <div className="participation-bar" style={{ width: "30%", background: "lightgreen" }}></div>
-                <p className="player-name-p">Deck <a className="xanax-warning-tooltip"><i className="legend-outline warning-icon bi bi-exclamation-triangle-fill"></i> </a>
+                <p className="player-name-p">Deck 
                     <br /><span className="legend-outline respect-span legend-respect">R: 200</span> </p>
-                <p><a className="attacks-tooltip legend-outline"><i className="bi bi-bullseye"></i> 20</a> <span className="legend-outline participation legend-participation"> (30%)</span></p>
+                    
+                <p><a className="attacks-tooltip legend-outline"><i className="bi bi-bullseye"></i> 20</a>
+                 <span className="legend-outline participation legend-participation"> (30%)</span> 
+                  <a className="xanax-warning-tooltip"> <span className="legend-outline warning-icon bi bi-exclamation-triangle-fill"></span></a></p>
 
                 <p className="quick-stats-p">
                     <a className="outside-attacks-tooltip legend-outline"><i className="bi bi-plus-circle-dotted"></i>15</a> |

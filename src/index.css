@@ -398,12 +398,11 @@ code {
 
 .warning-icon {
   color: darkred;
-  display: block;
-  position: absolute;
-  right: 5px;
-  bottom: 2px;
-}
 
+}
+.warning-icon span{
+
+}
 .react-tooltip {
   z-index: 9999;
 }

@@ -27,8 +27,8 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
         <div className="row-container">
             <div className="member-row" onClick={showMore}>
                 <div className="participation-bar" style={{ width: `${participationBarWidth}`, background: `${participationBarColour}` }}></div>
-                <p className="player-name-p">{rowName} {warningIcon} <br /><span className="respect-span">R: {memberScore}</span> </p>
-                <p ><i className="bi bi-bullseye"></i> {memberAttacks}<span className="participation"> ({participationNumber}%)</span></p>
+                <p className="player-name-p">{rowName}  <br /><span className="respect-span">R: {memberScore}</span> </p>
+                <p ><i className="bi bi-bullseye"></i> {memberAttacks}<span className="participation"> ({participationNumber}%)</span> {warningIcon}</p>
                 {filteredNews ?
 
                     <p className="quick-stats-p"><i className="bi bi-plus-circle-dotted"></i>{wartimeAttacks} | <i className="bi bi-capsule"></i>{filteredNews.xanaxUsed} | <i className="bi bi-crosshair"></i>{filteredNews.attackPotential} | <i className="bi bi-heart-pulse"></i>{filteredNews.medsUsed} | <i className="bi bi-droplet"></i>{filteredNews.ipecacUsed}</p>

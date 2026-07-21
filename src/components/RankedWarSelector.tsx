@@ -91,6 +91,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         if (parseInt(e.target.value) === 0) {
             setErrorMsg("No war data found.")
             setSelectedWar(null)
+            setSelectedOption(0)
 
             return
         } else {
@@ -156,9 +157,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         <>
             <div className="card" >
                 <div id="war-selector-card" className="card-content" >
-                    <h2>Ranked War Review</h2>
                     {errorMsg ? <p id="selector-error-message"> {errorMsg}</p> : null}
-                    <hr></hr>
                     <form onSubmit={generateWarReport}>
                         <label htmlFor="oppnonet-name">War Opponent:</label>
                         <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
