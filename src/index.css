@@ -159,7 +159,29 @@ form button {
 form #armoury-news-desc {
   font-size: .8rem;
 }
-
+#latest-news{
+  flex-basis:800px;
+  position:relative;
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+#latest-news ul{
+  list-style: none;
+  padding:0;
+  color:gold;
+}
+@keyframes bounce {
+  0%{
+    top:0;
+  }
+  50%{
+    top:5px;
+  }
+  100%{
+    top:0
+  }
+}
 #root {
   max-width: 1440px;
   margin: 0 auto;
@@ -618,6 +640,7 @@ h6 {
 #login-main-content {
   display: flex;
   justify-content: center;
+  flex-wrap:wrap;
   padding: 20px;
 }
 
