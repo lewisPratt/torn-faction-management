@@ -57,9 +57,10 @@
 }
 
 select {
-  max-width: 90%;
+  width: 100%;
   height: 30px;
   display: block;
+  margin:auto;
 }
 
 form button {
@@ -532,6 +533,17 @@ h6 {
 #report-rows-container .row-content:hover{
   background-color: #f4fff9;
 }
+#war-details{
+  font-size:.8rem;
+  text-align:center;
+}
+#ranked-war-selector-card .card-content form{
+  display:flex;
+  flex-direction: column;
+}
+#show-war-details-btn{
+  align-self:end;
+}
 @media (max-width:490px) {
   .stats-container div {
     flex-basis: 300px;
@@ -546,5 +558,8 @@ h6 {
 
   .player-name-p {
     font-size: .8rem;
+  }
+  #ranked-war-selector-card{
+    flex-basis:500px;
   }
 }

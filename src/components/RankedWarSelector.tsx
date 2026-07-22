@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import WarReport from './WarReport'
 import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps } from '../interfaces'
-
+import { Tooltip } from 'react-tooltip'
 
 
 //not finished
@@ -155,64 +155,79 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     return (
         <>
-            <div className="card" >
-                <div id="war-selector-card" className="card-content" >
+            <div className="card" id="ranked-war-selector-card">
+                <div className="card-content" >
                     {errorMsg ? <p id="selector-error-message"> {errorMsg}</p> : null}
-                    <form onSubmit={generateWarReport}>
-                        <label htmlFor="oppnonet-name">War Opponent:</label>
-                        <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
-                            <option value="0">Select a war</option>
-                            {Object.entries(rankedWarsList).map(([_mapKey, warData]) => {
 
-                                return Object.entries(warData.factions).map(([_innerMapKey, factionDetails]) => {
+                    {!warReport ?
+                        //A: if there is no war reprot produced yet, show the selector ui 
+                        <form onSubmit={generateWarReport}>
+                            <label htmlFor="opponent-name">War Opponent:</label>
+                            <select name="opponent-name" id="opponent-name" onChange={handleChange} value={selectedOption}>
+                                <option value="0">Select a war</option>
+                                {Object.entries(rankedWarsList).map(([_mapKey, warData]) => {
 
-                                    if (factionDetails.id !== faction_id) {
-                                        const disabled = warData.end === 0
-                                        let ongoingWar = ""
-                                        if (disabled) { ongoingWar = " - War ongoing" }
-                                        return <option value={warData.end} key={warData.end} disabled={disabled}>{factionDetails.name} {ongoingWar}</option>
+                                    return Object.entries(warData.factions).map(([_innerMapKey, factionDetails]) => {
 
-                                    }
-                                    return null
-                                })
-                            })}
-                        </select>
+                                        if (factionDetails.id !== faction_id) {
+                                            const disabled = warData.end === 0
+                                            let ongoingWar = ""
+                                            if (disabled) { ongoingWar = " - War ongoing" }
+                                            return <option value={warData.end} key={warData.end} disabled={disabled}>{factionDetails.name} {ongoingWar}</option>
 
-                        {!selectedWar ? noWarSelected :
-                            <>
+                                        }
+                                        return null
+                                    })
+                                })}
+                            </select>
 
-
-                                <label htmlFor="armoury-news-selector">Armoury use date:</label>
-                                <select id="armoury-news-selector" name="armoury-news-date" onChange={() => { setWarReport(null) }}>
-                                    <option value="war-start">War start</option>
-                                    <option value="1-day">1 day before war start</option>
-                                    <option value="2-day">2 days before war start</option>
-                                </select>
-                                <button type="submit">Generate Review</button> 
-                                <button type="button" className="secondary-button" onClick={() => setWarBreadown(prev => !prev)}>Show war Details?</button>
-                                {warBreakdown ? (
-                                    <>
-                                        <p><i className="bi bi-trophy"></i> {warWinner?.name}</p>
-                                        <p>Began:  {convertedStartTimestamp.toLocaleString()}</p>
-                                        <p>Ended:  {convertedEndTimestamp.toLocaleString()}</p>
-                                        <p>Length: {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</p>
-                                        <p><span className="green-text">{warWinner?.score} points</span> / <span className="red-text">{warLoser?.score} points</span></p>
-                                    </>
-                                ) : (
-                                    null
-                                )}
-                                <p id="reset-report-button"><button type="button" className="secondary-button" onClick={clearReview}>Reset Review</button></p>
-
-                            </>
+                            {!selectedWar ? noWarSelected :
+                                //B: if there is no selected war show element to prompt war selection
+                                //B: else show further ui to configure war report details
+                                <>
+                                   
+                                    <Tooltip id="ranked-war-selector-tooltip" />
 
 
-                        }
-                    </form></div>
+                                    <label htmlFor="armoury-news-selector">Armoury use date: <span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Grabs data related to Xanax use and other armoury items during this time period." data-tooltip-place="right"><i className="bi bi-question-circle"></i></span></label>
+
+                                    <select id="armoury-news-selector" name="armoury-news-date" onChange={() => { setWarReport(null) }}>
+                                        <option value="war-start">War start</option>
+                                        <option value="1-day">1 day before war start</option>
+                                        <option value="2-day">2 days before war start</option>
+                                    </select>
+
+                                    <button id="show-war-details-btn" type="button" className="secondary-button" onClick={() => setWarBreadown(prev => !prev)}>Show war Details?</button>
+                                    <button type="submit">Generate Review</button>
+
+                                    {warBreakdown ? (
+                                        //C: if warbreakdown state is set to true, show details of selected war
+                                        <>
+                                            <div id="war-details">
+                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War winner" data-tooltip-place="right"><i className="bi bi-trophy"></i> {warWinner?.name}</span></p>
+                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Winners points | Losers points" data-tooltip-place="right"><span className="green-text">{warWinner?.score} points</span> | <span className="red-text">{warLoser?.score} points</span></span></p>
+                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War start" data-tooltip-place="right"><i className="bi bi-calendar-range"></i> {convertedStartTimestamp.toLocaleString()}</span></p>
+                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
+                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War length" data-tooltip-place="right"><i className="bi bi-clock-history"></i> {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</span></p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        //C: else show nothing
+                                        null
+                                    )}
+                                </>
+
+
+                            }
+                        </form>
+                        //A: else show reset button to clear the selected war and trigger rerender to show war selector ui
+                        : <button onClick={clearReview}>Reset</button>}</div>
             </div>
 
 
             {!warReport ? noReport :
-
+                //D: if war report is empty show card for acknowledging this
+                //D: else show war report component
                 <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} />
 
             }
