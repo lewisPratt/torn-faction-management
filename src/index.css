@@ -408,6 +408,13 @@ code {
   font-size:.8rem;
   line-height:1rem;
 }
+#war-winner{
+  color:gold;
+}
+#war-loser{
+  color:brown;
+  font-size:.6rem;
+}
 .react-tooltip {
   z-index: 9999;
 }

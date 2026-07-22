@@ -252,7 +252,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                         //C: if warbreakdown state is set to true, show details of selected war
                         <>
                             <div id="war-details">
-                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War winner" data-tooltip-place="right"><i className="bi bi-trophy"></i> {warWinner?.name}</span></p>
+                                <p><span id="war-winner" data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War winner" data-tooltip-place="right"><i className="bi bi-trophy-fill"></i> {warWinner?.name}</span></p>
+                                <p><span id="war-loser" data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War Loser" data-tooltip-place="right"><i className="bi bi-award"></i> {warLoser?.name}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Winners points | Losers points" data-tooltip-place="right"><span className="green-text">{warWinner?.score} points</span> | <span className="red-text">{warLoser?.score} points</span></span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War start" data-tooltip-place="right"><i className="bi bi-calendar-range"></i> {convertedStartTimestamp.toLocaleString()}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
