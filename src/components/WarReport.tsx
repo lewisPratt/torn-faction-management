@@ -70,8 +70,11 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                     nextUrl = null
                 }
                 else {
-                    
-                    if (data.news[0] && Object.keys(data.news[0]).includes("timestamp") ) {
+                    //set variable for the earliest entry retrieved from armoury news
+
+                    console.log(data)
+                    if (data.news.length > 0 && Object.keys(data.news[0]).includes("timestamp") ) {
+                        //sets earliest to the last element of each pages news retrieved, so last page will overwrite and become the accurate last entry
                         earliestEntry = data.news.slice(-1)[0].timestamp
                     }
                     allResults.push(...data.news)
@@ -209,7 +212,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                         <div id="faction-report-overview">
                             <p><span className="faction-participation">({attackerPercentage}% faction participation)</span></p>
                             <XanaxCost totalNumber={totalXanax} />
-                            {earliestEntryText ? earliestEntryText : <p>Could not determine earliest Armoury entry.</p>}
+                            {earliestEntryText ? earliestEntryText : <p>Could not determine earliest Armoury entry. (might not be any entries!)</p>}
                         </div>
 
 
