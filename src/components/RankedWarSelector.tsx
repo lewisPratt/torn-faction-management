@@ -217,7 +217,6 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 //B: else show further ui to configure war report details
                                 <>
 
-                                    <Tooltip id="ranked-war-selector-tooltip" />
 
 
                                     <label htmlFor="armoury-news-selector">Armoury use date: <span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Grabs data related to Xanax use and other armoury items from this point until the end of the war." data-tooltip-place="right"><i className="bi bi-question-circle"></i></span></label>
@@ -258,6 +257,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War start" data-tooltip-place="right"><i className="bi bi-calendar-range"></i> {convertedStartTimestamp.toLocaleString()}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War length" data-tooltip-place="right"><i className="bi bi-clock-history"></i> {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</span></p>
+                                <Tooltip id="ranked-war-selector-tooltip" />
+
                             </div>
                         </>
                     ) : (
