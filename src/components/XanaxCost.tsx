@@ -33,15 +33,13 @@ function XanaxCost({ totalNumber }: xanaxCostProps) {
     }
 
     fetchData()
-
+    const tooltipText = `Based on current average price of $${averagePrice.toLocaleString()}.`
     if (!averagePrice) return
     if (errorMsg) return <p id="report-error-message">{errorMsg}</p>
     return (
         <>
-            <p> <a className="xanax-cost">{totalNumber} Xanax used at a cost of ${(totalNumber * averagePrice).toLocaleString()}</a></p>
-            <Tooltip anchorSelect=".xanax-cost" place="top-start">
-                Based on current average price of ${averagePrice.toLocaleString()}.
-            </Tooltip>
+            <p> <span data-tooltip-id="xanax-cost-tooltip" data-tooltip-content={tooltipText} data-tooltip-place="top">{totalNumber} Xanax used at a cost of ${(totalNumber * averagePrice).toLocaleString()}</span></p>
+            <Tooltip id="xanax-cost-tooltip" /> 
         </>
     )
 }
