@@ -377,8 +377,11 @@ code {
   background: #dcdcdc;
   text-align: center;
   border-radius: 10px;
+  transition: .3s;
 }
-
+.stats-container>div:hover{
+  scale:1.02;
+}
 .stats-container div>h4 {
   padding: 10px 0;
   margin: 0;
