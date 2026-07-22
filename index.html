@@ -1,15 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
+  <script>
+    const theme = localStorage.getItem("theme")
+    if(theme && theme === "light"){
+      document.documentElement.setAttribute("data-theme", "light");
+    }else if(theme && theme === "dark"){
+      document.documentElement.setAttribute("data-theme", "dark");
+    }else{
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  </script>
   <meta charset="UTF-8" />
  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 
   <title>Faction Ledger</title>
-  <script type="module" crossorigin src="/torn-faction-management/assets/index-DMLLtMzK.js"></script>
-  <link rel="stylesheet" crossorigin href="/torn-faction-management/assets/index-CQSOO-73.css">
+  <script type="module" crossorigin src="/torn-faction-management/assets/index-BSzDDGW6.js"></script>
+  <link rel="stylesheet" crossorigin href="/torn-faction-management/assets/index-B5Te0afz.css">
 </head>
 
 <body>
