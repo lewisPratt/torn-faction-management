@@ -3,7 +3,7 @@ import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
 
 
-function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarColour, memberScore, filteredNews, wartimeAttacks }: MemberRow) {
+function ReportRow({ memberId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks }: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
     const averageRespect = memberAttacks > 0 ?
         (memberScore / memberAttacks).toFixed(2)
@@ -22,10 +22,11 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
     }
     const messageText = `Message ${memberName}.`
     const profileText = `View ${memberName}'s profile.`
+    const participationBarClasses = `participation-bar ${participationBarClass}`
     return (
         <>
             <div className="row-content" onClick={showMore}>
-                <div className="participation-bar" style={{ width: `${participationBarWidth}`, background: `${participationBarColour}` }}></div>
+                <div className={participationBarClasses} style={{ width: `${participationBarWidth}`}}></div>
                 <p className="player-name-p">{rowName}  <br /><span className="respect-span">R: {memberScore}</span> </p>
                 <p ><i className="bi bi-bullseye"></i> {memberAttacks}<span className="participation"> ({participationNumber}%)</span> {warningIcon}</p>
                 {filteredNews ?

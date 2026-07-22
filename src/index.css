@@ -1,6 +1,4 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
-
-
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 
@@ -16,17 +14,24 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-  --button-bg:#f2f2f2;
-  --header-accent-bg:#ffffff;
-  --report-row-bg:#f9f9f9;
-
+  --button-bg: #ffffff;
+  --header-accent-bg: #eaeaea;
+  --report-row-bg: #f9f9f9;
+  --report-row-highlight: #e1ffdd;
+  --participation-bar-warning-bg: #f65d5d;
+  --participation-bar-positive-bg: #85f875;
+  --participation-bar-amber-bg: #f9bc5a;
+  --participation-bar-brightness: 1.2;
+  --more-info-container-bg: #f1f1f1;
+  --stats-container-div-bg: #dcdcdc;
+  --select-bg: #3b3b3b;
+  --select-color: #141414;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Russo One', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
@@ -35,13 +40,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;
@@ -53,21 +56,99 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-    --button-bg:#c3c3c3;
-    --header-accent-bg:#4e4e4e;
-    --report-row-bg:#4a4a4a;
-    }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --button-bg: #c3c3c3;
+    --header-accent-bg: #4e4e4e;
+    --report-row-bg: #4a4a4a;
+    --report-row-highlight: #161616;
+    --participation-bar-warning-bg: #b03a3a;
+    --participation-bar-positive-bg: #4aec35;
+    --participation-bar-amber-bg: #ffae2b;
+    --participation-bar-brightness: .5;
+    --more-info-container-bg: #3e3e3e;
+    --stats-container-div-bg: #585858;
+    --select-bg: #3b3b3b;
+    --select-color: #f1f1f1;
   }
+}
+
+:root[data-theme="dark"] {
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+  --bg: #16171d;
+  --border: #2e303a;
+  --code-bg: #1f2028;
+  --accent: #c084fc;
+  --accent-bg: rgba(98, 91, 105, 0.15);
+  --accent-border: rgba(192, 132, 252, 0.5);
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --button-bg: #c3c3c3;
+  --header-accent-bg: #4e4e4e;
+  --report-row-bg: #4a4a4a;
+  --report-row-highlight: #161616;
+  --participation-bar-warning-bg: #b03a3a;
+  --participation-bar-positive-bg: #4aec35;
+  --participation-bar-amber-bg: #ffae2b;
+  --participation-bar-brightness: .5;
+  --more-info-container-bg: #3e3e3e;
+  --stats-container-div-bg: #585858;
+  --select-bg: #3b3b3b;
+  --select-color: #f1f1f1;
+}
+
+:root[data-theme="light"] {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(186, 186, 186, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --button-bg: #ffffff;
+  --header-accent-bg: #eaeaea;
+  --report-row-bg: #f9f9f9;
+  --report-row-highlight: #e1ffdd;
+  --participation-bar-warning-bg: #f65d5d;
+  --participation-bar-positive-bg: #85f875;
+  --participation-bar-amber-bg: #f9bc5a;
+  --participation-bar-brightness: 1.2;
+  --more-info-container-bg: #f1f1f1;
+  --stats-container-div-bg: #dcdcdc;
+  --select-bg: #f1f1f1;
+  --select-color: #141414;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Russo One', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
 }
 
 select {
   width: 100%;
   height: 30px;
   display: block;
-  margin:auto;
+  margin: auto;
+
+}
+
+select,
+input {
+  background-color: var(--select-bg);
+  color: var(--select-color)
 }
 
 form button {
@@ -108,12 +189,12 @@ body {
 
 footer {
   padding: 20px;
-  display:flex;
+  display: flex;
   flex-direction: row;
-  gap:20px;
+  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  margin:50px 0;
+  margin: 50px 0;
 }
 
 h1,
@@ -278,6 +359,7 @@ code {
   z-index: 10;
   background-color: var(--report-row-bg);
   cursor: pointer;
+  overflow: hidden;
 }
 
 .row-content p {
@@ -291,12 +373,39 @@ code {
 .row-content .participation-bar {
   position: absolute;
   left: 0;
-  background-color: lightgreen;
   border-radius: 5px 0 0 5px;
   height: 100%;
   top: 0;
   z-index: 0;
+  animation-name: participationBarGrow;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+}
 
+@keyframes participationBarGrow {
+  0% {
+    height: 0
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+.row-content .participation-bar:hover {
+  filter: brightness(var(--participation-bar-brightness));
+}
+
+.participation-bar-warning {
+  background-color: var(--participation-bar-warning-bg);
+}
+
+.participation-bar-positive {
+  background-color: var(--participation-bar-positive-bg);
+}
+
+.participation-bar-amber {
+  background-color: var(--participation-bar-amber-bg);
 }
 
 .more-info-container {
@@ -307,7 +416,7 @@ code {
   width: 95%;
   margin: auto;
   border-radius: 0 0 5px 5px;
-  background-color: #f1f1f1;
+  background-color: var(--more-info-container-bg);
   /* animation-name: reveal;
   animation-duration: .2s;
   animation-iteration-count: 1; */
@@ -317,15 +426,18 @@ code {
   margin: 10px;
 }
 
-.member-row .respect-p, .warning-p,
+.member-row .respect-p,
+.warning-p,
 .more-info-container .average-p,
 .member-armoury-news-container {
   font-size: .7rem;
   margin: 10px;
 }
-.warning-p{
-  color:red;
+
+.warning-p {
+  color: red;
 }
+
 .member-armoury-news-container {
   display: flex;
   justify-content: space-between;
@@ -366,28 +478,34 @@ code {
   justify-content: center;
   padding: 10px;
 }
-#legend{
-  display:flex;
+
+#legend {
+  display: flex;
   flex-direction: column;
 }
-#legend-list{
+
+#legend-list {
   font-size: .8rem;
   list-style: none;
-  padding-left:0;
+  padding-left: 0;
 }
-#legend-button{
-  margin-top:10px;
+
+#legend-button {
+  margin-top: 10px;
 }
+
 .stats-container div {
   flex-basis: 200px;
-  background: #dcdcdc;
+  background: var(--stats-container-div-bg);
   text-align: center;
   border-radius: 10px;
   transition: .3s;
 }
-.stats-container>div:hover{
-  scale:1.02;
+
+.stats-container>div:hover {
+  scale: 1.02;
 }
+
 .stats-container div>h4 {
   padding: 10px 0;
   margin: 0;
@@ -410,17 +528,21 @@ code {
   color: darkred;
 
 }
-#faction-report-overview{
-  font-size:.8rem;
-  line-height:1rem;
+
+#faction-report-overview {
+  font-size: .8rem;
+  line-height: 1rem;
 }
-#war-winner{
-  color:gold;
+
+#war-winner {
+  color: gold;
 }
-#war-loser{
-  color:brown;
-  font-size:.6rem;
+
+#war-loser {
+  color: brown;
+  font-size: .6rem;
 }
+
 .react-tooltip {
   z-index: 9999;
 }
@@ -536,35 +658,42 @@ h6 {
 .create-api-p a {
   text-decoration: underline;
 }
-#chart-container{
-  margin-top:30px;
-  position:relative;
-  width:100%;
-  height:600px;
+
+#chart-container {
+  margin-top: 30px;
+  position: relative;
+  width: 100%;
+  height: 600px;
 }
 
-#report-rows-container .row-content{
-  transition:.3s
+#report-rows-container .row-content {
+  transition: .3s
 }
-#report-rows-container .row-content:hover{
-  background-color: #f4fff9;
+
+#report-rows-container .row-content:hover {
+  background-color: var(--report-row-highlight);
 }
-#war-details{
-  font-size:.8rem;
-  text-align:center;
+
+#war-details {
+  font-size: .8rem;
+  text-align: center;
 }
-#ranked-war-selector-card .card-content{
-  display:flex;
-  flex-direction:column;
-}
-#ranked-war-selector-card .card-content form{
-  display:flex;
+
+#ranked-war-selector-card .card-content {
+  display: flex;
   flex-direction: column;
 }
-#show-war-details-btn{
-  align-self:end;
-  margin:20px 0 10px 0;
+
+#ranked-war-selector-card .card-content form {
+  display: flex;
+  flex-direction: column;
 }
+
+#show-war-details-btn {
+  align-self: end;
+  margin: 20px 0 10px 0;
+}
+
 @media (max-width:490px) {
   .stats-container div {
     flex-basis: 300px;
@@ -580,7 +709,8 @@ h6 {
   .player-name-p {
     font-size: .8rem;
   }
-  #ranked-war-selector-card{
-    flex-basis:500px;
+
+  #ranked-war-selector-card {
+    flex-basis: 500px;
   }
 }

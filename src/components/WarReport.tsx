@@ -228,15 +228,15 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
 
                                 const participation = stats.participation_perc
                                 let barWidth = `${participation}%`
-                                let barColour = "lightgreen"
+                                let barClass = "participation-bar-positive"
 
                                 if (stats.war_attacks < 10 && stats.war_attacks > 0) {
-                                    barColour = "orange"
+                                    barClass = "participation-bar-amber"
                                 } else if (stats.war_attacks === 0) {
-                                    barColour = "lightcoral"
+                                    barClass = "participation-bar-warning"
                                     barWidth = "100%"
                                 }
-
+                                
                                 return (
                                     <div key={memberId} className="row-container">
                                         <ReportRow
@@ -253,7 +253,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                                             memberScore={stats.score}
                                             participationNumber={participation}
                                             participationBarWidth={barWidth}
-                                            participationBarColour={barColour}
+                                            participationBarClass={barClass}
                                             armouryTime={armouryTime}
                                             warEndDate={warEnd}
                                         />

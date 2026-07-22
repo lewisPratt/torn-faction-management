@@ -1,6 +1,9 @@
 import type { ApiKeyFormProps } from "../interfaces"
+import { useState } from "react"
+import DarkMode from "./DarkMode"
 
 function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps) {
+ 
   return (
     <>
       <header id="login-header">
@@ -23,7 +26,8 @@ function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps
             <br /><button onClick={handleSubmit}>Login</button></p>
         </div>
       </main>
-      <footer><a href="https://github.com/lewisPratt/torn-faction-management/issues" target="_blank"><button>Bugs & Feature Requests</button></a><a href="https://buymeacoffee.com/lewis19880g" target="_blank"><button>Buy me a Coffee!</button></a></footer>
+      <footer><a href="https://github.com/lewisPratt/torn-faction-management/issues" target="_blank"><button>Bugs & Feature Requests</button></a><a href="https://buymeacoffee.com/lewis19880g" target="_blank"><button>Buy me a Coffee!</button></a> <DarkMode />
+</footer>
     </>
   )
 }

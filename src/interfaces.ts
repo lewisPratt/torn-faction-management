@@ -149,7 +149,7 @@ export interface MemberRow {
     memberScore: number
     participationNumber: number
     participationBarWidth: string
-    participationBarColour: string
+    participationBarClass: string
     armouryTime: number
     warEndDate: number
 
