@@ -179,6 +179,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     return (
         <>
             <div className="card" id="ranked-war-selector-card">
+                 <Tooltip id="ranked-war-selector-tooltip" />
                 <div className="card-content" >
                     <PulseLoader
                         color={"#000000"}
@@ -258,7 +259,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War start" data-tooltip-place="right"><i className="bi bi-calendar-range"></i> {convertedStartTimestamp.toLocaleString()}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War length" data-tooltip-place="right"><i className="bi bi-clock-history"></i> {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</span></p>
-                                <Tooltip id="ranked-war-selector-tooltip" />
+                               
 
                             </div>
                         </>
