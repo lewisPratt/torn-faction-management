@@ -4,7 +4,6 @@ import { ApiKeyContext } from './ApiKeyContext'
 import type { warReportProps, ReportData, armouryNewsData, warMemberDataType } from "../interfaces"
 import ReportRow from './ReportRow'
 import XanaxCost from './XanaxCost'
-import LegendReportRow from './LegendReportRow'
 import WarChart from './WarChart'
 import { Tooltip } from 'react-tooltip'
 interface fullAttacksData {
@@ -24,7 +23,6 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
 
     const xanaxEnergyGain = 250
-    const [legendVisible, setLegend] = useState<boolean>(false)
 
     useEffect(() => {
         //fetch basic war report data for selected war
@@ -160,10 +158,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     }, [reportData, armouryNews, attacksData])
 
 
-    //toggle visibility of the legend component
-    function toggleLegend() {
-        setLegend(prev => !prev)
-    }
+  
 
     //if there is no data to populate the report(api error etc)
     if (!reportData) {
@@ -193,11 +188,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     return (
         <>
             <div id="report-container">
-                <div className="card" id="legend">
-                    <button onClick={toggleLegend}>Legend</button>
-
-                    {legendVisible ? <><p>Hover over the elements in the row below to see what they mean.</p><LegendReportRow /></> : null}
-                </div>
+               
 
 
                 <div className="card">
@@ -211,12 +202,8 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
 
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
                         <div id="report-rows-container">
-                            <Tooltip anchorSelect=".user-profile">
-                                Go to profile.
-                            </Tooltip>
-                            <Tooltip anchorSelect=".user-message">
-                                Send message.
-                            </Tooltip>
+                            <Tooltip id="more-info-tooltip" />
+                              
                             {warMemberData && warMemberData.map((memberEntry) => {
                                 const memberId = Object.keys(memberEntry)[0]
                                 const stats = Object.values(memberEntry)[0]

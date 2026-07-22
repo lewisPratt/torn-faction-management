@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import WarReport from './WarReport'
 import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps } from '../interfaces'
 import { Tooltip } from 'react-tooltip'
-
+import LegendReportRow from './LegendReportRow'
 
 //not finished
 function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
@@ -13,6 +13,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [selectedOption, setSelectedOption] = useState<number>(0)
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
     const [warBreakdown, setWarBreadown] = useState<boolean>(false)
+    const [legendVisible, setLegend] = useState<boolean>(false)
+
     const noReport = <div className="card"><p className="card-content">No report generated....yet</p></div>
 
     useEffect(() => {
@@ -114,6 +116,11 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         if (match) setSelectedWar(match[1])
 
     }
+    //toggle visibility of the legend component
+    function toggleLegend() {
+        setLegend(prev => !prev)
+    }
+
     function generateWarReport(e: React.SubmitEvent) {
         e.preventDefault()
         const form = e.target
@@ -185,11 +192,11 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 //B: if there is no selected war show element to prompt war selection
                                 //B: else show further ui to configure war report details
                                 <>
-                                   
+
                                     <Tooltip id="ranked-war-selector-tooltip" />
 
 
-                                    <label htmlFor="armoury-news-selector">Armoury use date: <span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Grabs data related to Xanax use and other armoury items during this time period." data-tooltip-place="right"><i className="bi bi-question-circle"></i></span></label>
+                                    <label htmlFor="armoury-news-selector">Armoury use date: <span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Grabs data related to Xanax use and other armoury items from this point until the end of the war." data-tooltip-place="right"><i className="bi bi-question-circle"></i></span></label>
 
                                     <select id="armoury-news-selector" name="armoury-news-date" onChange={() => { setWarReport(null) }}>
                                         <option value="war-start">War start</option>
@@ -221,7 +228,16 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                             }
                         </form>
                         //A: else show reset button to clear the selected war and trigger rerender to show war selector ui
-                        : <button onClick={clearReview}>Reset</button>}</div>
+                        : (
+                            <>
+                                <button onClick={clearReview}>Reset</button>
+                                
+                                    <button id="legend-button" onClick={toggleLegend}>Legend</button>
+
+                                    {legendVisible ? <LegendReportRow /> : null}
+                                
+                            </>)
+                    }</div>
             </div>
 
 

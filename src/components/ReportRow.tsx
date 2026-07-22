@@ -20,8 +20,8 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
     function showMore() {
         setShowMore(prev => !prev)
     }
-
-
+    const messageText = `Message ${memberName}.`
+    const profileText = `View ${memberName}'s profile.`
     return (
         <>
             <div className="row-content" onClick={showMore}>
@@ -38,7 +38,7 @@ function ReportRow({ memberId, memberName, memberAttacks, participationNumber, p
             {showMoreInfo ?
                 <div className="more-info-container">
                     <h3>{memberName}</h3>
-                    <p className="player-action-p"><a className="user-message" href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"></i></a>  <a className="user-profile" href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i></a></p>
+                    <p className="player-action-p"><a data-tooltip-id="more-info-tooltip" data-tooltip-content={messageText} data-tooltip-place="bottom" href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"></i></a>  <a data-tooltip-id="more-info-tooltip" data-tooltip-content={profileText} data-tooltip-place="bottom" href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i></a></p>
                     <p className="average-p">{memberName} averaged {averageRespect} respect per attack.</p>
                     {warningIcon ? <p className="warning-p">Based on their faction Xanax use, {memberName} did not perform the number of attacks expected.</p> : null}
                     <div className="stats-container">

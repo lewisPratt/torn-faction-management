@@ -354,24 +354,17 @@ code {
   justify-content: center;
   padding: 10px;
 }
-
-#legend>div {
-  margin: 20px;
+#legend{
+  display:flex;
+  flex-direction: column;
 }
-
-#legend>p {
-  margin: 10px;
+#legend-list{
   font-size: .8rem;
+  list-style: none;
 }
-
-#legend>button {
-  margin: 10px;
+#legend-button{
+  margin-top:10px;
 }
-
-.legend-outline {
-  border: 1px dashed black;
-}
-
 .stats-container div {
   flex-basis: 200px;
   background: #dcdcdc;
@@ -536,6 +529,10 @@ h6 {
 #war-details{
   font-size:.8rem;
   text-align:center;
+}
+#ranked-war-selector-card .card-content{
+  display:flex;
+  flex-direction:column;
 }
 #ranked-war-selector-card .card-content form{
   display:flex;
