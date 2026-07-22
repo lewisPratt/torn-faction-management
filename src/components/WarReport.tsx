@@ -122,7 +122,10 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                     totalWartimeAttacks += 1
                 }
             })
-            const extraAttacks = totalWartimeAttacks - memberData.attacks
+            let extraAttacks = 0
+            if (totalWartimeAttacks > memberData.attacks) {
+                extraAttacks = totalWartimeAttacks - memberData.attacks
+            }
 
             const preFiltered = armouryNews.filter(newsItem =>
                 newsItem.text.includes(`XID=${memberData.id}`) &&
@@ -158,7 +161,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     }, [reportData, armouryNews, attacksData])
 
 
-  
+
 
     //if there is no data to populate the report(api error etc)
     if (!reportData) {
@@ -188,7 +191,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     return (
         <>
             <div id="report-container">
-               
+
 
 
                 <div className="card">
@@ -203,7 +206,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
                         <div id="report-rows-container">
                             <Tooltip id="more-info-tooltip" />
-                              
+
                             {warMemberData && warMemberData.map((memberEntry) => {
                                 const memberId = Object.keys(memberEntry)[0]
                                 const stats = Object.values(memberEntry)[0]
