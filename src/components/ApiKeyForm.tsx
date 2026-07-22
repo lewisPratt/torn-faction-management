@@ -23,6 +23,7 @@ function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps
             <br /><button onClick={handleSubmit}>Login</button></p>
         </div>
       </main>
+      <footer><a href="https://github.com/lewisPratt/torn-faction-management/issues" target="_blank"><button>Bugs & Feature Requests</button></a></footer>
     </>
   )
 }

@@ -10,6 +10,7 @@ function Layout({ children, handleClearKey }: LayoutProps) {
 
             <footer>
                 <ClearKeyButton handleClearKey={handleClearKey} />
+                <a href="https://github.com/lewisPratt/torn-faction-management/issues" target="_blank"><button>Bugs & Feature Requests</button></a>
             </footer>
         </>
     )
