@@ -21,7 +21,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     const [armouryNews, setArmouryNews] = useState<armouryNewsData[] | null>(null)
     const [attacksData, setAttacksData] = useState<fullAttacksData[] | null>(null)
     const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
-
+    const [earliestnewsEntry, setEarliestNewsEntry] = useState<number>(0)
     const xanaxEnergyGain = 250
 
     useEffect(() => {
@@ -55,6 +55,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
         //used to parse and identify member use of faction items
         const fetchAllPages = async () => {
             const allResults: armouryNewsData[] = []
+            let earliestEntry = 0
             let nextUrl: string | null = `https://api.torn.com/v2/faction/news?striptags=false&limit=100&sort=DESC&from=${armouryTime}&to=${warEnd}&cat=armoryAction`
             while (nextUrl) {
                 const response = await fetch(nextUrl, {
@@ -69,10 +70,15 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                     nextUrl = null
                 }
                 else {
+                    
+                    if (data.news[0] && Object.keys(data.news[0]).includes("timestamp") ) {
+                        earliestEntry = data.news.slice(-1)[0].timestamp
+                    }
                     allResults.push(...data.news)
                     nextUrl = data._metadata?.links?.prev ?? null
                 }
             }
+            setEarliestNewsEntry(earliestEntry)
             setArmouryNews(allResults)
         }
 
@@ -106,6 +112,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
         fetchAllAttackPages()
 
     }, [])
+
     useEffect(() => {
 
         if (!reportData || !armouryNews || !attacksData) return
@@ -184,22 +191,25 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
     });
     //determine percentage of member participation 
     const attackerPercentage = Math.round((attackerCount / members.length) * 100)
-
+    let earliestEntryText
+    if (earliestnewsEntry) {
+        const firstEntry = new Date(earliestnewsEntry * 1000)
+        console.log("timestamp to convert", earliestnewsEntry)
+        earliestEntryText = <p>Earliest Armoury entry retrieved: {firstEntry.toLocaleString()}</p>
+    }
 
 
 
     return (
         <>
             <div id="report-container">
-
-
-
                 <div className="card">
                     <div className="card-content">
                         <h2>{reportData.attacks} attacks by {attackerCount} members </h2>
                         <div id="faction-report-overview">
                             <p><span className="faction-participation">({attackerPercentage}% faction participation)</span></p>
-                            <p><XanaxCost totalNumber={totalXanax} /></p>
+                            <XanaxCost totalNumber={totalXanax} />
+                            {earliestEntryText ? earliestEntryText : <p>Could not determine earliest Armoury entry.</p>}
                         </div>
 
 

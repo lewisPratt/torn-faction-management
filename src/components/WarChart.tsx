@@ -7,7 +7,6 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 
 function WarChart({ warMemberData }: warChartProps) {
-    console.log(warMemberData)
     let memberLabels: string[] = []
     //add all faction member names to array
     warMemberData.map((mapEntry) => {
