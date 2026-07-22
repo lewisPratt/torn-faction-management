@@ -14,7 +14,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [selectedWar, setSelectedWar] = useState<SelectedWar | null>(null)
     const [selectedOption, setSelectedOption] = useState<number>(0)
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
-    const [warBreakdown, setWarBreadown] = useState<boolean>(false)
+    const [warBreakdown, setWarBreakdown] = useState<boolean>(false)
     const [legendVisible, setLegend] = useState<boolean>(false)
     let [loading, setLoading] = useState(false);
 
@@ -95,6 +95,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         setSelectedWar(null)
         setWarReport(null)
         setSelectedOption(0)
+        setWarBreakdown(false)
     }
 
 
@@ -227,24 +228,9 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                         <option value="2-day">2 days before war start</option>
                                     </select>
 
-                                    <button id="show-war-details-btn" type="button" className="secondary-button" onClick={() => setWarBreadown(prev => !prev)}>Show war Details?</button>
                                     <button type="submit">Generate Review</button>
 
-                                    {warBreakdown ? (
-                                        //C: if warbreakdown state is set to true, show details of selected war
-                                        <>
-                                            <div id="war-details">
-                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War winner" data-tooltip-place="right"><i className="bi bi-trophy"></i> {warWinner?.name}</span></p>
-                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Winners points | Losers points" data-tooltip-place="right"><span className="green-text">{warWinner?.score} points</span> | <span className="red-text">{warLoser?.score} points</span></span></p>
-                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War start" data-tooltip-place="right"><i className="bi bi-calendar-range"></i> {convertedStartTimestamp.toLocaleString()}</span></p>
-                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
-                                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War length" data-tooltip-place="right"><i className="bi bi-clock-history"></i> {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</span></p>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        //C: else show nothing
-                                        null
-                                    )}
+
                                 </>
 
 
@@ -260,7 +246,24 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 {legendVisible ? <LegendReportRow /> : null}
 
                             </>)
-                    }</div>
+                    }
+                    {selectedWar ? <button id="show-war-details-btn" type="button" className="secondary-button" onClick={() => setWarBreakdown(prev => !prev)}>Show war Details?</button> : null}
+
+                    {warBreakdown ? (
+                        //C: if warbreakdown state is set to true, show details of selected war
+                        <>
+                            <div id="war-details">
+                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War winner" data-tooltip-place="right"><i className="bi bi-trophy"></i> {warWinner?.name}</span></p>
+                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Winners points | Losers points" data-tooltip-place="right"><span className="green-text">{warWinner?.score} points</span> | <span className="red-text">{warLoser?.score} points</span></span></p>
+                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War start" data-tooltip-place="right"><i className="bi bi-calendar-range"></i> {convertedStartTimestamp.toLocaleString()}</span></p>
+                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
+                                <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War length" data-tooltip-place="right"><i className="bi bi-clock-history"></i> {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</span></p>
+                            </div>
+                        </>
+                    ) : (
+                        //C: else show nothing
+                        null
+                    )}</div>
             </div>
 
 

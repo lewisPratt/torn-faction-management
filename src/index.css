@@ -361,6 +361,7 @@ code {
 #legend-list{
   font-size: .8rem;
   list-style: none;
+  padding-left:0;
 }
 #legend-button{
   margin-top:10px;
@@ -540,6 +541,7 @@ h6 {
 }
 #show-war-details-btn{
   align-self:end;
+  margin:20px 0 10px 0;
 }
 @media (max-width:490px) {
   .stats-container div {

@@ -69,6 +69,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                     nextUrl = null
                 }
                 else {
+                    console.log(...data.news)
                     allResults.push(...data.news)
                     nextUrl = data._metadata?.links?.prev ?? null
                 }

@@ -1,14 +1,13 @@
-
+// Component that renders a legend explaining the meaning of the values shown in ReportRow.tsx.
 
 function LegendReportRow() {
-
     return (
         
             <ul id="legend-list">
                 <li>R: - Respect Earned during wartime</li>
                 <li><i className="bi bi-bullseye"></i> 20 - War attacks made</li>
-                <li>(30%) - % of faction attacks.</li>
-                <li><span className=" warning-icon bi bi-exclamation-triangle-fill"></span> - Attack under performance warning.</li>
+                <li>(30%) - % of faction attacks</li>
+                <li><span className=" warning-icon bi bi-exclamation-triangle-fill"></span> - War under performance warning</li>
                 <li><i className="bi bi-plus-circle-dotted"></i>15 - Outside attacks</li>
                 <li><i className="bi bi-capsule"></i>3 - Faction Xanax used</li>
                 <li><i className="bi bi-crosshair"></i>30 - Expected war attacks</li>
@@ -17,6 +16,5 @@ function LegendReportRow() {
             </ul>
     
     )
-
 }
 export default LegendReportRow
