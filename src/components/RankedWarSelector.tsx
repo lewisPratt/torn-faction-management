@@ -2,8 +2,10 @@
 import { useState, useEffect } from 'react'
 import WarReport from './WarReport'
 import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps } from '../interfaces'
+import type { CSSProperties } from 'react'
 import { Tooltip } from 'react-tooltip'
 import LegendReportRow from './LegendReportRow'
+import { PulseLoader } from "react-spinners";
 
 //not finished
 function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
@@ -14,6 +16,14 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [warReport, setWarReport] = useState<warReportProps | null>(null)
     const [warBreakdown, setWarBreadown] = useState<boolean>(false)
     const [legendVisible, setLegend] = useState<boolean>(false)
+    let [loading, setLoading] = useState(false);
+
+    const override: CSSProperties = {
+        display: "block",
+        margin: "0 auto",
+        borderColor: "blue",
+
+    };
 
     const noReport = <div className="card"><p className="card-content">No report generated....yet</p></div>
 
@@ -42,7 +52,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     }, [])
 
     if (!rankedWarsList) {
-        return <div id="faction-info-card"><p>Loading...</p></div>
+        return <div id="faction-info-card"><p>Missing ranked war data</p></div>
     }
 
 
@@ -107,7 +117,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         setSelectedOption(parseInt(e.target.value))
         //if there is no rankedwar data show error (wont let you iterate over an object if its null state hasnt been handled.)
         if (!rankedWarsList) {
-            return <div id="faction-info-card"><p>Loading...</p></div>
+            return <div id="faction-info-card"><p>Missing ranked war data</p></div>
         }
         //run through the previously cached ranked war data and find the details for the selected war
         const match = Object.entries(rankedWarsList).find(([_mapKey, warData]) =>
@@ -123,6 +133,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     function generateWarReport(e: React.SubmitEvent) {
         e.preventDefault()
+        setLoading(true)
         const form = e.target
         const formData = new FormData(form)
         let armouryDate = 0
@@ -154,7 +165,11 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 armouryTime: armouryDate
             }
 
+
+
             setWarReport(report)
+            setLoading(false)
+
             errorMsg ? setErrorMsg("") : null
 
         }
@@ -164,6 +179,14 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         <>
             <div className="card" id="ranked-war-selector-card">
                 <div className="card-content" >
+                    <PulseLoader
+                        color={"#000000"}
+                        loading={loading}
+                        size={15}
+                        cssOverride={override}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
                     {errorMsg ? <p id="selector-error-message"> {errorMsg}</p> : null}
 
                     {!warReport ?
@@ -231,21 +254,25 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                         : (
                             <>
                                 <button onClick={clearReview}>Reset</button>
-                                
-                                    <button id="legend-button" onClick={toggleLegend}>Legend</button>
 
-                                    {legendVisible ? <LegendReportRow /> : null}
-                                
+                                <button id="legend-button" onClick={toggleLegend}>Legend</button>
+
+                                {legendVisible ? <LegendReportRow /> : null}
+
                             </>)
                     }</div>
             </div>
 
 
             {!warReport ? noReport :
-                //D: if war report is empty show card for acknowledging this
-                //D: else show war report component
-                <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} />
+                (
+                    //D: if war report is empty show card for acknowledging this
+                    //D: else show war report component
+                    <>
+                        <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} />
 
+                    </>
+                )
             }
         </>
     )
