@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 function DarkMode(){
- const [darkMode, setDarkMode] = useState<boolean>(false)
+ const [_darkMode, setDarkMode] = useState<boolean>(false)
      let toggleButton = ""
      
     function switchMode() {

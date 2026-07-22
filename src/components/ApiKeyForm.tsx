@@ -1,5 +1,4 @@
 import type { ApiKeyFormProps } from "../interfaces"
-import { useState } from "react"
 import DarkMode from "./DarkMode"
 
 function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps) {
