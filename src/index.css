@@ -46,6 +46,7 @@ GLOBAL VARIABLES
 
 
 }
+
 /*//////////////////////////////////////////
 
 DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
@@ -78,6 +79,7 @@ DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
     --select-color: #f1f1f1;
   }
 }
+
 /*//////////////////////////////////////////
 
 LIGHT/DARK MODE THEMES
@@ -130,7 +132,7 @@ LIGHT/DARK MODE THEMES
   --participation-bar-amber-bg: #f9bc5a;
   --participation-bar-brightness: 1.2;
   --more-info-container-bg: #f1f1f1;
-  --stats-container-div-bg: #dcdcdc;
+  --stats-container-div-bg: #ffffff;
   --select-bg: #f1f1f1;
   --select-color: #141414;
 
@@ -162,6 +164,7 @@ button {
   padding: 10px;
   background: var(--button-bg);
   border: 1px solid black;
+  border-radius:5px;
   cursor: pointer;
   color: black;
   font-weight: bold;
@@ -517,6 +520,12 @@ LOGIN
   text-decoration: underline;
 }
 
+.login-form button {
+  display: block;
+  margin: auto;
+  width: 200px;
+}
+
 /*//////////////////////////////////////////
 
 CHART 
@@ -813,7 +822,8 @@ MEDIA QUERIES
     font-size: 36px;
     margin: 20px 0;
   }
-  h2{
-      font-size: 20px;
+
+  h2 {
+    font-size: 20px;
   }
 }
