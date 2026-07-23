@@ -247,6 +247,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                                                 attackPotential: stats.attackPotential
                                             }}
                                             memberId={parseInt(memberId)}
+                                            warId={warId}
                                             memberName={stats.name}
                                             memberAttacks={stats.war_attacks}
                                             wartimeAttacks={stats.outside_attacks}

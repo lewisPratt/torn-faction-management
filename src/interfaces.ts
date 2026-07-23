@@ -143,6 +143,7 @@ export interface membersArmouryNews {
 export interface MemberRow {
     filteredNews: membersArmouryNews | null
     memberId: number
+    warId: number
     memberName: string
     memberAttacks: number
     wartimeAttacks: number
