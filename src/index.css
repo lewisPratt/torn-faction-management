@@ -1,7 +1,11 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
+/*//////////////////////////////////////////
 
+GLOBAL VARIABLES
+
+/////////////////////////////////////////*/
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -42,7 +46,11 @@
 
 
 }
+/*//////////////////////////////////////////
 
+DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
+
+/////////////////////////////////////////*/
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     --text: #9ca3af;
@@ -70,7 +78,11 @@
     --select-color: #f1f1f1;
   }
 }
+/*//////////////////////////////////////////
 
+LIGHT/DARK MODE THEMES
+
+/////////////////////////////////////////*/
 :root[data-theme="dark"] {
   --text: #9ca3af;
   --text-h: #f3f4f6;
@@ -137,12 +149,42 @@
 
 }
 
+/*//////////////////////////////////////////
+
+GLOBAL
+
+/////////////////////////////////////////*/
+
+/*//////////////
+BUTTONS
+//////////////*/
+button {
+  padding: 10px;
+  background: var(--button-bg);
+  border: 1px solid black;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+
+.secondary-button {
+  font-size: .6rem;
+  padding: 8px;
+  border: 1px dashed grey;
+}
+
+/*//////////////
+FORM
+//////////////*/
+label {
+  font-size: .8rem;
+}
+
 select {
   width: 100%;
   height: 30px;
   display: block;
   margin: auto;
-
 }
 
 select,
@@ -156,32 +198,21 @@ form button {
   margin: 10px 0;
 }
 
-form #armoury-news-desc {
-  font-size: .8rem;
+/*//////////////
+CUSTOM GLOBAL
+//////////////*/
+#main-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: 1;
+  gap: 20px;
 }
-#latest-news{
-  flex-basis:800px;
-  position:relative;
-  animation-name: bounce;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-}
-#latest-news ul{
-  list-style: none;
-  padding:0;
-  color:gold;
-}
-@keyframes bounce {
-  0%{
-    top:0;
-  }
-  50%{
-    top:5px;
-  }
-  100%{
-    top:0
-  }
-}
+
 #root {
   max-width: 1440px;
   margin: 0 auto;
@@ -193,12 +224,6 @@ form #armoury-news-desc {
   background-color: var(--bg);
 }
 
-a,
-a:visited {
-  color: black;
-  text-decoration: none;
-}
-
 html {
   height: 100%;
 }
@@ -206,8 +231,6 @@ html {
 body {
   margin: 0;
 }
-
-
 
 footer {
   padding: 20px;
@@ -217,6 +240,19 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   margin: 50px 0;
+}
+
+/*//////////////
+HEADINGS
+//////////////*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.8rem;
+  font-weight: 800;
 }
 
 h1,
@@ -230,11 +266,6 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
-
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
 }
 
 h2 {
@@ -242,15 +273,51 @@ h2 {
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
-
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
 }
 
 p {
   margin: 0;
 }
+
+a,
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.full-width {
+  flex-basis: 80%;
+}
+
+.edge-to-edge {
+  width: 100%;
+
+}
+
+.red-text {
+  color: red;
+}
+
+.green-text {
+  color: lightgreen;
+}
+
+.react-tooltip {
+  z-index: 9999;
+}
+
+#report-error-message,
+#selector-error-message {
+  text-align: right;
+  color: red;
+  font-size: .8rem;
+}
+
+/*//////////////////////////////////////////
+
+CARD
+
+/////////////////////////////////////////*/
 
 .card {
   border: 1px solid black;
@@ -266,13 +333,50 @@ p {
   padding: 20px;
 }
 
-.full-width {
-  flex-basis: 80%;
+
+/*//////////////////////////////////////////
+
+NEWS
+
+/////////////////////////////////////////*/
+
+
+#latest-news {
+  flex-basis: 800px;
+  position: relative;
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }
 
-.edge-to-edge {
-  width: 100%;
+#latest-news ul {
+  list-style: none;
+  padding: 0;
+  color: gold;
+}
 
+/*//////////////////////////////////////////
+
+FACTION INFO
+
+/////////////////////////////////////////*/
+
+#faction-info-card {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  flex-basis: 400px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+#faction-description {
+  font-size: .6rem;
+}
+
+#rank-text {
+  text-align: right;
+  font-size: .6rem;
 }
 
 .my-faction-info .card-content {
@@ -290,28 +394,11 @@ p {
   line-height: .8rem;
 }
 
-.red-text {
-  color: red;
-}
+/*//////////////////////////////////////////
 
-.green-text {
-  color: lightgreen;
-}
+PLAYER INFO CARD
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+/////////////////////////////////////////*/
 
 .player-card {
   background-color: var(--header-accent-bg);
@@ -334,40 +421,121 @@ code {
   max-width: 100%;
 }
 
-#faction-info-card {
-  border: 2px solid black;
-  border-radius: 5px;
-  padding: 20px;
-  flex-basis: 400px;
-  margin-bottom: 30px;
-  text-align: left;
-}
+/*//////////////////////////////////////////
 
-#faction-description {
-  font-size: .6rem;
-}
+WAR REPORT
 
-#rank-text {
-  text-align: right;
-  font-size: .6rem;
-}
-
-#main-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 20px;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex: 1;
-  gap: 20px;
-}
+/////////////////////////////////////////*/
 
 #report-container {
   flex: 1;
   flex-basis: 500px
 }
+
+#legend {
+  display: flex;
+  flex-direction: column;
+}
+
+#legend-list {
+  font-size: .8rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+#legend-button {
+  margin-top: 10px;
+}
+
+#faction-report-overview {
+  font-size: .8rem;
+  line-height: 1rem;
+}
+
+/*//////////////////////////////////////////
+
+LOGIN 
+
+/////////////////////////////////////////*/
+
+#login-main-content p {
+  font-size: 1rem;
+  margin: 20px;
+  text-align: center;
+}
+
+#login-main-content .api-p {
+  font-size: .8rem;
+}
+
+#login-main-content .login-form {
+  margin: 20px;
+  text-align: center;
+}
+
+#login-main-content .login-form input {
+  display: inline-block;
+  margin: 10px;
+}
+
+#login-main-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+#login-main-content .card {
+  flex-basis: 900px;
+}
+
+#login-header {
+  padding: 100px 20px 0 20px;
+}
+
+#login-header h2 {
+  font-size: 1rem;
+  margin-bottom: 50px;
+  font-family: monospace;
+}
+
+.login-error-card {
+  flex-basis: 300px;
+}
+
+#login-main-content .create-api-p {
+  font-size: .6rem;
+}
+
+#login-main-content input {
+  height: 25px;
+  padding: 10px;
+  width: 250px;
+}
+
+.create-api-p a {
+  text-decoration: underline;
+}
+
+/*//////////////////////////////////////////
+
+CHART 
+
+/////////////////////////////////////////*/
+
+#chart-container {
+  margin-top: 30px;
+  position: relative;
+  width: 100%;
+  height: 600px;
+}
+
+
+/*//////////////////////////////////////////
+
+REPORT ROW
+
+/////////////////////////////////////////*/
 
 .row-content {
   display: flex;
@@ -404,16 +572,6 @@ code {
   animation-iteration-count: 1;
 }
 
-@keyframes participationBarGrow {
-  0% {
-    height: 0
-  }
-
-  100% {
-    height: 100%;
-  }
-}
-
 .row-content .participation-bar:hover {
   filter: brightness(var(--participation-bar-brightness));
 }
@@ -439,9 +597,6 @@ code {
   margin: auto;
   border-radius: 0 0 5px 5px;
   background-color: var(--more-info-container-bg);
-  /* animation-name: reveal;
-  animation-duration: .2s;
-  animation-iteration-count: 1; */
 }
 
 .more-info-container h3 {
@@ -469,10 +624,12 @@ code {
   font: size 0.8rem;
 }
 
-#war-selector-card {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+#report-rows-container .row-content {
+  transition: .3s
+}
+
+#report-rows-container .row-content:hover {
+  background-color: var(--report-row-highlight);
 }
 
 .quick-stats-p {
@@ -499,21 +656,6 @@ code {
   gap: 20px;
   justify-content: center;
   padding: 10px;
-}
-
-#legend {
-  display: flex;
-  flex-direction: column;
-}
-
-#legend-list {
-  font-size: .8rem;
-  list-style: none;
-  padding-left: 0;
-}
-
-#legend-button {
-  margin-top: 10px;
 }
 
 .stats-container div {
@@ -551,47 +693,11 @@ code {
 
 }
 
-#faction-report-overview {
-  font-size: .8rem;
-  line-height: 1rem;
-}
+/*//////////////////////////////////////////
 
-#war-winner {
-  color: gold;
-}
+RANKED WAR SELECTOR
 
-#war-loser {
-  color: brown;
-  font-size: .6rem;
-}
-
-.react-tooltip {
-  z-index: 9999;
-}
-
-button {
-  padding: 10px;
-  background: var(--button-bg);
-  border: 1px solid black;
-  cursor: pointer;
-  color: black;
-  font-weight: bold;
-}
-
-label {
-  font-size: .8rem;
-}
-
-#war-selector-card h3 {
-  margin-bottom: 0;
-}
-
-#report-error-message,
-#selector-error-message {
-  text-align: right;
-  color: red;
-  font-size: .8rem;
-}
+/////////////////////////////////////////*/
 
 .no-war-p {
   margin: 10px 0;
@@ -606,95 +712,10 @@ label {
   display: inline-block;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1.8rem;
-  font-weight: 800;
-}
-
-#login-main-content p {
-  font-size: 1rem;
-  margin: 20px;
-  text-align: center;
-
-}
-
-#login-main-content .api-p {
-  font-size: .8rem;
-}
-
-#login-main-content .login-form {
-  margin: 20px;
-  text-align: center;
-}
-
-#login-main-content .login-form input {
-  display: inline-block;
-  margin: 10px;
-}
-
-#login-main-content {
+#war-selector-card {
   display: flex;
-  justify-content: center;
-  flex-wrap:wrap;
-  padding: 20px;
-}
-
-#login-main-content .card {
-  flex-basis: 900px;
-}
-
-#login-header {
-  padding: 100px 20px 0 20px;
-}
-
-#login-header h2 {
-  font-size: 1rem;
-  margin-bottom: 50px;
-  font-family: monospace;
-}
-
-.login-error-card {
-  flex-basis: 300px;
-}
-
-.secondary-button {
-  font-size: .6rem;
-  padding: 8px;
-  border: 1px dashed grey;
-}
-
-#login-main-content .create-api-p {
-  font-size: .6rem;
-}
-
-#login-main-content input {
-  height: 25px;
-  padding: 10px;
-  width: 30%;
-}
-
-.create-api-p a {
-  text-decoration: underline;
-}
-
-#chart-container {
-  margin-top: 30px;
-  position: relative;
-  width: 100%;
-  height: 600px;
-}
-
-#report-rows-container .row-content {
-  transition: .3s
-}
-
-#report-rows-container .row-content:hover {
-  background-color: var(--report-row-highlight);
+  flex-direction: column;
+  align-items: stretch;
 }
 
 #war-details {
@@ -717,6 +738,55 @@ h6 {
   margin: 20px 0 10px 0;
 }
 
+#war-selector-card h3 {
+  margin-bottom: 0;
+}
+
+#war-winner {
+  color: gold;
+}
+
+#war-loser {
+  color: brown;
+  font-size: .6rem;
+}
+
+/*//////////////////////////////////////////
+
+ANIMATIONs
+
+/////////////////////////////////////////*/
+
+@keyframes bounce {
+  0% {
+    top: 0;
+  }
+
+  50% {
+    top: 5px;
+  }
+
+  100% {
+    top: 0
+  }
+}
+
+@keyframes participationBarGrow {
+  0% {
+    height: 0
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+/*//////////////////////////////////////////
+
+MEDIA QUERIES
+
+/////////////////////////////////////////*/
+
 @media (max-width:490px) {
   .stats-container div {
     flex-basis: 300px;
@@ -735,5 +805,15 @@ h6 {
 
   #ranked-war-selector-card {
     flex-basis: 500px;
+  }
+}
+
+@media (max-width:1024px) {
+  h1 {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+  h2{
+      font-size: 20px;
   }
 }
