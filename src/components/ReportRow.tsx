@@ -45,26 +45,47 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
         // console.log(warObject)
         //if overall memberslog item is present in local storage
         if (localStorage.getItem("memberLogs")) {
+
             //grab the memberslog item 
             const loggedMembers = localStorage.getItem("memberLogs")
+
             if (loggedMembers) {
                 //parse the string value back into JS object
                 const parsedLogs = JSON.parse(loggedMembers)
-                console.log(parsedLogs)
-                if(Object.keys(parsedLogs).includes(memberId.toString())){
+
+                console.log("A: Parsed Logs", parsedLogs)
+                if (Object.keys(parsedLogs).includes(memberId.toString())) {
+
                     console.log("this member is stored")
-                    
+
+                    const thisMembersLogs = parsedLogs[memberId]
+
+                    if (Object.keys(thisMembersLogs).includes(warId.toString())) {
+
+                        console.log("this war is already stored, dont store it again")
+                    } else {
+
+                        console.log("war not stored yet, store it now.")
+                        parsedLogs[memberId] = {...parsedLogs[memberId] , [warId] : memberData}
+                        localStorage.setItem("memberLogs", JSON.stringify(parsedLogs))
+
+                    }
+                    console.log("B: member logs", thisMembersLogs)
+
                 }
                 else {
                     console.log("this member is not stored")
+                    const newlyLogged = {...parsedLogs, [memberId] : warObject}
+                    
+                    localStorage.setItem("memberLogs", JSON.stringify(newlyLogged))
                 }
-                
+
             }
 
         } else {
             console.log("member logs not present")
-            
-            const memberObject = {[memberId] : warObject}
+
+            const memberObject = { [memberId]: warObject }
             const convertedData = JSON.stringify(memberObject)
             localStorage.setItem("memberLogs", convertedData)
         }
