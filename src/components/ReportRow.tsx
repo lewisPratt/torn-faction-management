@@ -6,9 +6,8 @@ import MemberChart from './MemberChart'
 
 function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName}: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
-    const averageRespect = memberAttacks > 0 ?
-        (memberScore / memberAttacks).toFixed(2)
-        : "0"
+    const [_newLocalData, setNewLocalData] = useState<boolean>(false)
+
     const warningIcon = filteredNews && filteredNews.attackPotential > memberAttacks ? <span className="warning-icon bi bi-exclamation-triangle-fill"></span>
         : null
     const cutoff = memberName.length > 6 ? ".." : ""
@@ -72,6 +71,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                         console.log("war not stored yet, store it now.")
                         parsedLogs[memberId] = {...parsedLogs[memberId] , [warId] : memberData}
                         localStorage.setItem("memberLogs", JSON.stringify(parsedLogs))
+                        setNewLocalData(true)
 
                     }
                     console.log("B: member logs", thisMembersLogs)
@@ -82,6 +82,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                     const newlyLogged = {...parsedLogs, [memberId] : warObject}
                     
                     localStorage.setItem("memberLogs", JSON.stringify(newlyLogged))
+                    setNewLocalData(true)
                 }
 
             }
@@ -92,6 +93,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
             const memberObject = { [memberId]: warObject }
             const convertedData = JSON.stringify(memberObject)
             localStorage.setItem("memberLogs", convertedData)
+            setNewLocalData(true)
         }
     }
     return (
@@ -113,10 +115,9 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                     <p className="player-action-p">
                         <a data-tooltip-id="more-info-tooltip" data-tooltip-content={messageText} data-tooltip-place="bottom" href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"> </i></a>
                         <a data-tooltip-id="more-info-tooltip" data-tooltip-content={profileText} data-tooltip-place="bottom" href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i> </a>
-                        <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store performance Locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>
+                        <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>
                     </p>
 
-                    <p className="average-p">{memberName} averaged {averageRespect} respect per attack.</p>
                     {warningIcon ? <p className="warning-p">Based on their faction Xanax use, {memberName} did not perform the number of attacks expected.</p> : null}
                     <div className="stats-container">
                         <div>

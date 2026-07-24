@@ -540,12 +540,14 @@ CHART
 }
 
 .line-graph-container{
+  position: relative;
   height:250px;
   width:100%;
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding:20px;
 }
 /*//////////////////////////////////////////
 
@@ -708,7 +710,10 @@ REPORT ROW
   color: darkred;
 
 }
-
+.no-local-data-p{
+  font-size: .8rem;
+  text-align: center;
+}
 /*//////////////////////////////////////////
 
 RANKED WAR SELECTOR

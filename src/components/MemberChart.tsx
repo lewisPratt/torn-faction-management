@@ -68,7 +68,7 @@ function MemberChart({ memberId }: memberChartProps) {
             console.log()
             const options = {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
 
             }
             const data = {
@@ -84,10 +84,10 @@ function MemberChart({ memberId }: memberChartProps) {
 
                     },
                     {
-                        label: 'Attacks Total',
+                        label: 'War Attacks',
                         data: warTargetAttacksDataset,
                         fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
+                        borderColor: 'rgba(255, 78, 69, 0.5)',
                         tension: 0.1
 
                     },
@@ -105,6 +105,7 @@ function MemberChart({ memberId }: memberChartProps) {
 
             return (
                 <>
+                    <h3>Historical Performance</h3>
                     <div className="line-graph-container">
                         <Line data={data} options={options} />
                     </div>
@@ -112,7 +113,12 @@ function MemberChart({ memberId }: memberChartProps) {
             )
         }
         else {
-            return <p>No locally stored data for chart to display</p>
+            return (
+                <>
+                    <h3>Historical Performance</h3>
+                    <p className="no-local-data-p">No locally stored data for chart to display.</p>
+                </>
+            )
         }
     }
 
