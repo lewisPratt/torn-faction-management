@@ -539,7 +539,14 @@ CHART
   height: 600px;
 }
 
-
+.line-graph-container{
+  height:250px;
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /*//////////////////////////////////////////
 
 REPORT ROW

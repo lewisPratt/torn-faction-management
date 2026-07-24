@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
+import MemberChart from './MemberChart'
 
 
 function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName}: MemberRow) {
@@ -135,6 +136,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                             <p>{filteredNews?.ipecacUsed}</p>
                         </div>
                     </div>
+                    <MemberChart memberId={memberId} />
                     <ThisMemberDetails memberId={memberId} />
 
                 </div>
