@@ -3,7 +3,7 @@ import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
 
 
-function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks }: MemberRow) {
+function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName}: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
     const averageRespect = memberAttacks > 0 ?
         (memberScore / memberAttacks).toFixed(2)
@@ -29,6 +29,9 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
     function storeLocal() {
 
         const memberData = {
+            warEnd: warEndDate,
+            opponentName: opponentName,
+            warScore: memberScore,
             xanaxTaken: filteredNews?.xanaxUsed,
             memberAttacks: memberAttacks,
             participationPerc: participationNumber,

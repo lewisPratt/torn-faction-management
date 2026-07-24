@@ -13,7 +13,7 @@ interface fullAttacksData {
 }
 //for accumulating and storing individual member performance from different wars
 
-function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warReportProps) {
+function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentName}: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
@@ -246,6 +246,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime }: warRepor
                                                 ipecacUsed: stats.ipecacUsed,
                                                 attackPotential: stats.attackPotential
                                             }}
+                                            opponentName={opponentName}
                                             memberId={parseInt(memberId)}
                                             warId={warId}
                                             memberName={stats.name}

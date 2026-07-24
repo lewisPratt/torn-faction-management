@@ -102,6 +102,7 @@ export interface SelectedWar {
 }
 export interface warReportProps {
     factionId: number
+    opponentName: string
     warId: number
     warStart: number
     warEnd: number
@@ -153,6 +154,7 @@ export interface MemberRow {
     participationBarClass: string
     armouryTime: number
     warEndDate: number
+    opponentName: string
 
 }
 export interface MembersArmouryProps {

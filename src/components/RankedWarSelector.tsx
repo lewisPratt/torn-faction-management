@@ -7,7 +7,12 @@ import { Tooltip } from 'react-tooltip'
 import LegendReportRow from './LegendReportRow'
 import { PulseLoader } from "react-spinners";
 
-//not finished
+interface opponentObject {
+    id: number
+    chain: number
+    name: string
+    score: number
+}
 function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [rankedWarsList, setRankedWarsListData] = useState<RankedWarsListData | null>(null)
@@ -67,7 +72,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     console.log(warLengthDays)
     let warWinner = null
     let warLoser = null
-    let opponent = null
+    let opponentName = ""
+    let opponent : opponentObject 
     let myFaction = null
     // if a war has been selected from the dropdown
     if (selectedWar) {
@@ -75,9 +81,11 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         //set the team objects to remove need for repeated iteration
         if (Object.values(selectedWar.factions[0]).includes(faction_id)) {
             opponent = selectedWar.factions[1]
+            opponentName = opponent.name
             myFaction = selectedWar.factions[0]
         } else {
             opponent = selectedWar.factions[0]
+            opponentName = opponent.name
             myFaction = selectedWar.factions[1]
         }
         //set war winner name
@@ -156,8 +164,9 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 armouryDate = (selectedWar.start - 172800)
 
             }
-
+            
             const report = {
+                opponentName: opponent.name,
                 warStart: selectedWar.start,
                 warEnd: selectedWar.end,
                 target: selectedWar.target,
@@ -276,7 +285,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                     //D: if war report is empty show card for acknowledging this
                     //D: else show war report component
                     <>
-                        <WarReport warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} />
+                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} />
 
                     </>
                 )
