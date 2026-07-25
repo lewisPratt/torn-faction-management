@@ -26,7 +26,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
 
                 const thisMembersLogs = parsedLogs[memberId]
 
-                if (Object.keys(thisMembersLogs).includes(warId.toString())) {
+                if (isWarStored(memberId, warId)) {
 
                     console.log("this war is already stored, dont store it again")
                 } else {
@@ -58,29 +58,28 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
             localStorage.setItem("localLogs", convertedData)
             setHasSaved(true)
         }
-    }
-    //needs refactoring to fit DRY - but working in current state
-    let alreadyDownloaded : boolean = false
-    if (localLogs) {
+    } 
 
+
+    function isWarStored(memberId: number, warId: number): boolean {
+        const localLogs = localStorage.getItem("localLogs")
+        if (!localLogs) return false
 
         const parsedLogs = JSON.parse(localLogs)
-        if (Object.keys(parsedLogs).includes(memberId.toString())) {
-            //member is stored locally now check if war is
-            if (Object.keys(parsedLogs[memberId]).includes(warId.toString())) {
-                alreadyDownloaded = true
-            }
-            else {
-                alreadyDownloaded = false
-            }
-        }
+        if (!Object.keys(parsedLogs).includes(memberId.toString())) return false
+
+        return Object.keys(parsedLogs[memberId]).includes(warId.toString())
     }
+
+    let alreadyDownloaded = isWarStored(memberId, warId)
+
+   
 
     return (
         <>
-        {alreadyDownloaded ?  <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Already stored." data-tooltip-place="bottom" ><i className="bi bi-check-square"></i> </span>  
-        :  <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span> }
-        
+            {alreadyDownloaded ? <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Already stored." data-tooltip-place="bottom" ><i className="bi bi-check-square"></i> </span>
+                : <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>}
+
         </>
     )
 
