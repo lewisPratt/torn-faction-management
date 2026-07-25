@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { MemberRow } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
 import MemberChart from './MemberChart'
+import LocalDataStoreMember from './LocalDataStoreMember'
 
 
 function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName}: MemberRow) {
@@ -26,9 +27,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
     function showMore() {
         setShowMore(prev => !prev)
     }
-    function storeLocal() {
-
-        const memberData = {
+     const memberData = {
             warEnd: warEndDate,
             opponentName: opponentName,
             warScore: memberScore,
@@ -42,60 +41,63 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
         }
 
         const warObject = { [warId]: memberData }
+    // function storeLocal() {
+
+       
 
 
 
-        // console.log(warObject)
-        //if overall memberslog item is present in local storage
-        if (localStorage.getItem("memberLogs")) {
+    //     // console.log(warObject)
+    //     //if overall memberslog item is present in local storage
+    //     if (localStorage.getItem("memberLogs")) {
 
-            //grab the memberslog item 
-            const loggedMembers = localStorage.getItem("memberLogs")
+    //         //grab the memberslog item 
+    //         const loggedMembers = localStorage.getItem("memberLogs")
 
-            if (loggedMembers) {
-                //parse the string value back into JS object
-                const parsedLogs = JSON.parse(loggedMembers)
+    //         if (loggedMembers) {
+    //             //parse the string value back into JS object
+    //             const parsedLogs = JSON.parse(loggedMembers)
 
-                console.log("A: Parsed Logs", parsedLogs)
-                if (Object.keys(parsedLogs).includes(memberId.toString())) {
+    //             console.log("A: Parsed Logs", parsedLogs)
+    //             if (Object.keys(parsedLogs).includes(memberId.toString())) {
 
-                    console.log("this member is stored")
+    //                 console.log("this member is stored")
 
-                    const thisMembersLogs = parsedLogs[memberId]
+    //                 const thisMembersLogs = parsedLogs[memberId]
 
-                    if (Object.keys(thisMembersLogs).includes(warId.toString())) {
+    //                 if (Object.keys(thisMembersLogs).includes(warId.toString())) {
 
-                        console.log("this war is already stored, dont store it again")
-                    } else {
+    //                     console.log("this war is already stored, dont store it again")
+    //                 } else {
 
-                        console.log("war not stored yet, store it now.")
-                        parsedLogs[memberId] = {...parsedLogs[memberId] , [warId] : memberData}
-                        localStorage.setItem("memberLogs", JSON.stringify(parsedLogs))
-                        setNewLocalData(true)
+    //                     console.log("war not stored yet, store it now.")
+    //                     parsedLogs[memberId] = {...parsedLogs[memberId] , [warId] : memberData}
+    //                     localStorage.setItem("memberLogs", JSON.stringify(parsedLogs))
+    //                     setNewLocalData(true)
 
-                    }
-                    console.log("B: member logs", thisMembersLogs)
+    //                 }
+    //                 console.log("B: member logs", thisMembersLogs)
 
-                }
-                else {
-                    console.log("this member is not stored")
-                    const newlyLogged = {...parsedLogs, [memberId] : warObject}
+    //             }
+    //             else {
+    //                 console.log("this member is not stored")
+    //                 const newlyLogged = {...parsedLogs, [memberId] : warObject}
                     
-                    localStorage.setItem("memberLogs", JSON.stringify(newlyLogged))
-                    setNewLocalData(true)
-                }
+    //                 localStorage.setItem("memberLogs", JSON.stringify(newlyLogged))
+    //                 setNewLocalData(true)
+    //             }
 
-            }
+    //         }
 
-        } else {
-            console.log("member logs not present")
+    //     } else {
+    //         console.log("member logs not present")
 
-            const memberObject = { [memberId]: warObject }
-            const convertedData = JSON.stringify(memberObject)
-            localStorage.setItem("memberLogs", convertedData)
-            setNewLocalData(true)
-        }
-    }
+    //         const memberObject = { [memberId]: warObject }
+    //         const convertedData = JSON.stringify(memberObject)
+    //         localStorage.setItem("memberLogs", convertedData)
+    //         setNewLocalData(true)
+    //     }
+    // }
     return (
         <>
             <div className="row-content" onClick={showMore}>
@@ -115,7 +117,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                     <p className="player-action-p">
                         <a data-tooltip-id="more-info-tooltip" data-tooltip-content={messageText} data-tooltip-place="bottom" href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"> </i></a>
                         <a data-tooltip-id="more-info-tooltip" data-tooltip-content={profileText} data-tooltip-place="bottom" href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i> </a>
-                        <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>
+                        <LocalDataStoreMember memberData={memberData} memberId={memberId} warId={warId} warObject={warObject} setState={setNewLocalData}/>
                     </p>
 
                     {warningIcon ? <p className="warning-p">Based on their faction Xanax use, {memberName} did not perform the number of attacks expected.</p> : null}
