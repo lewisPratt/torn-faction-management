@@ -1,74 +1,88 @@
 import type { SetStateAction, Dispatch } from "react"
+import type { warObject } from "../interfaces"
 
-interface localStoreProps{
-    memberData: object
-    warObject: object
+interface localStoreProps {
+    warObject: warObject
     memberId: number
     warId: number
-    setState: Dispatch<SetStateAction<boolean>>
+    setHasSaved: Dispatch<SetStateAction<boolean>>
 
 }
 
-function LocalDataStoreMember({memberData,memberId, warId,warObject,setState} : localStoreProps) {
-    
+function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: localStoreProps) {
+    const localLogs = localStorage.getItem("localLogs")
+
     function storeLocal() {
-        // console.log(warObject)
         //if overall memberslog item is present in local storage
-        if (localStorage.getItem("memberLogs")) {
 
-            //grab the memberslog item 
-            const loggedMembers = localStorage.getItem("memberLogs")
+        if (localLogs) {
+            //parse the string value back into JS object
+            const parsedLogs = JSON.parse(localLogs)
 
-            if (loggedMembers) {
-                //parse the string value back into JS object
-                const parsedLogs = JSON.parse(loggedMembers)
+            console.log("A: Parsed Logs", parsedLogs)
+            if (Object.keys(parsedLogs).includes(memberId.toString())) {
 
-                console.log("A: Parsed Logs", parsedLogs)
-                if (Object.keys(parsedLogs).includes(memberId.toString())) {
+                console.log("this member is stored")
 
-                    console.log("this member is stored")
+                const thisMembersLogs = parsedLogs[memberId]
 
-                    const thisMembersLogs = parsedLogs[memberId]
+                if (Object.keys(thisMembersLogs).includes(warId.toString())) {
 
-                    if (Object.keys(thisMembersLogs).includes(warId.toString())) {
+                    console.log("this war is already stored, dont store it again")
+                } else {
 
-                        console.log("this war is already stored, dont store it again")
-                    } else {
-
-                        console.log("war not stored yet, store it now.")
-                        parsedLogs[memberId] = { ...parsedLogs[memberId], [warId]: memberData }
-                        localStorage.setItem("memberLogs", JSON.stringify(parsedLogs))
-                        setState(true)
-
-                    }
-                    console.log("B: member logs", thisMembersLogs)
+                    console.log("war not stored yet, store it now.")
+                    parsedLogs[memberId] = { ...parsedLogs[memberId], ...warObject }
+                    localStorage.setItem("localLogs", JSON.stringify(parsedLogs))
+                    setHasSaved(true)
 
                 }
-                else {
-                    console.log("this member is not stored")
-                    const newlyLogged = { ...parsedLogs, [memberId]: warObject }
-
-                    localStorage.setItem("memberLogs", JSON.stringify(newlyLogged))
-                    setState(true)
-                }
+                console.log("B: member logs", thisMembersLogs)
 
             }
+            else {
+                console.log("this member is not stored")
+                const newlyLogged = { ...parsedLogs, [memberId]: warObject }
 
-        } else {
+                localStorage.setItem("localLogs", JSON.stringify(newlyLogged))
+                setHasSaved(true)
+            }
+
+        }
+
+        else {
             console.log("member logs not present")
 
             const memberObject = { [memberId]: warObject }
             const convertedData = JSON.stringify(memberObject)
-            localStorage.setItem("memberLogs", convertedData)
-            setState(true)
+            localStorage.setItem("localLogs", convertedData)
+            setHasSaved(true)
         }
     }
+    //needs refactoring to fit DRY - but working in current state
+    let alreadyDownloaded : boolean = false
+    if (localLogs) {
+
+
+        const parsedLogs = JSON.parse(localLogs)
+        if (Object.keys(parsedLogs).includes(memberId.toString())) {
+            //member is stored locally now check if war is
+            if (Object.keys(parsedLogs[memberId]).includes(warId.toString())) {
+                alreadyDownloaded = true
+            }
+            else {
+                alreadyDownloaded = false
+            }
+        }
+    }
+
     return (
-
-        <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>
-
+        <>
+        {alreadyDownloaded ?  <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Already stored." data-tooltip-place="bottom" ><i className="bi bi-check-square"></i> </span>  
+        :  <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span> }
+        
+        </>
     )
-
 
 }
 

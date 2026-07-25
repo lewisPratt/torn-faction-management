@@ -1,5 +1,6 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, Title, Tooltip, Legend, LineElement, PointElement } from 'chart.js'
-import { Bar, Line, } from 'react-chartjs-2'
+import {Line, } from 'react-chartjs-2'
+import type { warObject } from '../interfaces'
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
 interface memberChartProps {
@@ -22,26 +23,13 @@ interface parsedDataObject {
         }
     }
 }
-interface warObject {
-    [warId: string]: {
-        warEnd: number
-        opponentName: string
-        warScore: number
-        xanaxTaken: number
-        memberAttacks: number
-        participationPerc: number
-        wartimeAttacksTotal: number
-        attackPotential: number
-        medsUsed: number
-        ipecacUsed: number
-    }
-}
+
 
 function MemberChart({ memberId }: memberChartProps) {
 
 
     //grab the memberslog item 
-    const loggedMembers = localStorage.getItem("memberLogs")
+    const loggedMembers = localStorage.getItem("localLogs")
     let memberWars: warObject
     if (loggedMembers) {
         const parsedData: parsedDataObject = JSON.parse(loggedMembers)
@@ -52,8 +40,6 @@ function MemberChart({ memberId }: memberChartProps) {
             let warLabels: string[] = []
             let warTargetAttacksDataset: number[] = []
             let participationPercDataset: number[] = []
-            let outsideAttacksDataset: number[] = []
-            let attackPotentialDataset: number[] = []
             let scoreDataset: number[] = []
 
             memberWars = parsedData[memberId.toString()]
@@ -63,6 +49,7 @@ function MemberChart({ memberId }: memberChartProps) {
                 warLabels.push(warEntry.opponentName)
                 warTargetAttacksDataset.push(warEntry.memberAttacks)
                 participationPercDataset.push(warEntry.participationPerc)
+                scoreDataset.push(warEntry.warScore)
             })
 
             console.log()
@@ -96,6 +83,15 @@ function MemberChart({ memberId }: memberChartProps) {
                         data: participationPercDataset,
                         fill: false,
                         borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                        hidden: true
+
+                    },
+                      {
+                        label: 'Score',
+                        data: scoreDataset,
+                        fill: false,
+                        borderColor: 'rgb(220, 255, 107)',
                         tension: 0.1,
                         hidden: true
 
