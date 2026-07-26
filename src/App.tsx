@@ -6,7 +6,6 @@ import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
 import RankedWarSelector from './components/RankedWarSelector'
 import type {firstViewProps } from './interfaces'
-import LatestUpdates from './components/LastestUpdates'
 
 
 function App() {

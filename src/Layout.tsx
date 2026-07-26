@@ -1,7 +1,6 @@
 import ClearKeyButton from "./components/ClearKeyButton"
 import type { LayoutProps } from "./interfaces"
 import DarkMode from "./components/DarkMode"
-import LatestUpdates from "./components/LastestUpdates"
 
 
 function Layout({ children, handleClearKey }: LayoutProps) {
