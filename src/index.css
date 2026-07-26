@@ -30,6 +30,7 @@ GLOBAL VARIABLES
   --stats-container-div-bg: #dcdcdc;
   --select-bg: #3b3b3b;
   --select-color: #141414;
+  --player-action-icons: #6b6375;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Russo One', Roboto, sans-serif;
@@ -77,6 +78,8 @@ DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
     --stats-container-div-bg: #585858;
     --select-bg: #3b3b3b;
     --select-color: #f1f1f1;
+    --player-action-icons: #d3d3d3;
+
   }
 }
 
@@ -109,6 +112,8 @@ LIGHT/DARK MODE THEMES
   --stats-container-div-bg: #585858;
   --select-bg: #3b3b3b;
   --select-color: #f1f1f1;
+  --player-action-icons: #d3d3d3;
+
 }
 
 :root[data-theme="light"] {
@@ -135,6 +140,7 @@ LIGHT/DARK MODE THEMES
   --stats-container-div-bg: #ffffff;
   --select-bg: #f1f1f1;
   --select-color: #141414;
+  --player-action-icons: #6b6375;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Russo One', Roboto, sans-serif;
@@ -164,7 +170,7 @@ button {
   padding: 10px;
   background: var(--button-bg);
   border: 1px solid black;
-  border-radius:5px;
+  border-radius: 5px;
   cursor: pointer;
   color: black;
   font-weight: bold;
@@ -538,17 +544,16 @@ CHART
   width: 100%;
   height: 600px;
 }
-
-.line-graph-container{
+.line-graph-container {
   position: relative;
-  height:250px;
-  width:100%;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding:20px;
+  height: 250px;
+  width: 100%;
+
 }
+.line-graph-container canvas{
+  margin:30px 20px;
+}
+
 /*//////////////////////////////////////////
 
 REPORT ROW
@@ -615,6 +620,7 @@ REPORT ROW
   margin: auto;
   border-radius: 0 0 5px 5px;
   background-color: var(--more-info-container-bg);
+  overflow: hidden;
 }
 
 .more-info-container h3 {
@@ -710,24 +716,36 @@ REPORT ROW
   color: darkred;
 
 }
-.no-local-data-p{
+
+.no-local-data-p {
   font-size: .8rem;
   text-align: center;
 }
-.store-locally-icon{
-  color:gold;
+
+.store-locally-icon {
+
   cursor: pointer;
 }
-.stored-icon{
-  color:lightgreen;
+
+.stored-icon {
+  color: lightgreen;
 }
-.stored-icon-trash{
-  color:crimson;
+
+.stored-icon-trash {
+  color: crimson;
   cursor: pointer;
 }
-.player-action-p span, .player-action-p a{
+
+.player-action-p span,
+.player-action-p a {
   margin: 0 5px;
 }
+
+.player-action-p a,
+.player-action-p {
+  color: var(--player-action-icons);
+}
+
 /*//////////////////////////////////////////
 
 RANKED WAR SELECTOR

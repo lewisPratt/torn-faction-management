@@ -77,7 +77,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
 
         delete parsedLogs[memberId][warId]
 
-        if(Object.values(parsedLogs[memberId]).length == 0) delete parsedLogs[memberId]
+        if(Object.values(parsedLogs[memberId]).length === 0) delete parsedLogs[memberId]
 
         const updatedLocalLogs = JSON.stringify(parsedLogs)
         localStorage.setItem("localLogs", updatedLocalLogs)
@@ -85,8 +85,6 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
         setHasSaved(prev => !prev)
 
     }
-
-
 
     return (
         <>
@@ -98,7 +96,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
                     <i className="bi bi-trash"></i>
                 </span>
             </>
-                : <span className="store-locally-icon" data-tooltip-id="more-info-tooltip" data-tooltip-content="Store dataset locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>}
+                : <span className="store-locally-icon" data-tooltip-id="more-info-tooltip" data-tooltip-content="Store dataset locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-arrow-down-square"></i> </span>}
 
         </>
     )

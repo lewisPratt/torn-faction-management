@@ -1,6 +1,7 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, Title, Tooltip, Legend, LineElement, PointElement } from 'chart.js'
-import {Line, } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 import type { warObject } from '../interfaces'
+import type { TooltipItem } from 'chart.js'
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
 interface memberChartProps {
@@ -41,10 +42,14 @@ function MemberChart({ memberId }: memberChartProps) {
             let warTargetAttacksDataset: number[] = []
             let participationPercDataset: number[] = []
             let scoreDataset: number[] = []
+            let warEndDates: string[] = []
 
             memberWars = parsedData[memberId.toString()]
-            console.log(memberWars)
             Object.values(memberWars).forEach((warEntry) => {
+                const warEnd = new Date(warEntry.warEnd * 1000)
+                const formattedDate = warEnd.toLocaleDateString('en-GB', { year: '2-digit', month: '2-digit', day: '2-digit' });
+
+                warEndDates.push(formattedDate)
                 xanaxUsedDataset.push(warEntry.xanaxTaken)
                 warLabels.push(warEntry.opponentName)
                 warTargetAttacksDataset.push(warEntry.memberAttacks)
@@ -52,11 +57,33 @@ function MemberChart({ memberId }: memberChartProps) {
                 scoreDataset.push(warEntry.warScore)
             })
 
-            console.log()
             const options = {
                 responsive: true,
                 maintainAspectRatio: false,
-
+                layout: {
+                    padding: 10
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            align: 'inner' as const
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (context: TooltipItem<'line'>) => {
+                                const index = context.dataIndex
+                                const date = warEndDates[index]
+                                return [
+                                    `${context.dataset.label}: ${context.formattedValue}`,
+                                    `End date: ${date}` 
+                                ]
+                            }
+                        }
+                    }
+                }
             }
             const data = {
                 labels: warLabels,
@@ -87,7 +114,7 @@ function MemberChart({ memberId }: memberChartProps) {
                         hidden: true
 
                     },
-                      {
+                    {
                         label: 'Score',
                         data: scoreDataset,
                         fill: false,
@@ -105,6 +132,7 @@ function MemberChart({ memberId }: memberChartProps) {
                     <div className="line-graph-container">
                         <Line data={data} options={options} />
                     </div>
+
                 </>
             )
         }
@@ -112,7 +140,7 @@ function MemberChart({ memberId }: memberChartProps) {
             return (
                 <>
                     <h3>Historical Performance</h3>
-                    <p className="no-local-data-p">No locally stored data for chart to display.</p>
+                    <p className="no-local-data-p">No locally stored data to display.</p>
                 </>
             )
         }

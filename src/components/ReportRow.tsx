@@ -48,7 +48,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
         }
     }
 
-  
+
     return (
         <>
             <div className="row-content" onClick={showMore}>
@@ -90,7 +90,9 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                             <p>{filteredNews?.ipecacUsed}</p>
                         </div>
                     </div>
-                    <MemberChart memberId={memberId} />
+                    
+                        <MemberChart memberId={memberId} />
+                
                     <ThisMemberDetails memberId={memberId} />
 
                 </div>
