@@ -1,3 +1,5 @@
+import type { Dispatch,SetStateAction } from "react"
+
 export interface TornUserData {
     name: string
     id: number
@@ -191,7 +193,7 @@ export interface warChartProps {
 }
 
 export interface warObject {
-    [warId: string]: {
+    [warId: number]: {
         warEnd: number
         opponentName: string
         warScore: number
@@ -203,4 +205,15 @@ export interface warObject {
         medsUsed: number
         ipecacUsed: number
     }
+}
+
+export interface localStoreProps {
+    warObject: warObject
+    memberId: number
+    warId: number
+    setHasSaved: Dispatch<SetStateAction<boolean>>
+
+}
+export interface parsedLogsShape{
+    [memberId : number]: warObject
 }

@@ -1,13 +1,6 @@
-import type { SetStateAction, Dispatch } from "react"
-import type { warObject } from "../interfaces"
+import type { warObject , parsedLogsShape, localStoreProps} from "../interfaces"
 
-interface localStoreProps {
-    warObject: warObject
-    memberId: number
-    warId: number
-    setHasSaved: Dispatch<SetStateAction<boolean>>
 
-}
 
 function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: localStoreProps) {
     const localLogs = localStorage.getItem("localLogs")
@@ -34,7 +27,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
                     console.log("war not stored yet, store it now.")
                     parsedLogs[memberId] = { ...parsedLogs[memberId], ...warObject }
                     localStorage.setItem("localLogs", JSON.stringify(parsedLogs))
-                    setHasSaved(true)
+                    setHasSaved(prev => !prev)
 
                 }
                 console.log("B: member logs", thisMembersLogs)
@@ -45,7 +38,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
                 const newlyLogged = { ...parsedLogs, [memberId]: warObject }
 
                 localStorage.setItem("localLogs", JSON.stringify(newlyLogged))
-                setHasSaved(true)
+                setHasSaved(prev => !prev)
             }
 
         }
@@ -56,9 +49,9 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
             const memberObject = { [memberId]: warObject }
             const convertedData = JSON.stringify(memberObject)
             localStorage.setItem("localLogs", convertedData)
-            setHasSaved(true)
+            setHasSaved(prev => !prev)
         }
-    } 
+    }
 
 
     function isWarStored(memberId: number, warId: number): boolean {
@@ -71,14 +64,41 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
         return Object.keys(parsedLogs[memberId]).includes(warId.toString())
     }
 
-    let alreadyDownloaded = isWarStored(memberId, warId)
 
-   
+    function deleteLocal() {
+
+        if (!isWarStored(memberId, warId)) return
+        if (!localLogs) return
+
+        const parsedLogs : parsedLogsShape = JSON.parse(localLogs)
+        const memberLogs : warObject = parsedLogs[memberId]
+
+        if(!Object.keys(memberLogs).includes(warId.toString())) return
+
+        delete parsedLogs[memberId][warId]
+
+        if(Object.values(parsedLogs[memberId]).length == 0) delete parsedLogs[memberId]
+
+        const updatedLocalLogs = JSON.stringify(parsedLogs)
+        localStorage.setItem("localLogs", updatedLocalLogs)
+        //trigger rerender by changing the state to the opposite of its current value
+        setHasSaved(prev => !prev)
+
+    }
+
+
 
     return (
         <>
-            {alreadyDownloaded ? <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Already stored." data-tooltip-place="bottom" ><i className="bi bi-check-square"></i> </span>
-                : <span data-tooltip-id="more-info-tooltip" data-tooltip-content="Store war performance locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>}
+            {isWarStored(memberId, warId) ? <>
+                <span className="stored-icon" data-tooltip-id="more-info-tooltip" data-tooltip-content="Already stored." data-tooltip-place="bottom" >
+                    <i className="bi bi-check-square"></i>
+                </span>
+                <span className="stored-icon-trash" data-tooltip-id="more-info-tooltip" data-tooltip-content="Delete dataset from local storage." data-tooltip-place="bottom" onClick={deleteLocal}>
+                    <i className="bi bi-trash"></i>
+                </span>
+            </>
+                : <span className="store-locally-icon" data-tooltip-id="more-info-tooltip" data-tooltip-content="Store dataset locally" data-tooltip-place="bottom" onClick={storeLocal}><i className="bi bi-box-arrow-down"></i> </span>}
 
         </>
     )

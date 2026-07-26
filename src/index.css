@@ -714,6 +714,20 @@ REPORT ROW
   font-size: .8rem;
   text-align: center;
 }
+.store-locally-icon{
+  color:gold;
+  cursor: pointer;
+}
+.stored-icon{
+  color:lightgreen;
+}
+.stored-icon-trash{
+  color:crimson;
+  cursor: pointer;
+}
+.player-action-p span, .player-action-p a{
+  margin: 0 5px;
+}
 /*//////////////////////////////////////////
 
 RANKED WAR SELECTOR
