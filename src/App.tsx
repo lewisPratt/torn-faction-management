@@ -6,6 +6,7 @@ import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
 import RankedWarSelector from './components/RankedWarSelector'
 import type {firstViewProps } from './interfaces'
+import LatestUpdates from './components/LastestUpdates'
 
 
 function App() {
@@ -88,6 +89,7 @@ function FirstView({ userData, errorMsg, apiKey }: firstViewProps) {
             <CustomGreeting id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id} />
 
           </header>
+         
           <FactionInfoCard uData={userData} apiKey={apiKey} />
           <section id="main-content">
          
@@ -103,7 +105,7 @@ function FirstView({ userData, errorMsg, apiKey }: firstViewProps) {
           ) : (
             <p className="card">Loading..</p>
           )}
-
+        
         </section>
       )}
     </>

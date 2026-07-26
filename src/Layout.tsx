@@ -1,6 +1,7 @@
 import ClearKeyButton from "./components/ClearKeyButton"
 import type { LayoutProps } from "./interfaces"
 import DarkMode from "./components/DarkMode"
+import LatestUpdates from "./components/LastestUpdates"
 
 
 function Layout({ children, handleClearKey }: LayoutProps) {
@@ -9,7 +10,7 @@ function Layout({ children, handleClearKey }: LayoutProps) {
         <>
 
             {children}
-
+         
             <footer>
                 <ClearKeyButton handleClearKey={handleClearKey} />
                 <a href="https://github.com/lewisPratt/torn-faction-management/issues" target="_blank"><button>Bugs & Feature Requests</button></a>

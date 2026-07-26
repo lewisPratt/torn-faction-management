@@ -6,6 +6,7 @@ import type { CSSProperties } from 'react'
 import { Tooltip } from 'react-tooltip'
 import LegendReportRow from './LegendReportRow'
 import { PulseLoader } from "react-spinners";
+import LatestUpdates from './LastestUpdates'
 
 interface opponentObject {
     id: number
@@ -30,7 +31,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
     };
 
-    const noReport = <div className="card"><p className="card-content">No report generated....yet</p></div>
+    const noReport = <><div className="card"><p className="card-content">No report generated....yet</p></div><LatestUpdates /></>
 
     useEffect(() => {
 
@@ -245,6 +246,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
                             }
                         </form>
+                        
                         //A: else show reset button to clear the selected war and trigger rerender to show war selector ui
                         : (
                             <>
