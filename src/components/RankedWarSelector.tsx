@@ -7,7 +7,12 @@ import { Tooltip } from 'react-tooltip'
 import LegendReportRow from './LegendReportRow'
 import { PulseLoader } from "react-spinners";
 import LatestUpdates from './LastestUpdates'
+import { supabase } from './supabaseClient'
 
+const trackEvent = async (eventName: string) => {
+    const { error } = await supabase.rpc('increment_event', { event_name: eventName })
+    if (error) console.error('Error tracking event:', error)
+}
 interface opponentObject {
     id: number
     chain: number
@@ -180,6 +185,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
             setWarReport(report)
             setLoading(false)
+            trackEvent("report_created")
 
             errorMsg ? setErrorMsg("") : null
 
