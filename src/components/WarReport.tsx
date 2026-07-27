@@ -6,6 +6,7 @@ import ReportRow from './ReportRow'
 import XanaxCost from './XanaxCost'
 import WarChart from './WarChart'
 import { Tooltip } from 'react-tooltip'
+import ClearLocalDataButton from './ClearLocalDataButton'
 interface fullAttacksData {
     attacker: {
         id: number
@@ -22,6 +23,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
     const [attacksData, setAttacksData] = useState<fullAttacksData[] | null>(null)
     const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
     const [earliestnewsEntry, setEarliestNewsEntry] = useState<number>(0)
+    const [clearedLocalData, setClearedLocalData] = useState<boolean>(false)
     const xanaxEnergyGain = 250
 
     useEffect(() => {
@@ -262,6 +264,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
                                     </div>
                                 )
                             })}
+                            <ClearLocalDataButton setHasCleared={setClearedLocalData} />
                         </div>
                     </div>
                 </div>

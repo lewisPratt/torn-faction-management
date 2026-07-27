@@ -1,11 +1,16 @@
-import type { warObject , parsedLogsShape, localStoreProps} from "../interfaces"
+import type { warObject, parsedLogsShape, localStoreProps } from "../interfaces"
+import { supabase } from './supabaseClient'
 
-
+const trackEvent = async (eventName: string) => {
+    const { error } = await supabase.rpc('increment_event', { event_name: eventName })
+    if (error) console.error('Error tracking event:', error)
+}
 
 function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: localStoreProps) {
-    const localLogs = localStorage.getItem("localLogs")
-
+    
+    
     function storeLocal() {
+        const localLogs = localStorage.getItem("localLogs")
         //if overall memberslog item is present in local storage
 
         if (localLogs) {
@@ -27,7 +32,9 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
                     console.log("war not stored yet, store it now.")
                     parsedLogs[memberId] = { ...parsedLogs[memberId], ...warObject }
                     localStorage.setItem("localLogs", JSON.stringify(parsedLogs))
+                    trackEvent("downloaded_datasets")
                     setHasSaved(prev => !prev)
+
 
                 }
                 console.log("B: member logs", thisMembersLogs)
@@ -38,6 +45,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
                 const newlyLogged = { ...parsedLogs, [memberId]: warObject }
 
                 localStorage.setItem("localLogs", JSON.stringify(newlyLogged))
+                trackEvent("downloaded_datasets")
                 setHasSaved(prev => !prev)
             }
 
@@ -49,6 +57,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
             const memberObject = { [memberId]: warObject }
             const convertedData = JSON.stringify(memberObject)
             localStorage.setItem("localLogs", convertedData)
+            trackEvent("downloaded_datasets")
             setHasSaved(prev => !prev)
         }
     }
@@ -66,18 +75,18 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
 
 
     function deleteLocal() {
-
+        const localLogs = localStorage.getItem("localLogs")
         if (!isWarStored(memberId, warId)) return
         if (!localLogs) return
 
-        const parsedLogs : parsedLogsShape = JSON.parse(localLogs)
-        const memberLogs : warObject = parsedLogs[memberId]
+        const parsedLogs: parsedLogsShape = JSON.parse(localLogs)
+        const memberLogs: warObject = parsedLogs[memberId]
 
-        if(!Object.keys(memberLogs).includes(warId.toString())) return
+        if (!Object.keys(memberLogs).includes(warId.toString())) return
 
         delete parsedLogs[memberId][warId]
 
-        if(Object.values(parsedLogs[memberId]).length === 0) delete parsedLogs[memberId]
+        if (Object.values(parsedLogs[memberId]).length === 0) delete parsedLogs[memberId]
 
         const updatedLocalLogs = JSON.stringify(parsedLogs)
         localStorage.setItem("localLogs", updatedLocalLogs)
