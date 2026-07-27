@@ -7,7 +7,6 @@ import LocalDataStoreMember from './LocalDataStoreMember'
 
 function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName, setLocalDataChange}: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
-    const [_newLocalData, setNewLocalData] = useState<boolean>(false)
 
     const warningIcon = filteredNews && filteredNews.attackPotential > memberAttacks ? <span className="warning-icon bi bi-exclamation-triangle-fill"></span>
         : null

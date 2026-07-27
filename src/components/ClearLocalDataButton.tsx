@@ -3,11 +3,11 @@ import type { Dispatch, SetStateAction } from "react"
 import { Tooltip } from "react-tooltip"
 
 interface clearLocalProps{
-    setHasCleared: Dispatch<SetStateAction<boolean>>
+    setLocalDataChange: Dispatch<SetStateAction<boolean>>
     
 }
 
-function ClearLocalDataButton({setHasCleared} : clearLocalProps) {
+function ClearLocalDataButton({setLocalDataChange} : clearLocalProps) {
     
     
     const buttonText = localStorage.getItem("localLogs") ? "Clear Local Data" : "No Local Data"
@@ -20,7 +20,7 @@ function ClearLocalDataButton({setHasCleared} : clearLocalProps) {
            
 
         localStorage.removeItem("localLogs")
-        setHasCleared(prev => !prev)
+        setLocalDataChange(prev => !prev)
       
 
     }
