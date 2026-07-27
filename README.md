@@ -35,8 +35,8 @@ Not vibe coded.
 
 * Grouping of faction member rows based on criteria (grouping underperforming member rows together)
 * Detailed Chain report for each war
-* Removal of all cached data
 * Add export data option to export war data as CSV/spreadsheet format
+* war reward payout calculator based on different aspects of members pariticipation in a war. (eg number of attacks, score etc)
 
 ## Feature Breakdown
 

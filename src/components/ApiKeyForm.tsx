@@ -7,7 +7,7 @@ function ApiKeyForm({ inputValue, setInputValue, handleSubmit }: ApiKeyFormProps
   return (
     <>
       <header id="login-header">
-        <h1>Faction Ledger</h1>
+        <h1>Torn Ledger</h1>
         <h2>A tool that breaks down player activity during ranked wars.</h2>
       </header>
       <main id="login-main-content">
