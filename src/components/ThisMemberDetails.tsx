@@ -2,14 +2,7 @@ import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
 import { useState, useEffect } from 'react'
 
-interface thisMemberDetailsProps {
-    memberId: number
-}
-interface memberDetailsData {
-    lastActive: string
-    donatorStatus: string
-    level: number
-}
+import type { thisMemberDetailsProps, memberDetailsData } from '../interfaces'
 
 function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
     const apiKey = useContext(ApiKeyContext)
@@ -47,14 +40,14 @@ function ThisMemberDetails({ memberId }: thisMemberDetailsProps) {
     }, [])
 
     if (!memberDetails) return
-    if(errorMsg) return <p id="report-error-message">{errorMsg}</p>
-    
+    if (errorMsg) return <p id="report-error-message">{errorMsg}</p>
+
     return (
-       
+
         <div className="member-details-container">
             <p>Active {memberDetails.lastActive} | {!memberDetails.donatorStatus ? "Player" : memberDetails.donatorStatus} | Level {memberDetails.level}</p>
         </div>
-  
+
     )
 }
 

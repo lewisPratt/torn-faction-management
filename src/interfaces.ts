@@ -1,4 +1,4 @@
-import type { Dispatch,SetStateAction } from "react"
+import type { Dispatch, SetStateAction } from "react"
 
 export interface TornUserData {
     name: string
@@ -157,7 +157,7 @@ export interface MemberRow {
     armouryTime: number
     warEndDate: number
     opponentName: string
-    setLocalDataChange: Dispatch<SetStateAction<boolean>> 
+    setLocalDataChange: Dispatch<SetStateAction<boolean>>
 
 }
 export interface MembersArmouryProps {
@@ -215,6 +215,55 @@ export interface localStoreProps {
     setLocalDataChange: Dispatch<SetStateAction<boolean>>
 
 }
-export interface parsedLogsShape{
-    [memberId : number]: warObject
+export interface parsedLogsShape {
+    [memberId: number]: warObject
+}
+
+export interface fullAttacksData {
+    attacker: {
+        id: number
+    }
+}
+export interface thisMemberDetailsProps {
+    memberId: number
+}
+export interface memberDetailsData {
+    lastActive: string
+    donatorStatus: string
+    level: number
+}
+export interface opponentObject {
+    id: number
+    chain: number
+    name: string
+    score: number
+}
+
+export interface memberChartProps {
+    memberId: number
+}
+
+export interface parsedDataObject {
+    [memberId: string]: {
+        [warId: string]: {
+            warEnd: number
+            opponentName: string
+            warScore: number
+            xanaxTaken: number
+            memberAttacks: number
+            participationPerc: number
+            wartimeAttacksTotal: number
+            attackPotential: number
+            medsUsed: number
+            ipecacUsed: number
+        }
+    }
+}
+
+export interface xanaxCostProps {
+    totalNumber: number
+}
+export interface clearLocalProps {
+    setLocalDataChange: Dispatch<SetStateAction<boolean>>
+
 }

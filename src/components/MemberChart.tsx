@@ -1,29 +1,11 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, Title, Tooltip, Legend, LineElement, PointElement } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import type { warObject } from '../interfaces'
+import type { warObject , parsedDataObject, memberChartProps} from '../interfaces'
 import type { TooltipItem } from 'chart.js'
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
-interface memberChartProps {
-    memberId: number
-}
 
-interface parsedDataObject {
-    [memberId: string]: {
-        [warId: string]: {
-            warEnd: number
-            opponentName: string
-            warScore: number
-            xanaxTaken: number
-            memberAttacks: number
-            participationPerc: number
-            wartimeAttacksTotal: number
-            attackPotential: number
-            medsUsed: number
-            ipecacUsed: number
-        }
-    }
-}
+ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
+
 
 
 function MemberChart({ memberId }: memberChartProps) {

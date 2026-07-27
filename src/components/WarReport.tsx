@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { ApiKeyContext } from './ApiKeyContext'
-import type { warReportProps, ReportData, armouryNewsData, warMemberDataType } from "../interfaces"
+import type { warReportProps, ReportData, armouryNewsData, warMemberDataType, fullAttacksData } from "../interfaces"
 import ReportRow from './ReportRow'
 import XanaxCost from './XanaxCost'
 import WarChart from './WarChart'
 import { Tooltip } from 'react-tooltip'
 import ClearLocalDataButton from './ClearLocalDataButton'
-interface fullAttacksData {
-    attacker: {
-        id: number
-    }
-}
-//for accumulating and storing individual member performance from different wars
 
-function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentName}: warReportProps) {
+
+function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
@@ -23,7 +18,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
     const [attacksData, setAttacksData] = useState<fullAttacksData[] | null>(null)
     const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
     const [earliestnewsEntry, setEarliestNewsEntry] = useState<number>(0)
-    const[_localDataChange, setLocalDataChange] = useState<boolean>(false)
+    const [_localDataChange, setLocalDataChange] = useState<boolean>(false)
 
     const xanaxEnergyGain = 250
 
@@ -76,7 +71,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
                     //set variable for the earliest entry retrieved from armoury news
 
                     console.log(data)
-                    if (data.news.length > 0 && Object.keys(data.news[0]).includes("timestamp") ) {
+                    if (data.news.length > 0 && Object.keys(data.news[0]).includes("timestamp")) {
                         //sets earliest to the last element of each pages news retrieved, so last page will overwrite and become the accurate last entry
                         earliestEntry = data.news.slice(-1)[0].timestamp
                     }
@@ -239,7 +234,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
                                     barClass = "participation-bar-warning"
                                     barWidth = "100%"
                                 }
-                                
+
                                 return (
                                     <div key={memberId} className="row-container">
                                         <ReportRow

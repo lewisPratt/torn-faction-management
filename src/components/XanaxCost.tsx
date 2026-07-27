@@ -3,9 +3,7 @@ import { ApiKeyContext } from './ApiKeyContext'
 import { useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-interface xanaxCostProps {
-    totalNumber: number
-}
+import type { xanaxCostProps } from '../interfaces'
 
 
 function XanaxCost({ totalNumber }: xanaxCostProps) {

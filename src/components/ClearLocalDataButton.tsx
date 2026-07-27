@@ -1,11 +1,6 @@
 
-import type { Dispatch, SetStateAction } from "react"
 import { Tooltip } from "react-tooltip"
-
-interface clearLocalProps{
-    setLocalDataChange: Dispatch<SetStateAction<boolean>>
-    
-}
+import type { clearLocalProps } from "../interfaces"
 
 function ClearLocalDataButton({setLocalDataChange} : clearLocalProps) {
     

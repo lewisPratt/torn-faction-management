@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import WarReport from './WarReport'
-import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps } from '../interfaces'
+import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps, opponentObject } from '../interfaces'
 import type { CSSProperties } from 'react'
 import { Tooltip } from 'react-tooltip'
 import LegendReportRow from './LegendReportRow'
@@ -13,12 +13,7 @@ const trackEvent = async (eventName: string) => {
     const { error } = await supabase.rpc('increment_event', { event_name: eventName })
     if (error) console.error('Error tracking event:', error)
 }
-interface opponentObject {
-    id: number
-    chain: number
-    name: string
-    score: number
-}
+
 function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [rankedWarsList, setRankedWarsListData] = useState<RankedWarsListData | null>(null)
