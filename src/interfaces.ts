@@ -157,6 +157,7 @@ export interface MemberRow {
     armouryTime: number
     warEndDate: number
     opponentName: string
+    setLocalDataChange: Dispatch<SetStateAction<boolean>> 
 
 }
 export interface MembersArmouryProps {
@@ -211,7 +212,7 @@ export interface localStoreProps {
     warObject: warObject
     memberId: number
     warId: number
-    setHasSaved: Dispatch<SetStateAction<boolean>>
+    setLocalDataChange: Dispatch<SetStateAction<boolean>>
 
 }
 export interface parsedLogsShape{

@@ -5,7 +5,7 @@ import MemberChart from './MemberChart'
 import LocalDataStoreMember from './LocalDataStoreMember'
 
 
-function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName }: MemberRow) {
+function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName, setLocalDataChange}: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
     const [_newLocalData, setNewLocalData] = useState<boolean>(false)
 
@@ -68,7 +68,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                     <p className="player-action-p">
                         <a data-tooltip-id="more-info-tooltip" data-tooltip-content={messageText} data-tooltip-place="bottom" href={`https://www.torn.com/messages.php#/p=compose&XID=${memberId}`} target="_blank"><i className="bi bi-envelope-arrow-up"> </i></a>
                         <a data-tooltip-id="more-info-tooltip" data-tooltip-content={profileText} data-tooltip-place="bottom" href={`https://www.torn.com/profiles.php?XID=${memberId}`} target="_blank"><i className="bi bi-person-circle"></i> </a>
-                        <LocalDataStoreMember memberId={memberId} warId={warId} warObject={warObject} setHasSaved={setNewLocalData} />
+                        <LocalDataStoreMember memberId={memberId} warId={warId} warObject={warObject} setLocalDataChange={setLocalDataChange}/>
                     </p>
 
                     {warningIcon ? <p className="warning-p">Based on their faction Xanax use, {memberName} did not perform the number of attacks expected.</p> : null}

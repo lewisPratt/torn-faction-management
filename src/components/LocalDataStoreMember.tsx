@@ -6,9 +6,9 @@ const trackEvent = async (eventName: string) => {
     if (error) console.error('Error tracking event:', error)
 }
 
-function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: localStoreProps) {
-    
-    
+function LocalDataStoreMember({ memberId, warId, warObject, setLocalDataChange }: localStoreProps) {
+
+
     function storeLocal() {
         const localLogs = localStorage.getItem("localLogs")
         //if overall memberslog item is present in local storage
@@ -33,7 +33,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
                     parsedLogs[memberId] = { ...parsedLogs[memberId], ...warObject }
                     localStorage.setItem("localLogs", JSON.stringify(parsedLogs))
                     trackEvent("downloaded_datasets")
-                    setHasSaved(prev => !prev)
+                    setLocalDataChange(prev => !prev)
 
 
                 }
@@ -46,7 +46,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
 
                 localStorage.setItem("localLogs", JSON.stringify(newlyLogged))
                 trackEvent("downloaded_datasets")
-                setHasSaved(prev => !prev)
+                setLocalDataChange(prev => !prev)
             }
 
         }
@@ -58,7 +58,7 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
             const convertedData = JSON.stringify(memberObject)
             localStorage.setItem("localLogs", convertedData)
             trackEvent("downloaded_datasets")
-            setHasSaved(prev => !prev)
+            setLocalDataChange(prev => !prev)
         }
     }
 
@@ -88,10 +88,16 @@ function LocalDataStoreMember({ memberId, warId, warObject, setHasSaved }: local
 
         if (Object.values(parsedLogs[memberId]).length === 0) delete parsedLogs[memberId]
 
-        const updatedLocalLogs = JSON.stringify(parsedLogs)
-        localStorage.setItem("localLogs", updatedLocalLogs)
+        //check to see if the delete entry was the last in the logs object
+        if (Object.keys(parsedLogs).length != 0) {
+            const updatedLocalLogs = JSON.stringify(parsedLogs)
+            localStorage.setItem("localLogs", updatedLocalLogs)
+        }
+        else {
+            localStorage.removeItem("localLogs")
+        }
         //trigger rerender by changing the state to the opposite of its current value
-        setHasSaved(prev => !prev)
+        setLocalDataChange(prev => !prev)
 
     }
 

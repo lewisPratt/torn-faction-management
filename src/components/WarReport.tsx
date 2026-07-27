@@ -24,6 +24,8 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
     const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
     const [earliestnewsEntry, setEarliestNewsEntry] = useState<number>(0)
     const [clearedLocalData, setClearedLocalData] = useState<boolean>(false)
+    const[localDataChange, setLocalDataChange] = useState<boolean>(false)
+
     const xanaxEnergyGain = 250
 
     useEffect(() => {
@@ -260,6 +262,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime , opponentN
                                             participationBarClass={barClass}
                                             armouryTime={armouryTime}
                                             warEndDate={warEnd}
+                                            setLocalDataChange={setLocalDataChange}
                                         />
                                     </div>
                                 )

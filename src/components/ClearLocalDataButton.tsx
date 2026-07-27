@@ -1,8 +1,10 @@
 
 import type { Dispatch, SetStateAction } from "react"
+import { Tooltip } from "react-tooltip"
 
 interface clearLocalProps{
     setHasCleared: Dispatch<SetStateAction<boolean>>
+    
 }
 
 function ClearLocalDataButton({setHasCleared} : clearLocalProps) {
@@ -19,13 +21,15 @@ function ClearLocalDataButton({setHasCleared} : clearLocalProps) {
 
         localStorage.removeItem("localLogs")
         setHasCleared(prev => !prev)
+      
 
     }
 
 
     return (
         <>
-            <button onClick={removeLocalData}>{buttonText}</button>
+            <button  data-tooltip-id="clear-data-button-tooltip" data-tooltip-content="Remove ALL faction member data stored locally." data-tooltip-place="right" onClick={removeLocalData}>{buttonText}</button>
+            <Tooltip id="clear-data-button-tooltip"/>
         </>
 
     )
