@@ -74,7 +74,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     let warWinner = null
     let warLoser = null
     let opponentName = ""
-    let opponent : opponentObject 
+    let opponent: opponentObject
     let myFaction = null
     // if a war has been selected from the dropdown
     if (selectedWar) {
@@ -165,7 +165,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 armouryDate = (selectedWar.start - 172800)
 
             }
-            
+
             const report = {
                 opponentName: opponent.name,
                 warStart: selectedWar.start,
@@ -187,10 +187,26 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
         }
     }
 
+    //format currency as user types into war reward input field
+    function formatCurrency(event: React.ChangeEvent<HTMLInputElement>) {
+        if (!event.target) return
+        // alert(event.target.value)
+        let currentValue = event.target.value
+        console.log(currentValue)
+        currentValue = currentValue.replace(/,/g, "")
+        currentValue = currentValue.replace("$", "")
+
+        if (currentValue === "" || isNaN(parseInt(currentValue))) {
+            currentValue = "0"
+        }
+        let formattedValue = new Intl.NumberFormat("en-GB").format(parseInt(currentValue))
+        event.target.value = "$".concat(formattedValue)
+    }
+
     return (
         <>
             <div className="card" id="ranked-war-selector-card">
-                 <Tooltip id="ranked-war-selector-tooltip" />
+                <Tooltip id="ranked-war-selector-tooltip" />
                 <div className="card-content" >
                     <PulseLoader
                         color={"#000000"}
@@ -238,7 +254,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                         <option value="1-day">1 day before war start</option>
                                         <option value="2-day">2 days before war start</option>
                                     </select>
-
+                                    <label htmlFor="war-reward-amount">War reward cash amount</label>
+                                    <input type="text" placeholder="War Reward amount" id="war-reward-amount" name="war-reward-amount" onChange={formatCurrency}></input>
                                     <button type="submit">Generate Review</button>
 
 
@@ -247,7 +264,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
 
                             }
                         </form>
-                        
+
                         //A: else show reset button to clear the selected war and trigger rerender to show war selector ui
                         : (
                             <>
@@ -272,7 +289,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War end" data-tooltip-place="right"><i className="bi bi-calendar-range-fill"></i> {convertedEndTimestamp.toLocaleString()}</span></p>
                                 <p><span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="War length" data-tooltip-place="right"><i className="bi bi-clock-history"></i> {warLengthDays}D, {warLengthHours}H, {warLengthMinutes}M</span></p>
                                 <p>#{selectedWar?.id}</p>
-                               
+
 
                             </div>
                         </>
