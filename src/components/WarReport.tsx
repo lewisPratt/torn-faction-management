@@ -9,7 +9,7 @@ import { Tooltip } from 'react-tooltip'
 import ClearLocalDataButton from './ClearLocalDataButton'
 
 
-function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName }: warReportProps) {
+function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName, warReward, splitType }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
@@ -234,6 +234,14 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                                     barClass = "participation-bar-warning"
                                     barWidth = "100%"
                                 }
+                                //determine war payout (if applicable)
+                                let memberPayout : number = 0
+                                let payoutFormatted :string = ""
+                                if (warReward != 0 && splitType != "none") {
+                                    memberPayout = (participation / 100) * warReward
+                                    payoutFormatted =  new Intl.NumberFormat("en-GB").format(memberPayout)
+                                    
+                                }
 
                                 return (
                                     <div key={memberId} className="row-container">
@@ -257,6 +265,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                                             armouryTime={armouryTime}
                                             warEndDate={warEnd}
                                             setLocalDataChange={setLocalDataChange}
+                                            memberPayout={payoutFormatted}
                                         />
                                     </div>
                                 )

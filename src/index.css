@@ -589,6 +589,15 @@ REPORT ROW
 
 /////////////////////////////////////////*/
 
+.payout-container {
+  position: relative;
+  translate: 0 -50%;
+  background-color: gold;
+  border-radius: 0 0 4px 4px;
+  padding: 2px 5px;
+  z-index:10;
+}
+
 .row-content {
   display: flex;
   justify-content: space-between;
@@ -601,7 +610,7 @@ REPORT ROW
   z-index: 10;
   background-color: var(--report-row-bg);
   cursor: pointer;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .row-content p {

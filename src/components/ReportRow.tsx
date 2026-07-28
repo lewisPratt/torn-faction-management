@@ -3,9 +3,9 @@ import type { MemberRow, warObject } from '../interfaces'
 import ThisMemberDetails from './ThisMemberDetails'
 import MemberChart from './MemberChart'
 import LocalDataStoreMember from './LocalDataStoreMember'
+import MemberPayout from './MemberPayout'
 
-
-function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName, setLocalDataChange}: MemberRow) {
+function ReportRow({ memberId, warId, memberName, memberAttacks, participationNumber, participationBarWidth, participationBarClass, memberScore, filteredNews, wartimeAttacks, warEndDate, opponentName, setLocalDataChange, memberPayout}: MemberRow) {
     const [showMoreInfo, setShowMore] = useState<boolean>(false)
 
     const warningIcon = filteredNews && filteredNews.attackPotential > memberAttacks ? <span className="warning-icon bi bi-exclamation-triangle-fill"></span>
@@ -51,6 +51,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
     return (
         <>
             <div className="row-content" onClick={showMore}>
+                {/* {memberPayout ? <MemberPayout payout={memberPayout} /> : null} */}
                 <div className={participationBarClasses} style={{ width: `${participationBarWidth}` }}></div>
                 <p className="player-name-p">{rowName}  <br /><span className="respect-span">R: {memberScore}</span> </p>
                 <p ><i className="bi bi-bullseye"></i> {memberAttacks}<span className="participation"> ({participationNumber}%)</span> {warningIcon}</p>
@@ -61,6 +62,7 @@ function ReportRow({ memberId, warId, memberName, memberAttacks, participationNu
                 }
 
             </div>
+            {memberPayout ? <MemberPayout payout={memberPayout} /> : null}
             {showMoreInfo ?
                 <div className="more-info-container">
                     <h3>{memberName}</h3>

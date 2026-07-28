@@ -111,6 +111,7 @@ export interface warReportProps {
     target: number
     armouryTime: number
     warReward: number
+    splitType: string
 }
 
 export interface ReportData {
@@ -159,6 +160,7 @@ export interface MemberRow {
     warEndDate: number
     opponentName: string
     setLocalDataChange: Dispatch<SetStateAction<boolean>>
+    memberPayout : string
 
 }
 export interface MembersArmouryProps {

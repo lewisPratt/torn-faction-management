@@ -171,21 +171,26 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             //guardd for empty field or null value. and get the split type 
             //TO DO: pass to war report component
             let rewardAmount: string
+            let splitType : string
             let strippedValue : number = 0
 
             const rewardEntry = formData.get("war-reward-amount")
-            const splitType = formData.get("split-type")
+            const splitEntry = formData.get("split-type")
+            if(splitEntry === null || splitEntry === ""  ){ 
+                splitType = "none"
+            }else{
+                splitType = splitEntry.toString()
+            }
+
             if (rewardEntry === null || rewardEntry === "") {
                 rewardAmount = "0"
             } else {
                 rewardAmount = rewardEntry.toString()
-                
             }
             if (rewardAmount != "0") {
                 rewardAmount = rewardAmount.replace(/,/g, "")
                 rewardAmount = rewardAmount.replace("$", "")
                 strippedValue  = parseInt(rewardAmount)
-                console.log(strippedValue, splitType)
             }
             
 
@@ -198,7 +203,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 factionId: faction_id,
                 warId: selectedWar.id,
                 armouryTime: armouryDate,
-                warReward: strippedValue
+                warReward: strippedValue,
+                splitType: splitType
             }
 
 
@@ -215,7 +221,6 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     //format currency as user types into war reward input field
     function formatCurrency(event: React.ChangeEvent<HTMLInputElement>) {
         if (!event.target) return
-        // alert(event.target.value)
         let currentValue = event.target.value
         currentValue = currentValue.replace(/,/g, "")
         currentValue = currentValue.replace("$", "")
@@ -332,7 +337,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                     //D: if war report is empty show card for acknowledging this
                     //D: else show war report component
                     <>
-                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} warReward={warReport.warReward}/>
+                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} warReward={warReport.warReward} splitType={warReport.splitType}/>
 
                     </>
                 )
