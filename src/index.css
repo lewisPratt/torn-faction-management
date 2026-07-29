@@ -7,7 +7,7 @@ GLOBAL VARIABLES
 
 /////////////////////////////////////////*/
 :root {
-  --text: #6b6375;
+  --text: #575659;
   --text-h: #08060d;
   --bg: #fff;
   --border: #e5e4e7;
@@ -31,6 +31,7 @@ GLOBAL VARIABLES
   --select-bg: #3b3b3b;
   --select-color: #141414;
   --player-action-icons: #6b6375;
+  --warning-icon: red;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Russo One', Roboto, sans-serif;
@@ -55,7 +56,7 @@ DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
 /////////////////////////////////////////*/
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --text: #9ca3af;
+    --text: #e1e1e5;
     --text-h: #f3f4f6;
     --bg: #16171d;
     --border: #2e303a;
@@ -71,7 +72,7 @@ DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
     --report-row-bg: #4a4a4a;
     --report-row-highlight: #161616;
     --participation-bar-warning-bg: #b03a3a;
-    --participation-bar-positive-bg: #4aec35;
+    --participation-bar-positive-bg: #35c522;
     --participation-bar-amber-bg: #ffae2b;
     --participation-bar-brightness: .5;
     --more-info-container-bg: #3e3e3e;
@@ -79,6 +80,7 @@ DARK MODE THEME FOR AUTO SET PREFERS DARK MODE (VIA BROWSER OR SYSTEM SETTINGS)
     --select-bg: #3b3b3b;
     --select-color: #f1f1f1;
     --player-action-icons: #d3d3d3;
+    --warning-icon: darkred;
 
   }
 }
@@ -89,7 +91,7 @@ LIGHT/DARK MODE THEMES
 
 /////////////////////////////////////////*/
 :root[data-theme="dark"] {
-  --text: #9ca3af;
+  --text: #e1e1e5;
   --text-h: #f3f4f6;
   --bg: #16171d;
   --border: #2e303a;
@@ -105,7 +107,7 @@ LIGHT/DARK MODE THEMES
   --report-row-bg: #4a4a4a;
   --report-row-highlight: #161616;
   --participation-bar-warning-bg: #b03a3a;
-  --participation-bar-positive-bg: #4aec35;
+  --participation-bar-positive-bg: #35c522;
   --participation-bar-amber-bg: #ffae2b;
   --participation-bar-brightness: .5;
   --more-info-container-bg: #3e3e3e;
@@ -113,6 +115,7 @@ LIGHT/DARK MODE THEMES
   --select-bg: #3b3b3b;
   --select-color: #f1f1f1;
   --player-action-icons: #d3d3d3;
+  --warning-icon: red;
 
 }
 
@@ -141,6 +144,7 @@ LIGHT/DARK MODE THEMES
   --select-bg: #f1f1f1;
   --select-color: #141414;
   --player-action-icons: #6b6375;
+  --warning-icon: darkred;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Russo One', Roboto, sans-serif;
@@ -592,10 +596,14 @@ REPORT ROW
 .payout-container {
   position: relative;
   translate: 0 -50%;
-  background-color: gold;
+  background: #f5f774;
+  background: linear-gradient(180deg, rgba(245, 247, 116, 1) 0%, rgba(235, 198, 134, 1) 100%);
   border-radius: 0 0 4px 4px;
   padding: 2px 5px;
-  z-index:10;
+  z-index: 10;
+  color: black;
+  border: 1px solid black;
+  font-size: .8rem;
 }
 
 .row-content {
@@ -652,7 +660,7 @@ REPORT ROW
 .more-info-container {
   border: 1px solid black;
   position: relative;
-  top: -15px;
+  top: -20px;
   z-index: 1;
   width: 95%;
   margin: auto;
@@ -751,7 +759,7 @@ REPORT ROW
 }
 
 .warning-icon {
-  color: darkred;
+  color: var(--warning-icon);
 
 }
 
@@ -790,6 +798,10 @@ RANKED WAR SELECTOR
 
 /////////////////////////////////////////*/
 
+.optional-text {
+  font-size: .6rem;
+}
+
 .no-war-p {
   margin: 10px 0;
   font-size: .8rem;
@@ -808,10 +820,32 @@ RANKED WAR SELECTOR
   flex-direction: column;
   align-items: stretch;
 }
-
+#ranked-war-selector-card fieldset{
+  margin-top:20px;
+}
 #ranked-war-selector-card input[type="text"] {
   height: 15px;
   padding: 10px;
+  border: 1px solid black;
+}
+fieldset{
+  display:flex;
+  flex-direction: column;
+}
+fieldset p {
+  font-size:.8rem;
+  margin-top:10px;
+}
+.radio-label {
+  display: flex;
+  margin: 8px 0;
+  background: #e9e9e9;
+  font-weight: bolder;
+  padding: 2px 10px;
+  text-align: right;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 #war-details {

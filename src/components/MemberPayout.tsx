@@ -6,7 +6,7 @@ interface memberPayoutProps{
 function MemberPayout({payout} : memberPayoutProps){
 
     if(payout != "0"){
-        return <div className="payout-container">${payout}</div>
+        return <div className="payout-container">Share: ${payout}</div>
     }else{
         return
     }

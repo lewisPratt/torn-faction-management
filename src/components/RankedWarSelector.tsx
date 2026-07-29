@@ -76,6 +76,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     let opponentName = ""
     let opponent: opponentObject
     let myFaction = null
+    let myFactionScore : number = 0
     // if a war has been selected from the dropdown
     if (selectedWar) {
 
@@ -98,7 +99,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             warWinner = myFaction
             warLoser = opponent
         }
-
+        myFactionScore = myFaction.score
+        console.log(myFactionScore)
     }
     function clearReview() {
         setSelectedWar(null)
@@ -171,14 +173,14 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             //guardd for empty field or null value. and get the split type 
             //TO DO: pass to war report component
             let rewardAmount: string
-            let splitType : string
-            let strippedValue : number = 0
+            let splitType: string
+            let strippedValue: number = 0
 
             const rewardEntry = formData.get("war-reward-amount")
             const splitEntry = formData.get("split-type")
-            if(splitEntry === null || splitEntry === ""  ){ 
+            if (splitEntry === null || splitEntry === "") {
                 splitType = "none"
-            }else{
+            } else {
                 splitType = splitEntry.toString()
             }
 
@@ -190,12 +192,12 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             if (rewardAmount != "0") {
                 rewardAmount = rewardAmount.replace(/,/g, "")
                 rewardAmount = rewardAmount.replace("$", "")
-                strippedValue  = parseInt(rewardAmount)
+                strippedValue = parseInt(rewardAmount)
             }
-            
 
 
-            const report : warReportProps = {
+
+            const report: warReportProps = {
                 opponentName: opponent.name,
                 warStart: selectedWar.start,
                 warEnd: selectedWar.end,
@@ -204,7 +206,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 warId: selectedWar.id,
                 armouryTime: armouryDate,
                 warReward: strippedValue,
-                splitType: splitType
+                splitType,
+                myFactionScore
             }
 
 
@@ -283,11 +286,14 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                         <option value="1-day">1 day before war start</option>
                                         <option value="2-day">2 days before war start</option>
                                     </select>
-                                    <label htmlFor="war-reward-amount">War reward cash amount</label>
-                                    <input type="text" placeholder="War Reward amount" id="war-reward-amount" name="war-reward-amount" onChange={formatCurrency}></input>
-                                    <label htmlFor='split-type'><input type="radio" name="split-type" value="Score" />Score</label>
-                                    <label htmlFor='split-type'><input type="radio" name="split-type" value="Attacks"/>Attacks</label>
-                                    
+                                    <fieldset>
+                                        <legend><span className="optional-text">Optional</span></legend>
+                                        <label htmlFor="war-reward-amount">War reward payouts <span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Determines member shares of war reward" data-tooltip-place="right"><i className="bi bi-question-circle"></i></span></label>
+                                        <input type="text" placeholder="Total war payout" id="war-reward-amount" name="war-reward-amount" onChange={formatCurrency}></input>
+                                        <p>Divide payout based on:</p>
+                                        <label className="radio-label" htmlFor='score-radio'><input type="radio" name="split-type" value="score" id="score-radio" />Score %</label>
+                                        <label className="radio-label" htmlFor='attacks-radio'><input type="radio" name="split-type" value="attacks" id="attacks-radio" />Attacks %</label>
+                                    </fieldset>
                                     <button type="submit">Generate Review</button>
 
 
@@ -337,7 +343,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                     //D: if war report is empty show card for acknowledging this
                     //D: else show war report component
                     <>
-                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} warReward={warReport.warReward} splitType={warReport.splitType}/>
+                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} warReward={warReport.warReward} splitType={warReport.splitType} myFactionScore={myFactionScore} />
 
                     </>
                 )

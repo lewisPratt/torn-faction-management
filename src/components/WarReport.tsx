@@ -9,7 +9,7 @@ import { Tooltip } from 'react-tooltip'
 import ClearLocalDataButton from './ClearLocalDataButton'
 
 
-function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName, warReward, splitType }: warReportProps) {
+function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName, warReward, splitType, myFactionScore }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
@@ -38,7 +38,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                 console.log(data)
             }
             else {
-
+                console.log("ware report data: ", data)
                 const factions = Object.values(data.rankedwarreport.factions)
                 factions.forEach((faction: any) => {
                     if (faction.id === factionId) {
@@ -208,6 +208,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                     <div className="card-content">
                         <h2>{reportData.attacks} attacks by {attackerCount} members </h2>
                         <div id="faction-report-overview">
+                            <p>Ranked war against {opponentName}.</p>
                             <p><span className="faction-participation">({attackerPercentage}% faction participation)</span></p>
                             <XanaxCost totalNumber={totalXanax} />
                             {earliestEntryText ? earliestEntryText : <p>Could not determine earliest Armoury entry. (might not be any entries!)</p>}
@@ -235,12 +236,20 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                                     barWidth = "100%"
                                 }
                                 //determine war payout (if applicable)
-                                let memberPayout : number = 0
-                                let payoutFormatted :string = ""
+                                let memberPayout: number = 0
+                                let payoutFormatted: string = ""
                                 if (warReward != 0 && splitType != "none") {
-                                    memberPayout = (participation / 100) * warReward
-                                    payoutFormatted =  new Intl.NumberFormat("en-GB").format(memberPayout)
-                                    
+                      
+                                    //determine amount based on what percentage of faction attacks the player made
+                                    if (splitType === "attacks") {
+                                        memberPayout = (participation / 100) * warReward
+                                        //determine amount based on what percentage of faction respect score the player earned
+                                    } else if (splitType === "score") {
+                                        memberPayout = Math.round((stats.score / myFactionScore) * warReward)
+
+                                    }
+                                    payoutFormatted = new Intl.NumberFormat("en-GB").format(memberPayout)
+
                                 }
 
                                 return (
