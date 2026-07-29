@@ -9,7 +9,7 @@ import { Tooltip } from 'react-tooltip'
 import ClearLocalDataButton from './ClearLocalDataButton'
 
 
-function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName, warReward, splitType, myFactionScore }: warReportProps) {
+function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentName, warReward, splitType, myFactionScore, deductXanax }: warReportProps) {
     const apiKey = useContext(ApiKeyContext)
 
     const [errorMsg, setErrorMsg] = useState<string>('')
@@ -19,9 +19,12 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
     const [warMemberData, setWarMemberData] = useState<warMemberDataType[] | null>(null)
     const [earliestnewsEntry, setEarliestNewsEntry] = useState<number>(0)
     const [_localDataChange, setLocalDataChange] = useState<boolean>(false)
+    const [averagePrice, setAveragePrice] = useState<number>(0)
 
     const xanaxEnergyGain = 250
-
+    let earliestEntryText
+    let warRewardTotal: number
+    let originalReward: number = 0
     useEffect(() => {
         //fetch basic war report data for selected war
         const fetchData = async () => {
@@ -38,7 +41,6 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                 console.log(data)
             }
             else {
-                console.log("ware report data: ", data)
                 const factions = Object.values(data.rankedwarreport.factions)
                 factions.forEach((faction: any) => {
                     if (faction.id === factionId) {
@@ -70,7 +72,6 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                 else {
                     //set variable for the earliest entry retrieved from armoury news
 
-                    console.log(data)
                     if (data.news.length > 0 && Object.keys(data.news[0]).includes("timestamp")) {
                         //sets earliest to the last element of each pages news retrieved, so last page will overwrite and become the accurate last entry
                         earliestEntry = data.news.slice(-1)[0].timestamp
@@ -112,6 +113,28 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
 
         fetchAllAttackPages()
 
+
+        //fetch Xanax cost details
+        const fetchXanaxData = async () => {
+            const response = await fetch(`https://api.torn.com/v2/market/206/itemmarket?limit=1&offset=0`, {
+                headers: {
+                    'Authorization': `ApiKey ${apiKey}`,
+                    'accept': 'application/json'
+                }
+            })
+            const data = await response.json()
+            if (data.error) {
+                console.log("error")
+                setErrorMsg(data.error.error)
+                console.log(data)
+            }
+            else {
+                setAveragePrice(data.itemmarket.item.average_price)
+
+            }
+        }
+
+        fetchXanaxData()
     }, [])
 
     useEffect(() => {
@@ -170,12 +193,10 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
 
 
 
-
     //if there is no data to populate the report(api error etc)
     if (!reportData) {
         return <div className="card"><p className="card-content">Loading...</p></div>
     }
-
     //count total amount of xanax used in the war
     const totalXanax = armouryNews?.filter(newsItem =>
         newsItem.text.includes(`Xanax`) &&
@@ -192,14 +213,17 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
     });
     //determine percentage of member participation 
     const attackerPercentage = Math.round((attackerCount / members.length) * 100)
-    let earliestEntryText
+
     if (earliestnewsEntry) {
         const firstEntry = new Date(earliestnewsEntry * 1000)
-        console.log("timestamp to convert", earliestnewsEntry)
         earliestEntryText = <p>Earliest Armoury entry retrieved: {firstEntry.toLocaleString()}</p>
     }
+    originalReward = warReward
+    if (averagePrice && splitType != "none" && deductXanax && warReward) {
 
-
+        warReward -= (totalXanax * averagePrice)
+    }
+    warRewardTotal = warReward
 
     return (
         <>
@@ -210,7 +234,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                         <div id="faction-report-overview">
                             <p>Ranked war against {opponentName}.</p>
                             <p><span className="faction-participation">({attackerPercentage}% faction participation)</span></p>
-                            <XanaxCost totalNumber={totalXanax} />
+                            <XanaxCost totalNumber={totalXanax} averagePrice={averagePrice} />
                             {earliestEntryText ? earliestEntryText : <p>Could not determine earliest Armoury entry. (might not be any entries!)</p>}
                         </div>
 
@@ -219,6 +243,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
 
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
                         <div id="report-rows-container">
+                            {warRewardTotal != originalReward ? <h3>Before Xanax Cost: {originalReward.toLocaleString()} After: {warRewardTotal.toLocaleString()}</h3> : null}
                             <Tooltip id="more-info-tooltip" />
 
                             {warMemberData && warMemberData.map((memberEntry) => {
@@ -239,7 +264,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
                                 let memberPayout: number = 0
                                 let payoutFormatted: string = ""
                                 if (warReward != 0 && splitType != "none") {
-                      
+
                                     //determine amount based on what percentage of faction attacks the player made
                                     if (splitType === "attacks") {
                                         memberPayout = (participation / 100) * warReward
@@ -249,6 +274,7 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
 
                                     }
                                     payoutFormatted = new Intl.NumberFormat("en-GB").format(memberPayout)
+
 
                                 }
 

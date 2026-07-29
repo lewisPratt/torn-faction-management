@@ -113,6 +113,7 @@ export interface warReportProps {
     warReward: number
     splitType: string
     myFactionScore: number
+    deductXanax: boolean
 
 }
 
@@ -267,6 +268,7 @@ export interface parsedDataObject {
 
 export interface xanaxCostProps {
     totalNumber: number
+    averagePrice: number
 }
 export interface clearLocalProps {
     setLocalDataChange: Dispatch<SetStateAction<boolean>>

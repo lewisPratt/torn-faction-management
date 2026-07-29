@@ -49,7 +49,6 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 console.log(data)
             }
             else {
-                console.log(data.rankedwars)
                 setRankedWarsListData(data.rankedwars)
             }
         }
@@ -70,13 +69,12 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
     const warLengthDays = Math.floor((endTimestamp - startTimestamp) / 86400)
     const warLengthHours = Math.floor(((endTimestamp - startTimestamp) % 86400) / 3600)
     const warLengthMinutes = Math.floor((((endTimestamp - startTimestamp) % 86400) % 3600) / 60)
-    console.log(warLengthDays)
     let warWinner = null
     let warLoser = null
     let opponentName = ""
     let opponent: opponentObject
     let myFaction = null
-    let myFactionScore : number = 0
+    let myFactionScore: number = 0
     // if a war has been selected from the dropdown
     if (selectedWar) {
 
@@ -100,7 +98,6 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             warLoser = opponent
         }
         myFactionScore = myFaction.score
-        console.log(myFactionScore)
     }
     function clearReview() {
         setSelectedWar(null)
@@ -171,13 +168,17 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
             //work out payout amounts
             //strip entered war reward amount if there is one
             //guardd for empty field or null value. and get the split type 
-            //TO DO: pass to war report component
             let rewardAmount: string
             let splitType: string
             let strippedValue: number = 0
-
+            let deductXanaxFlag : boolean = false
+            const deductXanax = formData.get("deduct-xanax")
             const rewardEntry = formData.get("war-reward-amount")
             const splitEntry = formData.get("split-type")
+            if (deductXanax === "true") {
+
+                deductXanaxFlag = true
+            }
             if (splitEntry === null || splitEntry === "") {
                 splitType = "none"
             } else {
@@ -207,7 +208,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                 armouryTime: armouryDate,
                 warReward: strippedValue,
                 splitType,
-                myFactionScore
+                myFactionScore,
+                deductXanax: deductXanaxFlag
             }
 
 
@@ -290,6 +292,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                         <legend><span className="optional-text">Optional</span></legend>
                                         <label htmlFor="war-reward-amount">War reward payouts <span data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Determines member shares of war reward" data-tooltip-place="right"><i className="bi bi-question-circle"></i></span></label>
                                         <input type="text" placeholder="Total war payout" id="war-reward-amount" name="war-reward-amount" onChange={formatCurrency}></input>
+                                        <label htmlFor="deduct-xanax"><input type="checkbox" id="deduct-xanax" name="deduct-xanax" value="true" /> Deduct Xanax cost from total?</label>
                                         <p>Divide payout based on:</p>
                                         <label className="radio-label" htmlFor='score-radio'><input type="radio" name="split-type" value="score" id="score-radio" />Score %</label>
                                         <label className="radio-label" htmlFor='attacks-radio'><input type="radio" name="split-type" value="attacks" id="attacks-radio" />Attacks %</label>
@@ -343,7 +346,7 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                     //D: if war report is empty show card for acknowledging this
                     //D: else show war report component
                     <>
-                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} warReward={warReport.warReward} splitType={warReport.splitType} myFactionScore={myFactionScore} />
+                        <WarReport opponentName={opponentName} warStart={warReport.warStart} warEnd={warReport.warEnd} factionId={faction_id} target={warReport.target} warId={warReport.warId} armouryTime={warReport.armouryTime} warReward={warReport.warReward} splitType={warReport.splitType} myFactionScore={myFactionScore} deductXanax={warReport.deductXanax} />
 
                     </>
                 )

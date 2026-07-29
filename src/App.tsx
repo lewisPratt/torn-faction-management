@@ -31,7 +31,6 @@ function App() {
       }
       else {
         setUserData(data.profile)
-        console.log(data.profile)
       }
     }
 
