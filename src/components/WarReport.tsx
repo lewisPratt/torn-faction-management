@@ -243,8 +243,9 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
 
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
                         <div id="report-rows-container">
-                            {warRewardTotal != originalReward ? <h3>Before Xanax Cost: {originalReward.toLocaleString()} After: {warRewardTotal.toLocaleString()}</h3> : null}
-                            <Tooltip id="more-info-tooltip" />
+                            {warRewardTotal != originalReward ? <><h3>Total reward amount: ${warRewardTotal.toLocaleString()} </h3><p id="xanax-deduction-p"> Before Xanax deduction: ${originalReward.toLocaleString()}</p> </>: null}
+                            <p id="report-row-help">Select a row to see more info about that faction member</p>
+                           <Tooltip id="more-info-tooltip" />
 
                             {warMemberData && warMemberData.map((memberEntry) => {
                                 const memberId = Object.keys(memberEntry)[0]

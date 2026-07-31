@@ -492,6 +492,20 @@ WAR REPORT
   line-height: 1rem;
 }
 
+#report-rows-container>h3 {
+  width: fit-content;
+  margin: 20px auto 0 auto;
+  padding: 20px;
+  background-color: #efefef;
+  border-radius: 10px;
+  border: 1px dashed black;
+}
+#xanax-deduction-p{
+  font-size:.8rem;
+  text-align:center;
+  width:fit-content;
+  margin:auto;
+}
 /*//////////////////////////////////////////
 
 LOGIN 
@@ -592,7 +606,11 @@ CHART
 REPORT ROW
 
 /////////////////////////////////////////*/
-
+#report-row-help{
+  font-size:.6rem;
+  text-align: right;
+  margin:0;
+}
 .payout-container {
   position: relative;
   translate: 0 -50%;
@@ -820,22 +838,27 @@ RANKED WAR SELECTOR
   flex-direction: column;
   align-items: stretch;
 }
-#ranked-war-selector-card fieldset{
-  margin-top:20px;
+
+#ranked-war-selector-card fieldset {
+  margin-top: 20px;
 }
+
 #ranked-war-selector-card input[type="text"] {
   height: 15px;
   padding: 10px;
   border: 1px solid black;
 }
-fieldset{
-  display:flex;
+
+fieldset {
+  display: flex;
   flex-direction: column;
 }
+
 fieldset p {
-  font-size:.8rem;
-  margin-top:10px;
+  font-size: .8rem;
+  margin-top: 10px;
 }
+
 .radio-label {
   display: flex;
   margin: 8px 0;
