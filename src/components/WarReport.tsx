@@ -219,17 +219,20 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
         earliestEntryText = <p>Earliest Armoury entry retrieved: {firstEntry.toLocaleString()}</p>
     }
     originalReward = warReward
-    let splitDesc : string = ""
+    let splitDesc: string = ""
     if (averagePrice && splitType != "none" && deductXanax && warReward) {
-        if(splitType === "attacks"){
-            splitDesc = "Share calculated by members percentage of total faction attacks undertaken."
-        }else if(splitType === "score"){
-            splitDesc = "Share calculated by members percentage of total faction respect score."
-        }
+
         warReward -= (totalXanax * averagePrice)
     }
     warRewardTotal = warReward
 
+    if (warReward) {
+        if (splitType === "attacks") {
+            splitDesc = "Share calculated by members percentage of total faction attacks undertaken."
+        } else if (splitType === "score") {
+            splitDesc = "Share calculated by members percentage of total faction respect score."
+        }
+    }
     return (
         <>
             <div id="report-container">
@@ -248,10 +251,10 @@ function WarReport({ warStart, warEnd, factionId, warId, armouryTime, opponentNa
 
                         {warMemberData ? <div id="chart-container"><WarChart warMemberData={warMemberData} /></div> : null}
                         <div id="report-rows-container">
-                            {warRewardTotal != originalReward ? <><h3>Total reward amount: ${warRewardTotal.toLocaleString()} </h3><p id="xanax-deduction-p"> Before Xanax deduction: ${originalReward.toLocaleString()}</p> </>: null}
+                            {warRewardTotal != originalReward ? <><h3>Total reward amount: ${warRewardTotal.toLocaleString()} </h3><p id="xanax-deduction-p"> Before Xanax deduction: ${originalReward.toLocaleString()}</p> </> : null}
                             {splitType != "none" ? <p id="split-desc-p">{splitDesc}</p> : null}
                             <p id="report-row-help">Select a row to see more info about that faction member</p>
-                           <Tooltip id="more-info-tooltip" />
+                            <Tooltip id="more-info-tooltip" />
 
                             {warMemberData && warMemberData.map((memberEntry) => {
                                 const memberId = Object.keys(memberEntry)[0]
