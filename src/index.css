@@ -640,6 +640,7 @@ REPORT ROW
   color: black;
   border: 1px solid black;
   font-size: .8rem;
+  cursor: pointer;
 }
 
 .row-content {
