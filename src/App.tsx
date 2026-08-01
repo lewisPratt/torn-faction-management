@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ApiKeyForm from './components/ApiKeyForm'
 import { ApiKeyContext } from './components/ApiKeyContext'
-import CustomGreeting from './components/CustomGreeting'
+import AppHeader from './components/AppHeader'
 import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
 import RankedWarSelector from './components/RankedWarSelector'
@@ -84,7 +84,7 @@ function FirstView({ userData, errorMsg, apiKey }: firstViewProps) {
       {userData ? (
         <>
           <header>
-            <CustomGreeting id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id} />
+            <AppHeader id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id} />
 
           </header>
          

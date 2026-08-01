@@ -294,8 +294,8 @@ function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
                                         <input type="text" placeholder="Total war payout" id="war-reward-amount" name="war-reward-amount" onChange={formatCurrency}></input>
                                         <label htmlFor="deduct-xanax"><input type="checkbox" id="deduct-xanax" name="deduct-xanax" value="true" /> Deduct Xanax cost from total?</label>
                                         <p>Divide payout based on:</p>
-                                        <label className="radio-label" htmlFor='score-radio'><input type="radio" name="split-type" value="score" id="score-radio" />Score %</label>
-                                        <label className="radio-label" htmlFor='attacks-radio'><input type="radio" name="split-type" value="attacks" id="attacks-radio" />Attacks %</label>
+                                        <label className="radio-label" data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Members % of overall faction respect score" htmlFor='score-radio'><input type="radio" name="split-type" value="score" id="score-radio" />Score %</label>
+                                        <label className="radio-label" data-tooltip-id="ranked-war-selector-tooltip" data-tooltip-content="Members % of overall faction attack count" htmlFor='attacks-radio'><input type="radio" name="split-type" value="attacks" id="attacks-radio" />Attacks %</label>
                                     </fieldset>
                                     <button type="submit">Generate Review</button>
 
