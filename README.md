@@ -29,6 +29,7 @@ Not vibe coded.
   * Calculation of total Xanax cost for the war (based on relative current average Xanax price) 
 * DARK MODE!
 * Store faction member war data locally, to enable visualization of performance over multiple wars (using line charts)
+* war reward payout calculator based on different aspects of members pariticipation in a war. (eg number of attacks, score etc)
 
   
   ## Planned features
@@ -36,7 +37,6 @@ Not vibe coded.
 * Grouping of faction member rows based on criteria (grouping underperforming member rows together)
 * Detailed Chain report for each war
 * Add export data option to export war data as CSV/spreadsheet format
-* war reward payout calculator based on different aspects of members pariticipation in a war. (eg number of attacks, score etc)
 
 ## Feature Breakdown
 
@@ -60,4 +60,23 @@ As you store datasets for the same faction member over multiple wars, the line c
 It's a great way to focus in on specific members of a faction and drill down on how much they are contributing (or hindering) the factions efforts during wartime. 
 
 ![Report row example](https://raw.githubusercontent.com/lewisPratt/torn-faction-management/refs/heads/main/src/assets/readme/report-row-example.png "Example of war report member row")
+
+### War reward payout calculator
+<hr>
+
+Using the calculator, you can automatically work out the share for each faction member based on either their percentage of total faction war attacks, or their percentage of total faction respect score. The calculator will then display under every member row, how much that faction member should receive as their payout for the currently selected war. 
+If a faction member has not met the criteria for a share to be calculated, (percentage of total faction score or attacks is 0) they do not have a share shown under their member row. 
+
+Clicking on the members share container will toggle styling that lets you check off each faction member as you update their faction balance. This is a visual change only and does not actually change balances or interact with Torn. 
+
+
+War payout calculations are optional and can be ignored if you do not want to calculate shares of war profits. 
+![payout display](https://raw.githubusercontent.com/lewisPratt/torn-faction-management/refs/heads/main/src/assets/readme/payout-calculator.png "Example of normal payout display")
+
+
+When the payout calculator is used, each qualifying members payout amount is displayed under their report row.
+![payout display](https://raw.githubusercontent.com/lewisPratt/torn-faction-management/refs/heads/main/src/assets/readme/payout-unchecked.png "Example of normal payout display")
+
+On clicking the payout container, its styling will change, helping to keep track of who has been paid. These visual changes will not persist between report generations and are only applied whilst the current report is active. 
+![payout checked display](https://raw.githubusercontent.com/lewisPratt/torn-faction-management/refs/heads/main/src/assets/readme/payout-checked.png "Example of checked payout display")
 
