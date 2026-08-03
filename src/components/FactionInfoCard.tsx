@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
-import type { FactionData, factionProps } from '../interfaces'
+import { useState, useEffect, useContext } from 'react'
+import type { FactionData } from '../interfaces'
+import { ApiKeyContext } from './ApiKeyContext'
 
-function FactionInfoCard({ apiKey }: factionProps) {
-
+function FactionInfoCard() {
+    const apiKey = useContext(ApiKeyContext)
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [facData, setFacData] = useState<FactionData | null>(null)
 

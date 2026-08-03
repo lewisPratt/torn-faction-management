@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react'
 import ApiKeyForm from './components/ApiKeyForm'
 import { ApiKeyContext } from './components/ApiKeyContext'
-import AppHeader from './components/AppHeader'
-import FactionInfoCard from './components/FactionInfoCard'
 import Layout from './Layout'
-import RankedWarSelector from './components/RankedWarSelector'
-import type {firstViewProps } from './interfaces'
-
+import RankedWarReportView from './components/RankedWarReportView'
 
 function App() {
   const [apiKey, setApiKey] = useState(localStorage.getItem('tornApiKey') || '')
@@ -63,51 +59,18 @@ function App() {
       handleSubmit={handleSubmit}
     />
   }
+
   return (
     <ApiKeyContext.Provider value={apiKey}>
-      <Layout handleClearKey={handleClearKey}>
-        <FirstView
-          userData={userData}
-          handleClearKey={handleClearKey}
-          errorMsg={errorMsg}
-          apiKey={apiKey}
+      <Layout handleClearKey={handleClearKey} userData={userData}>
+
+        <RankedWarReportView userData={userData} handleClearKey={handleClearKey} errorMsg={errorMsg}
         />
       </Layout>
     </ApiKeyContext.Provider>
   )
 }
 
-function FirstView({ userData, errorMsg, apiKey }: firstViewProps) {
-  return (
-    <>
 
-      {userData ? (
-        <>
-          <header>
-            <AppHeader id={userData.id} name={userData.name} level={userData.level} rank={userData.rank} title={userData.title} image={userData.image} faction_id={userData.faction_id} />
-
-          </header>
-         
-          <FactionInfoCard uData={userData} apiKey={apiKey} />
-          <section id="main-content">
-         
-            <RankedWarSelector apiKey={apiKey} faction_id={userData.faction_id} />
-              
-          </section>
-        </>
-
-      ) : (
-        <section id="main-content">
-          {errorMsg ? (
-            <p className="card"><div className="card-content">{errorMsg}</div></p>
-          ) : (
-            <p className="card">Loading..</p>
-          )}
-        
-        </section>
-      )}
-    </>
-  )
-}
 
 export default App

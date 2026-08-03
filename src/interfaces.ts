@@ -9,15 +9,15 @@ export interface TornUserData {
     title: string
     faction_id: number
 }
-export interface firstViewProps {
+export interface rankedWarReportViewProps {
     userData: TornUserData
     handleClearKey: () => void
     errorMsg: string
-    apiKey: string
 }
 export interface LayoutProps {
     children: React.ReactNode
     handleClearKey: () => void
+    userData: TornUserData
 }
 export interface ApiKeyFormProps {
     inputValue: string
@@ -26,10 +26,6 @@ export interface ApiKeyFormProps {
 }
 export interface ClearKeyProps {
     handleClearKey: () => void
-}
-export interface factionProps {
-    uData: any
-    apiKey: string
 }
 
 export interface FactionMember {
@@ -51,7 +47,6 @@ export interface FactionData {
     }
 }
 export interface RankedWarProps {
-    apiKey: string
     faction_id: number
 
 }

@@ -6,6 +6,7 @@ function CustomGreeting({ id, image, name, rank, title, level }: TornUserData) {
 
 
   return (
+    <header>
     <div className="header-card">
 
       <h1>Torn Ledger</h1>
@@ -21,6 +22,7 @@ function CustomGreeting({ id, image, name, rank, title, level }: TornUserData) {
         </div>
       </div>
     </div>
+    </header>
   )
 }
 

@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import WarReport from './WarReport'
 import type { RankedWarProps, RankedWarsListData, SelectedWar, warReportProps, opponentObject } from '../interfaces'
 import type { CSSProperties } from 'react'
@@ -8,13 +8,15 @@ import LegendReportRow from './LegendReportRow'
 import { PulseLoader } from "react-spinners";
 import LatestUpdates from './LastestUpdates'
 import { supabase } from './supabaseClient'
+import { ApiKeyContext } from './ApiKeyContext'
 
 const trackEvent = async (eventName: string) => {
     const { error } = await supabase.rpc('increment_event', { event_name: eventName })
     if (error) console.error('Error tracking event:', error)
 }
 
-function RankedWarSelector({ apiKey, faction_id }: RankedWarProps) {
+function RankedWarSelector({faction_id }: RankedWarProps) {
+    const apiKey = useContext(ApiKeyContext)
     const [errorMsg, setErrorMsg] = useState<string>('')
     const [rankedWarsList, setRankedWarsListData] = useState<RankedWarsListData | null>(null)
     const [selectedWar, setSelectedWar] = useState<SelectedWar | null>(null)
