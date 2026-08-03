@@ -222,10 +222,11 @@ CUSTOM GLOBAL
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  flex: 1;
   gap: 20px;
 }
-
+#spacer{
+  flex:1;
+}
 #root {
   max-width: 1440px;
   margin: 0 auto;
@@ -475,6 +476,9 @@ HEADER
   margin:0;
   text-align:left;
 }
+#app-nav{
+  width:100%;
+}
 /*//////////////////////////////////////////
 
 WAR REPORT
@@ -528,7 +532,11 @@ WAR REPORT
 LOGIN 
 
 /////////////////////////////////////////*/
-
+#api-error-container{
+  margin:20px;
+  padding:10px;
+  border:1px solid black;
+}
 #login-main-content p {
   font-size: 1rem;
   margin: 20px;

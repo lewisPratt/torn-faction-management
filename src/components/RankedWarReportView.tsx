@@ -2,25 +2,20 @@
 import type { rankedWarReportViewProps } from "../interfaces"
 import RankedWarSelector from "./RankedWarSelector"
 
-function RankedWarReportView({ userData, errorMsg }: rankedWarReportViewProps) {
-  return (
-    <>
-      {userData ? (
-
-        <RankedWarSelector faction_id={userData.faction_id} />
-
-      ) : (
+function RankedWarReportView({ userData }: rankedWarReportViewProps) {
+    return (
         <>
-          {errorMsg ? (
-            <p className="card"><div className="card-content">{errorMsg}</div></p>
-          ) : (
-            <p className="card">Loading..</p>
-          )}
+            {userData ? (
+
+                <RankedWarSelector faction_id={userData.faction_id} />
+
+            ) : (
+
+                <p className="card">Loading..</p>
+            )}
 
         </>
-      )}
-    </>
-  )
+    )
 }
 
 export default RankedWarReportView

@@ -11,8 +11,9 @@ export interface TornUserData {
 }
 export interface rankedWarReportViewProps {
     userData: TornUserData
-    handleClearKey: () => void
-    errorMsg: string
+}
+export interface navProps {
+    userData: TornUserData
 }
 export interface LayoutProps {
     children: React.ReactNode

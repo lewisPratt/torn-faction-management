@@ -3,8 +3,6 @@ import type { TornUserData } from "../interfaces"
 
 function CustomGreeting({ id, image, name, rank, title, level }: TornUserData) {
 
-
-
   return (
     <header>
     <div className="header-card">
