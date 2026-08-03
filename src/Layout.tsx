@@ -18,12 +18,6 @@ function Layout({ children, handleClearKey, userData }: LayoutProps) {
                 </>
                 : null
             }
-
-
-
-            
-                
-                
                 <section id="main-content">
                 <BrowserRouter>
                 <NavigationBar userData={userData} />

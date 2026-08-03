@@ -1,20 +1,26 @@
-import { Link, Route, Routes } from "react-router-dom"
+import { NavLink, Route, Routes } from "react-router-dom"
 import RankedWarReportView from "./RankedWarReportView"
 import type { navProps } from "../interfaces"
-import AboutApp from "./AboutApp"
+import ChainReportView from "./ChainReportView";
 
 
-function NavigationBar({userData} : navProps) {
+function NavigationBar({ userData }: navProps) {
+    const navLinkStyles = ({ isActive }: { isActive: boolean }) => ({
+        color: isActive ? '#007bff' : '#333',
+        textDecoration: isActive ? 'none' : 'underline',
+        fontWeight: isActive ? 'bold' : 'normal',
+        padding: '5px 10px'
+    });
     return (
         <>
             <nav id="app-nav">
-                <Link to="/torn-faction-management/">Home</Link> |{" "}
-                <Link to="/torn-faction-management/about">About</Link> |{" "}
-                <Link to="/torn-faction-management/contact">Contact</Link>
+                <NavLink to="/torn-faction-management/" style={navLinkStyles} end>War Report</NavLink > |{" "}
+                <NavLink to="/torn-faction-management/about" style={navLinkStyles} end>Chain Report</NavLink> |{" "}
+                <NavLink to="/torn-faction-management/contact" style={navLinkStyles}end>Contact</NavLink>
             </nav>
             <Routes>
                 <Route path="/torn-faction-management/" element={<RankedWarReportView userData={userData} />} />
-                <Route path="/torn-faction-management/about" element={<AboutApp />} />
+                <Route path="/torn-faction-management/about" element={<ChainReportView />} />
                 <Route path="/torn-faction-management/contact" element={<Contact />} />
             </Routes>
 
@@ -22,9 +28,9 @@ function NavigationBar({userData} : navProps) {
     )
 
 
-  function Contact() {
-    return <p>This is a contact page</p>
-  }
+    function Contact() {
+        return <p>Coming Soon.</p>
+    }
 }
 
 export default NavigationBar
