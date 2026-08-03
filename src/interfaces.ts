@@ -12,6 +12,32 @@ export interface TornUserData {
 export interface rankedWarReportViewProps {
     userData: TornUserData
 }
+export interface chainReportViewProps {
+    userData: TornUserData
+}
+export interface chainListData {
+    [key: string]: {
+        chain: number
+        end: number
+        id: number
+        respect: number
+        start: number
+    }
+}
+
+export interface chainListProps {
+    list: chainListData
+}
+export interface chainRowData {
+    chain: number
+    end: number
+    id: number
+    respect: number
+    start: number
+}
+export interface chainRowProps {
+    chain: chainRowData
+}
 export interface navProps {
     userData: TornUserData
 }

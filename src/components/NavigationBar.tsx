@@ -20,7 +20,7 @@ function NavigationBar({ userData }: navProps) {
             </nav>
             <Routes>
                 <Route path="/torn-faction-management/" element={<RankedWarReportView userData={userData} />} />
-                <Route path="/torn-faction-management/about" element={<ChainReportView />} />
+                <Route path="/torn-faction-management/about" element={<ChainReportView userData={userData}/>} />
                 <Route path="/torn-faction-management/contact" element={<Contact />} />
             </Routes>
 
